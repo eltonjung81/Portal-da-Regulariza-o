@@ -834,6 +834,14 @@
     src="https://www.facebook.com/tr?id=342417132052740&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JWTFYFMPB5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JWTFYFMPB5');
+    </script>
 </head>
 
 <body>
@@ -1185,6 +1193,12 @@
                 if (id === 'step-home') fbq('track', 'ViewContent');
                 if (id === 'step-paywall') fbq('track', 'InitiateCheckout');
             }
+
+            // Google Analytics Tracking
+            if (typeof gtag === 'function') {
+                gtag('event', 'screen_view', { screen_name: id });
+                if (id === 'step-paywall') gtag('event', 'begin_checkout');
+            }
         }
 
         let selectedConsultationType = '';
@@ -1255,6 +1269,7 @@
             lastGeneratedUrl = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
             
             if (typeof fbq === 'function') fbq('track', 'Contact', { content_name: 'Guia Autoatendimento' });
+            if (typeof gtag === 'function') gtag('event', 'generate_lead', { content_name: 'Guia', method: 'whatsapp' });
             window.open(lastGeneratedUrl, '_blank');
             show('step-success');
         }
@@ -1274,6 +1289,7 @@
             lastGeneratedUrl = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
 
             if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'Consultoria Premium' });
+            if (typeof gtag === 'function') gtag('event', 'generate_lead', { content_name: 'Consultoria', method: 'whatsapp' });
             window.open(lastGeneratedUrl, '_blank');
             show('step-success');
         }
