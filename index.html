@@ -1057,13 +1057,13 @@
 
                 <div class="plans-container">
                     <!-- PLANO 1 -->
-                    <div class="plan-card" onclick="show('step-payment')">
+                    <div class="plan-card" onclick="comprarGuia()">
                         <div class="plan-title">Autoatendimento</div>
                         <div class="plan-price">
                             <span class="plan-price-unit">R$&nbsp;</span><span class="val">19</span><span class="unit">,90</span>
                         </div>
-                        <p class="plan-desc">Acesso imediato ao guia completo para você mesmo resolver.</p>
-                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Quero o Guia</button>
+                        <p class="plan-desc">Acesso ao guia completo com orientações enviadas pelo WhatsApp.</p>
+                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Solicitar Guia</button>
                     </div>
 
                     <!-- PLANO 2 -->
@@ -1073,8 +1073,8 @@
                         <div class="plan-price">
                             <span class="plan-price-unit">R$&nbsp;</span><span class="val">59</span><span class="unit">,90</span>
                         </div>
-                        <p class="plan-desc">Fazemos toda a análise, busca e negociação para você sem precisar sair de casa.</p>
-                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Contratar Consultoria</button>
+                        <p class="plan-desc">Consultoria personalizada com análise e negociação total do seu caso.</p>
+                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Solicitar Consultoria</button>
                     </div>
                 </div>
 
@@ -1110,40 +1110,21 @@
                 <button class="btn-ghost" onclick="show('step-paywall')">Voltar para planos</button>
             </section>
 
-            <!-- ── PAGAMENTO ── -->
-            <section id="step-payment">
-                <div class="step-label">Pagamento via PIX</div>
-                <h2>Finalize o pagamento</h2>
-                <p class="desc">Após a confirmação, o guia completo é enviado para o seu e-mail em até 15 minutos.</p>
-
-                <div class="pix-box">
-                    <div class="pix-label">Chave PIX</div>
-                    <div class="pix-key" id="pix-key-text">seuemail@email.com</div>
-                    <button class="copy-btn" id="copy-btn" onclick="copyPix()">Copiar chave</button>
-                </div>
-
-                <div class="alert-box" style="margin-bottom:24px;">
-                    📎 Após realizar o pagamento, clique em "Já paguei" abaixo. O acesso será liberado em até 15 minutos
-                    no e-mail informado no comprovante.
-                </div>
-
-                <button class="btn-cta" onclick="show('step-confirm')">Já realizei o pagamento →</button>
-                <button class="btn-ghost" onclick="show('step-paywall')">Voltar</button>
-            </section>
-
-            <!-- ── CONFIRMAÇÃO ── -->
-            <section id="step-confirm">
+            <!-- ── SUCESSO ── -->
+            <section id="step-success">
                 <div class="success-wrap">
                     <div class="success-icon">✓</div>
-                    <div class="step-label" style="text-align:center;">Confirmação recebida</div>
-                    <h2>Pagamento registrado com sucesso</h2>
-                    <p class="desc">Nossa equipe irá verificar o pagamento e enviar o guia completo para o e-mail
-                        associado ao comprovante PIX. Prazo: até 15 minutos.</p>
+                    <div class="step-label" style="text-align:center;">Solicitação Enviada</div>
+                    <h2>Tudo pronto! Seu atendimento começou.</h2>
+                    <p class="desc">Já enviamos seus dados para o nosso consultor. Se o WhatsApp não abriu automaticamente, você pode clicar no botão abaixo para iniciar a conversa agora mesmo.</p>
+                    
                     <div class="alert-box" style="text-align:left;">
-                        💬 Dúvidas? Entre em contato via WhatsApp ou e-mail informados no comprovante. Estamos
-                        disponíveis de segunda a sexta, das 9h às 18h.
+                        💬 <strong>O que acontece agora?</strong><br>
+                        Nossa equipe analisará seu caso e enviará as orientações de pagamento e o acesso ao serviço diretamente no seu WhatsApp.
                     </div>
-                    <button class="btn-ghost" onclick="location.reload()">Analisar outro caso</button>
+                    
+                    <button class="btn-cta gold" onclick="reabrirWhats()">Abrir WhatsApp Novamente</button>
+                    <button class="btn-ghost" onclick="location.reload()" style="margin-top: 15px;">Voltar ao início</button>
                 </div>
             </section>
 
@@ -1238,17 +1219,19 @@
             }, 2200);
         }
 
-        function copyPix() {
-            const key = document.getElementById('pix-key-text').innerText;
-            const btn = document.getElementById('copy-btn');
-            navigator.clipboard.writeText(key).then(() => {
-                btn.textContent = 'Copiado!';
-                btn.classList.add('copied');
-                setTimeout(() => {
-                    btn.textContent = 'Copiar chave';
-                    btn.classList.remove('copied');
-                }, 2000);
-            });
+        let lastGeneratedUrl = '';
+
+        function reabrirWhats() {
+            if (lastGeneratedUrl) window.open(lastGeneratedUrl, '_blank');
+        }
+
+        function comprarGuia() {
+            const telefone = "5551999906748";
+            const texto = `Olá! Gostaria de adquirir o *Guia de Autoatendimento* por R$19,90.`;
+            lastGeneratedUrl = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
+            
+            window.open(lastGeneratedUrl, '_blank');
+            show('step-success');
         }
 
         function enviarLead() {
@@ -1261,19 +1244,12 @@
                 return;
             }
 
-            // Configuração do WhatsApp
             const telefone = "5551999906748";
-            const texto = `Olá! Gostaria de contratar a Consultoria Premium.\n\n*Nome:* ${nome}\n*WhatsApp:* ${whats}\n*Caso:* ${problema}`;
-            const url = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
+            const texto = `Olá! Gostaria de contratar a *Consultoria Premium* (R$59,90).\n\n*Nome:* ${nome}\n*WhatsApp:* ${whats}\n*Caso:* ${problema}`;
+            lastGeneratedUrl = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
 
-            // Feedback para o usuário
-            alert("Solicitação recebida! Estamos em manutenção em nosso sistema automático, mas você será redirecionado para o nosso WhatsApp para atendimento humano imediato.");
-
-            // Abre o WhatsApp em uma nova aba
-            window.open(url, '_blank');
-
-            // Segue o fluxo para a tela de pagamento (Checkout)
-            show('step-payment');
+            window.open(lastGeneratedUrl, '_blank');
+            show('step-success');
         }
     </script>
 </body>
