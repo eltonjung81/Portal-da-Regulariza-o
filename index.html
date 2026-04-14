@@ -1170,6 +1170,34 @@
     </footer>
 
     <script>
+        // Flags para garantir disparo único por formulário
+        let trackedDocStart = false;
+        let trackedPremiumStart = false;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Monitora início do preenchimento de CPF/CNPJ
+            const inputDoc = document.getElementById('user-doc');
+            if (inputDoc) {
+                inputDoc.addEventListener('focus', () => {
+                    if (!trackedDocStart && typeof gtag === 'function') {
+                        gtag('event', 'form_start', { form_name: 'identificacao_inicial' });
+                        trackedDocStart = true;
+                    }
+                });
+            }
+
+            // Monitora início do formulário Premium
+            const inputNome = document.getElementById('nome');
+            if (inputNome) {
+                inputNome.addEventListener('focus', () => {
+                    if (!trackedPremiumStart && typeof gtag === 'function') {
+                        gtag('event', 'form_start', { form_name: 'consultoria_premium' });
+                        trackedPremiumStart = true;
+                    }
+                });
+            }
+        });
+
         function show(id) {
             // Reset home choices if navigating back to home
             if (id === 'step-home') {
