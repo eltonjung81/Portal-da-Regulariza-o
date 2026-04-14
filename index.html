@@ -1208,11 +1208,12 @@
                 };
                 const screenName = stepNames[id] || id;
 
-                // Envia como visualização de tela e visualização de página virtual
+                // Envia como visualização de tela e visualização de página virtual (explícito)
                 gtag('event', 'screen_view', { screen_name: screenName });
-                gtag('config', 'G-JWTFYFMPB5', {
-                    'page_title': screenName,
-                    'page_path': '/' + id
+                gtag('event', 'page_view', {
+                    page_title: screenName,
+                    page_location: window.location.origin + '/' + id,
+                    page_path: '/' + id
                 });
 
                 if (id === 'step-paywall') gtag('event', 'begin_checkout');
