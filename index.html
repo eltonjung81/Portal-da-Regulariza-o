@@ -1196,7 +1196,25 @@
 
             // Google Analytics Tracking
             if (typeof gtag === 'function') {
-                gtag('event', 'screen_view', { screen_name: id });
+                const stepNames = {
+                    'step-home': 'Início - Escolha de Serviço',
+                    'step-cpf-form': 'Diagnóstico - CPF',
+                    'step-cpf-result': 'Resultado - CPF',
+                    'step-mei-form': 'Diagnóstico - MEI',
+                    'step-mei-result': 'Resultado - MEI',
+                    'step-paywall': 'Paywall - Escolha de Plano',
+                    'step-premium-form': 'Formulário Consultoria Premium',
+                    'step-success': 'Sucesso - Redirecionamento WhatsApp'
+                };
+                const screenName = stepNames[id] || id;
+
+                // Envia como visualização de tela e visualização de página virtual
+                gtag('event', 'screen_view', { screen_name: screenName });
+                gtag('config', 'G-JWTFYFMPB5', {
+                    'page_title': screenName,
+                    'page_path': '/' + id
+                });
+
                 if (id === 'step-paywall') gtag('event', 'begin_checkout');
             }
         }
@@ -1220,6 +1238,13 @@
 
             choices.style.display = 'none';
             container.style.display = 'block';
+
+            if (typeof gtag === 'function') {
+                gtag('event', 'select_content', {
+                    content_type: 'consultation_type',
+                    item_id: type
+                });
+            }
         }
 
         function resetTypeSelection() {
@@ -1250,6 +1275,10 @@
             // Show loader
             document.getElementById('doc-input-container').style.display = 'none';
             document.getElementById('consulting-loader').style.display = 'block';
+
+            if (typeof gtag === 'function') {
+                gtag('event', 'search', { search_term: selectedConsultationType });
+            }
 
             // Realistic delay to build trust
             setTimeout(() => {
