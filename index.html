@@ -816,7 +816,26 @@
                 grid-template-columns: 1fr;
             }
         }
+    <style>
+        /* ... existing styles ... */
     </style>
+    <!-- Facebook Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '342417132052740');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=342417132052740&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Facebook Pixel Code -->
 </head>
 
 <body>
@@ -1161,6 +1180,13 @@
                 t.classList.add('active');
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Facebook Pixel Tracking
+            if (typeof fbq === 'function') {
+                fbq('track', 'PageView');
+                if (id === 'step-home') fbq('track', 'ViewContent');
+                if (id === 'step-paywall') fbq('track', 'InitiateCheckout');
+            }
         }
 
         let selectedConsultationType = '';
@@ -1230,6 +1256,7 @@
             const texto = `Olá! Gostaria de adquirir o *Guia de Autoatendimento* por R$19,90.`;
             lastGeneratedUrl = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
             
+            if (typeof fbq === 'function') fbq('track', 'Contact', { content_name: 'Guia Autoatendimento' });
             window.open(lastGeneratedUrl, '_blank');
             show('step-success');
         }
@@ -1248,6 +1275,7 @@
             const texto = `Olá! Gostaria de contratar a *Consultoria Premium* (R$59,90).\n\n*Nome:* ${nome}\n*WhatsApp:* ${whats}\n*Caso:* ${problema}`;
             lastGeneratedUrl = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
 
+            if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'Consultoria Premium' });
             window.open(lastGeneratedUrl, '_blank');
             show('step-success');
         }
