@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soluções Fiscais | Regularização de CPF e MEI</title>
+    <meta name="description"
+        content="Regularize sua situação fiscal com orientação especializada. CPF e MEI em conformidade com a Receita Federal.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        :root {
+            --ink: #0D0D0D;
+            --paper: #FAF8F4;
+            --gold: #B8924A;
+            --gold-lt: #D4A96A;
+            --muted: #6B6560;
+            --rule: #DDD8CF;
+            --surface: #FFFFFF;
+            --red: #C0392B;
+            --green: #1A6B3C;
+            --green-bg: #F0F7F3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ── PAGE ── */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ── HEADER ── */
+        header {
+            width: 100%;
+            border-bottom: 1px solid var(--rule);
+            background: var(--surface);
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-rule {
+            width: 28px;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        .logo-badge {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            border-left: 1px solid var(--rule);
+            padding-left: 12px;
+            margin-left: 4px;
+        }
+
+        .header-seal {
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .seal-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            flex-shrink: 0;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            width: 100%;
+            max-width: 780px;
+            padding: 72px 32px 56px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-eyebrow {
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 500;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .hero-eyebrow::before,
+        .hero-eyebrow::after {
+            content: '';
+            display: block;
+            width: 28px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(38px, 6vw, 62px);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 em {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .hero-sub {
+            font-size: 16px;
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 480px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+        }
+
+        .trust-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .trust-sep {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--rule);
+        }
+
+        /* ── MAIN CARD ── */
+        .card-wrap {
+            width: 100%;
+            max-width: 540px;
+            padding: 0 24px 80px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            padding: 48px 44px;
+            box-shadow: 0 2px 40px rgba(0, 0, 0, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-lt), var(--gold));
+        }
+
+        /* ── STEPS ── */
+        section {
+            display: none;
+            animation: fadeUp .35s ease both;
+        }
+
+        section.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── STEP HEADER ── */
+        .step-label {
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .card h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
+        }
+
+        .card .desc {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        /* ── CHOICE BUTTONS ── */
+        .choice-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 0;
+        }
+
+        .choice-btn {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 20px;
+            border: 1.5px solid var(--rule);
+            border-radius: 3px;
+            background: var(--paper);
+            cursor: pointer;
+            transition: border-color .2s, background .2s, box-shadow .2s;
+            text-align: left;
+        }
+
+        .choice-btn:hover {
+            border-color: var(--gold);
+            background: var(--surface);
+            box-shadow: 0 4px 16px rgba(184, 146, 74, 0.12);
+        }
+
+        .choice-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--ink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 16px;
+        }
+
+        .choice-text strong {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--ink);
+            margin-bottom: 2px;
+        }
+
+        .choice-text span {
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 300;
+        }
+
+        /* ── FORM ── */
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .field select,
+        .field input[type=text] {
+            width: 100%;
+            padding: 13px 16px;
+            border: 1px solid var(--rule);
+            border-radius: 3px;
+            font-size: 15px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--ink);
+            background: #FEFEFE;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B6560' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .field select:focus,
+        .field input[type=text]:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(184, 146, 74, 0.12);
+        }
+
+        /* ── RESULT BOX ── */
+        .result-box {
+            border: 1px solid var(--rule);
+            border-radius: 3px;
+            padding: 20px 20px;
+            margin-bottom: 24px;
+            background: var(--green-bg);
+            border-left: 3px solid var(--green);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .result-box .ri {
+            color: var(--green);
+            font-size: 18px;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        .result-box strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .result-box p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.55;
+            font-weight: 300;
+        }
+
+        .alert-box {
+            border: 1px solid #F3D9B1;
+            border-radius: 3px;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            background: #FDFAF4;
+            border-left: 3px solid var(--gold);
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        /* ── CTA BUTTON ── */
+        .btn-cta {
+            width: 100%;
+            padding: 16px 24px;
+            background: var(--ink);
+            color: var(--surface);
+            border: none;
+            border-radius: 3px;
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background .2s, transform .15s;
+            margin-top: 4px;
+        }
+
+        .btn-cta:hover {
+            background: #222;
+            transform: translateY(-1px);
+        }
+
+        .btn-cta.gold {
+            background: var(--gold);
+        }
+
+        .btn-cta.gold:hover {
+            background: var(--gold-lt);
+        }
+
+        .btn-ghost {
+            width: 100%;
+            padding: 13px 24px;
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--rule);
+            border-radius: 3px;
+            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 400;
+            cursor: pointer;
+            transition: border-color .2s, color .2s;
+            margin-top: 10px;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--muted);
+            color: var(--ink);
+        }
+
+        /* ── PAYWALL ── */
+        .paywall-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .price-display {
+            text-align: center;
+            margin: 24px 0;
+            padding: 32px 24px;
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            background: var(--paper);
+            position: relative;
+        }
+
+        .price-sup {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--muted);
+            vertical-align: top;
+            margin-top: 12px;
+            display: inline-block;
+        }
+
+        .price-main {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 80px;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: -0.05em;
+            line-height: 1;
+        }
+
+        .price-cents {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--ink);
+            vertical-align: top;
+            margin-top: 12px;
+            display: inline-block;
+        }
+
+        .price-note {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 8px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .deliverables {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .deliverables li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--rule);
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--ink);
+        }
+
+        .deliverables li:last-child {
+            border-bottom: none;
+        }
+
+        .del-check {
+            color: var(--green);
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* ── PIX ── */
+        .pix-box {
+            border: 1px dashed var(--rule);
+            border-radius: 3px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            background: var(--paper);
+        }
+
+        .pix-label {
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .pix-key {
+            font-family: 'SFMono-Regular', Consolas, monospace;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ink);
+            background: var(--surface);
+            border: 1px solid var(--rule);
+            border-radius: 2px;
+            padding: 10px 16px;
+            margin: 8px 0 16px;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--rule);
+            border-radius: 2px;
+            padding: 8px 18px;
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all .2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .copy-btn.copied {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        /* ── SUCCESS ── */
+        .success-wrap {
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 24px;
+            border-radius: 50%;
+            border: 2px solid var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: var(--green);
+            background: var(--green-bg);
+        }
+
+        .success-wrap h2 {
+            margin-bottom: 10px;
+        }
+
+        .success-wrap .desc {
+            margin-bottom: 28px;
+        }
+
+        /* ── PROGRESS ── */
+        .progress-bar {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 32px;
+        }
+
+        .pb {
+            height: 3px;
+            flex: 1;
+            border-radius: 2px;
+            background: var(--rule);
+            transition: background .4s;
+        }
+
+        .pb.done {
+            background: var(--gold);
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            height: 1px;
+            background: var(--rule);
+            margin: 28px 0;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            width: 100%;
+            border-top: 1px solid var(--rule);
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-left {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.6;
+            max-width: 480px;
+        }
+
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .footer-lock {
+            font-size: 13px;
+        }
+
+        @media(max-width:600px) {
+            .hero {
+                padding: 48px 24px 40px;
+            }
+
+            .card {
+                padding: 36px 24px;
+            }
+
+            .card-wrap {
+                padding: 0 0 60px;
+            }
+
+            header {
+                padding: 0 20px;
+            }
+
+            .logo-badge {
+                display: none;
+            }
+
+            footer {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px 24px;
+            }
+
+            .trust-row {
+                gap: 16px;
+            }
+        }
+
+        /* ── LOADER ── */
+        .loader-spinner {
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--rule);
+            border-top: 2px solid var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ── NEW PLAN STYLES ── */
+        .plans-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .plan-card {
+            border: 1.5px solid var(--rule);
+            border-radius: 6px;
+            padding: 24px 20px;
+            background: var(--surface);
+            transition: all .2s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .plan-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 4px 20px rgba(184, 146, 74, 0.1);
+        }
+
+        .plan-card.premium {
+            border-color: var(--gold);
+            background: #FFFCF7;
+        }
+
+        .premium-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+        }
+
+        .plan-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .plan-price {
+            margin-bottom: 16px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .plan-price .val {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1;
+        }
+
+        .plan-price .unit {
+            font-size: 14px;
+            color: var(--muted);
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        .plan-price-unit {
+            font-size: 14px;
+            color: var(--muted);
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        .plan-desc {
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--muted);
+            margin-bottom: 20px;
+            flex-grow: 1;
+            font-weight: 300;
+        }
+
+        @media(max-width: 500px) {
+            .plans-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <div class="logo-rule"></div>
+            SF Consultoria
+            <span class="logo-badge">Regularização Fiscal</span>
+        </div>
+        <div class="header-seal">
+            <div class="seal-dot"></div>
+            Atendimento Seguro
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-eyebrow">Consultoria Tributária Digital</div>
+        <h1>Regularize seu CPF ou MEI<br><em>sem complicações</em></h1>
+        <p class="hero-sub">Orientação especializada para resolver sua situação junto à Receita Federal. Processo claro,
+            resultado em dias.</p>
+        <div class="trust-row">
+            <span>Informações oficiais</span>
+            <div class="trust-sep"></div>
+            <span>Atendimento humanizado</span>
+            <div class="trust-sep"></div>
+            <span>Resultado garantido</span>
+        </div>
+    </div>
+
+    <!-- CARD -->
+    <div class="card-wrap">
+        <div class="card">
+
+            <!-- ── STEP 1: ESCOLHA ── -->
+            <section id="step-home" class="active">
+                <div class="step-label">Passo 1 de 4 — Identificação</div>
+                <div class="progress-bar">
+                    <div class="pb done"></div>
+                    <div class="pb"></div>
+                    <div class="pb"></div>
+                    <div class="pb"></div>
+                </div>
+                <h2>Como podemos ajudar?</h2>
+                <p class="desc">Escolha a opção que deseja regularizar para iniciarmos sua consulta nas bases oficiais.</p>
+                
+                <!-- Escolha Inicial -->
+                <div class="choice-grid" id="home-choices" style="display: flex; flex-direction: column; gap: 12px;">
+                    <button class="choice-btn" onclick="selectType('cpf')">
+                        <div class="choice-icon">👤</div>
+                        <div class="choice-text">
+                            <strong>Regularizar meu CPF</strong>
+                            <span>Situação irregular, pendência ou CPF suspenso</span>
+                        </div>
+                    </button>
+                    <button class="choice-btn" onclick="selectType('mei')">
+                        <div class="choice-icon">🏢</div>
+                        <div class="choice-text">
+                            <strong>Regularizar meu MEI</strong>
+                            <span>DAS em atraso, DASN pendente ou CNPJ irregular</span>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Container do Input (Invisível inicialmente) -->
+                <div id="doc-input-container" style="display:none; animation: fadeUp .3s ease both;">
+                    <div class="field" style="margin-bottom: 24px;">
+                        <label id="doc-label">Informe seu CPF</label>
+                        <input type="text" id="user-doc" placeholder="000.000.000-00" maxlength="18">
+                    </div>
+                    <button class="btn-cta" onclick="startConsultation()">Consultar Situação →</button>
+                    <button class="btn-ghost" onclick="resetTypeSelection()">Voltar</button>
+                </div>
+
+                <div id="consulting-loader" style="display:none; text-align:center; padding: 20px 0;">
+                    <div class="loader-spinner"></div>
+                    <p style="font-size: 14px; color: var(--gold); margin-top: 15px; font-weight: 500;">Consultando bases oficiais...</p>
+                </div>
+            </section>
+
+            <!-- ── STEP 2A: FORMULÁRIO CPF ── -->
+            <section id="step-cpf-form">
+                <div class="step-label">Passo 2 de 3 — Diagnóstico CPF</div>
+                <div class="progress-bar">
+                    <div class="pb done"></div>
+                    <div class="pb done"></div>
+                    <div class="pb"></div>
+                </div>
+                <h2>Situação do seu CPF</h2>
+                <p class="desc">Informe os detalhes para identificarmos o caminho mais rápido para regularização.</p>
+                <div class="field">
+                    <label>Status atual do CPF</label>
+                    <select id="cpf-sit">
+                        <option value="irregular">Irregular</option>
+                        <option value="pendente">Pendente de regularização</option>
+                        <option value="suspento">Suspenso</option>
+                        <option value="nao-sei">Não sei ao certo</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Principal motivo identificado</label>
+                    <select id="cpf-prob">
+                        <option value="ir">Imposto de Renda não declarado</option>
+                        <option value="cad">Dados cadastrais desatualizados</option>
+                        <option value="divida">Dívida ativa na Receita Federal</option>
+                        <option value="outro">Outro / Não sei</option>
+                    </select>
+                </div>
+                <div class="alert-box">
+                    ⚠️ CPFs em situação irregular geram bloqueios em empréstimos, abertura de contas e licitações.
+                </div>
+                <button class="btn-cta" onclick="show('step-cpf-result')">Analisar minha situação →</button>
+                <button class="btn-ghost" onclick="show('step-home')">Voltar</button>
+            </section>
+
+            <!-- ── STEP 3A: RESULTADO CPF ── -->
+            <section id="step-cpf-result">
+                <div class="step-label">Passo 3 de 3 — Resultado</div>
+                <div class="progress-bar">
+                    <div class="pb done"></div>
+                    <div class="pb done"></div>
+                    <div class="pb done"></div>
+                </div>
+                <h2>Análise concluída</h2>
+                <p class="desc">Identificamos o perfil da sua situação e o procedimento indicado.</p>
+                <div class="result-box">
+                    <div class="ri">✔</div>
+                    <div>
+                        <strong>Regularização viável — prazo estimado: 5 a 15 dias úteis</strong>
+                        <p>Com base nas informações fornecidas, sua situação se enquadra no procedimento padrão de
+                            regularização junto à Receita Federal. O guia completo detalha cada etapa com prints e
+                            orientações práticas.</p>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <p class="desc" style="margin-bottom:0;font-size:13px;">O passo a passo completo inclui acesso ao e-CAC,
+                    geração de pendências, envio de declaração e protocolo de acompanhamento.</p>
+                <div style="height:20px;"></div>
+                <button class="btn-cta gold" onclick="show('step-paywall')">Acessar guia completo →</button>
+                <button class="btn-ghost" onclick="show('step-home')">Voltar ao início</button>
+            </section>
+
+            <!-- ── STEP 2B: FORMULÁRIO MEI ── -->
+            <section id="step-mei-form">
+                <div class="step-label">Passo 2 de 3 — Diagnóstico MEI</div>
+                <div class="progress-bar">
+                    <div class="pb done"></div>
+                    <div class="pb done"></div>
+                    <div class="pb"></div>
+                </div>
+                <h2>Situação do seu MEI</h2>
+                <p class="desc">Informe os dados abaixo para um diagnóstico preciso do seu CNPJ.</p>
+                <div class="field">
+                    <label>Situação dos pagamentos (DAS)</label>
+                    <select id="mei-pay">
+                        <option value="atrasado-muito">Mais de 12 meses em atraso</option>
+                        <option value="atrasado-pouco">Menos de 12 meses em atraso</option>
+                        <option value="em-dia">Em dia</option>
+                        <option value="nao-sei">Não tenho certeza</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Declaração anual (DASN) enviada?</label>
+                    <select id="mei-dasn">
+                        <option value="nao">Não foi enviada</option>
+                        <option value="atrasada">Sim, mas com atraso</option>
+                        <option value="sim">Sim, em dia</option>
+                    </select>
+                </div>
+                <div class="alert-box">
+                    ⚠️ MEIs com mais de 12 meses sem pagamento correm risco de cancelamento automático do CNPJ.
+                </div>
+                <button class="btn-cta" onclick="show('step-mei-result')">Analisar minha situação →</button>
+                <button class="btn-ghost" onclick="show('step-home')">Voltar</button>
+            </section>
+
+            <!-- ── STEP 3B: RESULTADO MEI ── -->
+            <section id="step-mei-result">
+                <div class="step-label">Passo 3 de 3 — Resultado</div>
+                <div class="progress-bar">
+                    <div class="pb done"></div>
+                    <div class="pb done"></div>
+                    <div class="pb done"></div>
+                </div>
+                <h2>Análise concluída</h2>
+                <p class="desc">Identificamos o perfil da sua situação e o procedimento indicado.</p>
+                <div class="result-box">
+                    <div class="ri">✔</div>
+                    <div>
+                        <strong>Regularização possível — guia disponível para o seu caso</strong>
+                        <p>MEIs com pagamentos em atraso e declarações pendentes podem ser regularizados via portal
+                            Gov.br, Simei e Receita Federal. O guia inclui cálculo de multas, parcelamento e
+                            procedimento completo.</p>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <p class="desc" style="margin-bottom:0;font-size:13px;">O passo a passo completo cobre: emissão de DAS
+                    retroativos, parcelamento de dívidas, envio da DASN e regularização cadastral no CNPJ.</p>
+                <div style="height:20px;"></div>
+                <button class="btn-cta gold" onclick="show('step-paywall')">Acessar guia completo →</button>
+                <button class="btn-ghost" onclick="show('step-home')">Voltar ao início</button>
+            </section>
+
+            <!-- ── PAYWALL ── -->
+            <section id="step-paywall">
+                <div class="paywall-header">
+                    <div class="step-label" style="text-align:center;margin-bottom:12px;">Escolha o Seu Plano</div>
+                    <h2>Tudo que você precisa em um só lugar</h2>
+                    <p class="desc" style="margin-bottom:0;">Selecione a melhor forma de regularizar sua situação agora.</p>
+                </div>
+
+                <ul class="deliverables">
+                    <li><span class="del-check">✓</span> Guia Completo com Passo a Passo</li>
+                    <li><span class="del-check">✓</span> Modelos de documentos prontos</li>
+                    <li><span class="del-check">✓</span> Suporte especializado</li>
+                </ul>
+
+                <div class="comparison-block" style="margin-top: 32px;">
+                    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 16px; color: var(--ink);">Entenda qual opção é ideal para você</h3>
+                    
+                    <div style="margin-bottom: 18px;">
+                        <p class="desc" style="margin-bottom: 4px; font-weight: 600; font-size: 14px; color: var(--ink);">✔ Guia passo a passo — R$19,90</p>
+                        <p class="desc" style="font-size: 13px; line-height: 1.5; margin-bottom: 0;">Você recebe um guia completo com todas as instruções para regularizar sua situação por conta própria. Ideal para quem quer economizar e tem tempo para seguir o processo.</p>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <p class="desc" style="margin-bottom: 4px; font-weight: 600; font-size: 14px; color: var(--ink);">✔ Atendimento completo — R$59,90</p>
+                        <p class="desc" style="font-size: 13px; line-height: 1.5; margin-bottom: 0;">Nossa equipe analisa seu caso, tenta resolver para você e acompanha todo o processo. Se necessário, encaminhamos para um especialista parceiro sem custo adicional. Ideal para quem quer praticidade, segurança e evitar erros.</p>
+                    </div>
+
+                    <div class="alert-box" style="margin-bottom: 32px;">
+                        💡 <strong>Recomendação:</strong><br>
+                        Se você quer resolver mais rápido e com menos risco, o atendimento completo é a melhor escolha.
+                    </div>
+                </div>
+
+                <div class="plans-container">
+                    <!-- PLANO 1 -->
+                    <div class="plan-card" onclick="show('step-payment')">
+                        <div class="plan-title">Autoatendimento</div>
+                        <div class="plan-price">
+                            <span class="plan-price-unit">R$&nbsp;</span><span class="val">19</span><span class="unit">,90</span>
+                        </div>
+                        <p class="plan-desc">Acesso imediato ao guia completo para você mesmo resolver.</p>
+                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Quero o Guia</button>
+                    </div>
+
+                    <!-- PLANO 2 -->
+                    <div class="plan-card premium" onclick="show('step-premium-form')">
+                        <div class="premium-badge">Mais Escolhido</div>
+                        <div class="plan-title">Nós resolvemos para você</div>
+                        <div class="plan-price">
+                            <span class="plan-price-unit">R$&nbsp;</span><span class="val">59</span><span class="unit">,90</span>
+                        </div>
+                        <p class="plan-desc">Fazemos toda a análise, busca e negociação para você sem precisar sair de casa.</p>
+                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Contratar Consultoria</button>
+                    </div>
+                </div>
+
+                <button class="btn-ghost" onclick="show('step-home')">Voltar ao início</button>
+            </section>
+
+            <!-- ── PREMIUM FORM ── -->
+            <section id="step-premium-form">
+                <div class="step-label">Consultoria Especializada</div>
+                <h2>Falta pouco para resolver tudo</h2>
+                <p class="desc">Informe seus dados para que nosso consultor inicie o seu processo de regularização imediatamente.</p>
+
+                <div class="field">
+                    <label>Nome Completo</label>
+                    <input type="text" id="nome" placeholder="Digite seu nome completo">
+                </div>
+
+                <div class="field">
+                    <label>WhatsApp</label>
+                    <input type="text" id="whats" placeholder="(00) 00000-0000">
+                </div>
+
+                <div class="field">
+                    <label>Descrição do problema</label>
+                    <input type="text" id="problema" placeholder="Conte brevemente o seu caso (opcional)">
+                </div>
+
+                <div class="alert-box">
+                    🔒 Seus dados estão seguros e serão usados apenas para a análise do seu caso fiscal.
+                </div>
+
+                <button class="btn-cta gold" onclick="enviarLead()">Enviar Dados e Pagar →</button>
+                <button class="btn-ghost" onclick="show('step-paywall')">Voltar para planos</button>
+            </section>
+
+            <!-- ── PAGAMENTO ── -->
+            <section id="step-payment">
+                <div class="step-label">Pagamento via PIX</div>
+                <h2>Finalize o pagamento</h2>
+                <p class="desc">Após a confirmação, o guia completo é enviado para o seu e-mail em até 15 minutos.</p>
+
+                <div class="pix-box">
+                    <div class="pix-label">Chave PIX</div>
+                    <div class="pix-key" id="pix-key-text">seuemail@email.com</div>
+                    <button class="copy-btn" id="copy-btn" onclick="copyPix()">Copiar chave</button>
+                </div>
+
+                <div class="alert-box" style="margin-bottom:24px;">
+                    📎 Após realizar o pagamento, clique em "Já paguei" abaixo. O acesso será liberado em até 15 minutos
+                    no e-mail informado no comprovante.
+                </div>
+
+                <button class="btn-cta" onclick="show('step-confirm')">Já realizei o pagamento →</button>
+                <button class="btn-ghost" onclick="show('step-paywall')">Voltar</button>
+            </section>
+
+            <!-- ── CONFIRMAÇÃO ── -->
+            <section id="step-confirm">
+                <div class="success-wrap">
+                    <div class="success-icon">✓</div>
+                    <div class="step-label" style="text-align:center;">Confirmação recebida</div>
+                    <h2>Pagamento registrado com sucesso</h2>
+                    <p class="desc">Nossa equipe irá verificar o pagamento e enviar o guia completo para o e-mail
+                        associado ao comprovante PIX. Prazo: até 15 minutos.</p>
+                    <div class="alert-box" style="text-align:left;">
+                        💬 Dúvidas? Entre em contato via WhatsApp ou e-mail informados no comprovante. Estamos
+                        disponíveis de segunda a sexta, das 9h às 18h.
+                    </div>
+                    <button class="btn-ghost" onclick="location.reload()">Analisar outro caso</button>
+                </div>
+            </section>
+
+        </div><!-- .card -->
+    </div><!-- .card-wrap -->
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-left">
+            Este serviço oferece orientações baseadas em informações públicas disponibilizadas pela Receita Federal do
+            Brasil. Não substitui assessoria jurídica ou contábil formal. Os resultados podem variar conforme a situação
+            individual de cada contribuinte.
+        </div>
+        <div class="footer-right">
+            <span class="footer-lock">🔒</span>
+            Ambiente Seguro
+        </div>
+    </footer>
+
+    <script>
+        function show(id) {
+            // Reset home choices if navigating back to home
+            if (id === 'step-home') {
+                resetTypeSelection();
+            }
+
+            document.querySelectorAll('section').forEach(s => {
+                s.classList.remove('active');
+            });
+            const t = document.getElementById(id);
+            // Force reflow for animation replay
+            if (t) {
+                void t.offsetWidth;
+                t.classList.add('active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        let selectedConsultationType = '';
+
+        function selectType(type) {
+            selectedConsultationType = type;
+            const label = document.getElementById('doc-label');
+            const input = document.getElementById('user-doc');
+            const choices = document.getElementById('home-choices');
+            const container = document.getElementById('doc-input-container');
+
+            if (type === 'cpf') {
+                label.innerText = 'Informe seu CPF';
+                input.placeholder = '000.000.000-00';
+            } else {
+                label.innerText = 'Informe seu CNPJ';
+                input.placeholder = '00.000.000/0000-00';
+            }
+
+            choices.style.display = 'none';
+            container.style.display = 'block';
+        }
+
+        function resetTypeSelection() {
+            const choices = document.getElementById('home-choices');
+            const container = document.getElementById('doc-input-container');
+            const loader = document.getElementById('consulting-loader');
+            
+            if (choices) choices.style.display = 'flex';
+            if (container) container.style.display = 'none';
+            if (loader) loader.style.display = 'none';
+            
+            const input = document.getElementById('user-doc');
+            if (input) input.value = '';
+        }
+
+        function startConsultation() {
+            const nextStep = selectedConsultationType === 'cpf' ? 'step-cpf-form' : 'step-mei-form';
+            simulateConsultation(nextStep);
+        }
+
+        function simulateConsultation(nextStep) {
+            const doc = document.getElementById('user-doc').value;
+            if (!doc || doc.trim().length < 11) {
+                alert('Para sua segurança, informe um documento válido para iniciarmos a consulta nas bases oficiais.');
+                return;
+            }
+
+            // Show loader
+            document.getElementById('doc-input-container').style.display = 'none';
+            document.getElementById('consulting-loader').style.display = 'block';
+
+            // Realistic delay to build trust
+            setTimeout(() => {
+                show(nextStep);
+            }, 2200);
+        }
+
+        function copyPix() {
+            const key = document.getElementById('pix-key-text').innerText;
+            const btn = document.getElementById('copy-btn');
+            navigator.clipboard.writeText(key).then(() => {
+                btn.textContent = 'Copiado!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = 'Copiar chave';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        function enviarLead() {
+            const nome = document.getElementById('nome').value;
+            const whats = document.getElementById('whats').value;
+            const problema = document.getElementById('problema').value;
+
+            if (!nome || !whats) {
+                alert("Por favor, preencha seu nome e WhatsApp para continuarmos.");
+                return;
+            }
+
+            // Configuração do WhatsApp
+            const telefone = "5551999906748";
+            const texto = `Olá! Gostaria de contratar a Consultoria Premium.\n\n*Nome:* ${nome}\n*WhatsApp:* ${whats}\n*Caso:* ${problema}`;
+            const url = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
+
+            // Feedback para o usuário
+            alert("Solicitação recebida! Estamos em manutenção em nosso sistema automático, mas você será redirecionado para o nosso WhatsApp para atendimento humano imediato.");
+
+            // Abre o WhatsApp em uma nova aba
+            window.open(url, '_blank');
+
+            // Segue o fluxo para a tela de pagamento (Checkout)
+            show('step-payment');
+        }
+    </script>
+</body>
+
+</html>
