@@ -1,1 +1,2 @@
-/api/*  https://octopus-app-wouxq.ondigitalocean.app/api/:splat  200
+/api/*  https://starfish-app-6lw4g.ondigitalocean.app/api/:splat  200
+/admin  /admin-leads.html  200

@@ -6,21 +6,11 @@ import psycopg
 from psycopg.rows import dict_row
 
 # Fetch database URL from environment variable
-# Defaulting to Transaction Pooler (port 6543) for better cloud compatibility
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres.hbnjzmkbkcpsyrppspsb:[YOUR-PASSWORD]@aws-1-us-west-2.pooler.supabase.com:6543/postgres")
+# MUST be provided via DATABASE_URL environment variable in production
+DATABASE_URL = os.getenv("DATABASE_URL", "")
 
 async def get_db_connection():
     # Helper to get a connection with dict_row factory
-    # Masking password for security in logs
-    import re
-    username = "unknown"
-    host_part = "unknown"
-    match = re.search(r"postgresql://([^:]+):[^@]+@(.+)", DATABASE_URL)
-    if match:
-        username = match.group(1)
-        host_part = match.group(2)
-    
-    print(f"DEBUG: Tentando conectar como usuário '{username}' no host '{host_part}'")
     return await psycopg.AsyncConnection.connect(DATABASE_URL, row_factory=dict_row)
 
 async def init_db():
