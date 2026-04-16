@@ -11,6 +11,9 @@ DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres.hbnjzmkbkcpsyrpp
 
 async def get_db_connection():
     # Helper to get a connection with dict_row factory
+    # Masking password for security in logs
+    masked_url = DATABASE_URL.split('@')[-1] if '@' in DATABASE_URL else DATABASE_URL
+    print(f"DATABASE_URL (host part): {masked_url}")
     return await psycopg.AsyncConnection.connect(DATABASE_URL, row_factory=dict_row)
 
 async def init_db():
