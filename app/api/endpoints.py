@@ -75,12 +75,15 @@ async def checkout(request: CheckoutRequest):
         # Fallback to simulation if token is missing or invalid for testing
         print(f"MP Error: {result['response']}")
         qr_code = "00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-4266141740005204000053039865802BR5913MEI_EM_DIA_APP6009SAO_PAULO62070503***6304E2CA"
-        qr_code_base64 = ""
+        # Generate a real QR code image using a public API for the fallback key
+        qr_code_base64 = f"https://api.qrserver.com/v1/create-qr-code/?size=250x250&data={qr_code}"
         payment_id = "SIMULATED_" + order_id
     else:
         payment = result["response"]
         qr_code = payment["point_of_interaction"]["transaction_data"]["qr_code"]
-        qr_code_base64 = payment["point_of_interaction"]["transaction_data"]["qr_code_base64"]
+        # Convert base64 from MP to a proper data URI if it's not already
+        raw_base64 = payment["point_of_interaction"]["transaction_data"]["qr_code_base64"]
+        qr_code_base64 = f"data:image/png;base64,{raw_base64}"
         payment_id = str(payment["id"])
 
     order_data = {
