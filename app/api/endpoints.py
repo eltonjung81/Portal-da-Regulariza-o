@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException, BackgroundTasks
+from typing import Optional
 import uuid
 import httpx
 from pydantic import BaseModel
