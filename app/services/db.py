@@ -6,8 +6,8 @@ import psycopg
 from psycopg.rows import dict_row
 
 # Fetch database URL from environment variable
-# If local, it can be the Supabase URI for testing
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:[YOUR-PASSWORD]@db.hbnjzmkbkcpsyrppspsb.supabase.co:5432/postgres")
+# Defaulting to Transaction Pooler (port 6543) for better cloud compatibility
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres.hbnjzmkbkcpsyrppspsb:[YOUR-PASSWORD]@aws-1-us-west-2.pooler.supabase.com:6543/postgres")
 
 async def get_db_connection():
     # Helper to get a connection with dict_row factory
