@@ -4,6 +4,6 @@ gunicorn
 httpx
 python-dotenv
 playwright
-aiosqlite
+psycopg[binary]
 mercadopago
 python-multipart
