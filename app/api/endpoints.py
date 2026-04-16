@@ -103,12 +103,7 @@ async def checkout(request: CheckoutRequest):
         "qr_code_base64": qr_code_base64
     }
 
-async def update_order_status(order_id: str, progress: int, message: str):
-    """Callback to update order progress in DB"""
-    if order_id in orders_db:
-        orders_db[order_id]["progress"] = progress
-        orders_db[order_id]["message"] = message
-        orders_db[order_id]["status"] = "processing" if progress < 100 else "completed"
+# Helper functions are imported from app.services.db
 
 @router.post("/regularizar")
 async def regularizar(request: RegularizeRequest, background_tasks: BackgroundTasks):
@@ -129,7 +124,7 @@ async def regularizar(request: RegularizeRequest, background_tasks: BackgroundTa
         order["cnpj"], 
         request.gov_password, 
         request.order_id, 
-        lambda p, m: update_order_status(request.order_id, p, m),
+        lambda p, m: update_order_status(request.order_id, "processing", p, m),
         cpf=request.cpf
     )
     

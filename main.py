@@ -33,9 +33,11 @@ async def root():
 async def admin():
     return FileResponse('admin-leads.html')
 
+# Health check endpoint moved to router prefix usually, but let's add it here too for the root
+@app.get("/api/v1/health")
 @app.get("/health")
 async def health():
-    return {"status": "ok", "message": "MEI em Dia API is running", "version": "1.0.0"}
+    return {"status": "ok", "message": "MEI em Dia API is running", "version": "1.0.1"}
 
 if __name__ == "__main__":
     import uvicorn

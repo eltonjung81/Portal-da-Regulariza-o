@@ -23,5 +23,5 @@ RUN playwright install chromium
 # Expose port
 EXPOSE 8000
 
-# Run gunicorn with uvicorn workers
-CMD gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:$PORT
+# Run gunicorn with uvicorn workers (reduced to 2 to save RAM)
+CMD gunicorn -w 2 -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:$PORT
