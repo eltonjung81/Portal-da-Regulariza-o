@@ -1857,8 +1857,11 @@
             show('step-home');
         }
 
-        // Auto-login if session exists
+        // Auto-login if session exists + Wake up backend (for Render free tier)
         window.addEventListener('load', async () => {
+            // Wake up ping
+            fetch('/api/v1/health').catch(() => {});
+
             const cnpj = localStorage.getItem('track_cnpj');
             const digits = localStorage.getItem('track_digits');
             if (cnpj && digits) {
