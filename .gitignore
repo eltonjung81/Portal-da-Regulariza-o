@@ -1,3 +1,22 @@
-Documento.rtf
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv
+vane/
+env/
+.env
+
+# Database
+database.db
+*.db-journal
+
+# Logs & Screenshots
+*.log
+login_error.png
+auth_error.png
+screenshots/
+
+# OS
 .DS_Store
 Thumbs.db

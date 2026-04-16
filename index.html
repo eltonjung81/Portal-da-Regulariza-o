@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soluções Fiscais | Regularização de CPF e MEI</title>
+    <title>MEI em Dia | Regularização de Débitos MEI</title>
     <meta name="description"
-        content="Regularize sua situação fiscal com orientação especializada. CPF e MEI em conformidade com a Receita Federal.">
+        content="Regularize sua situação fiscal MEI com automação inteligente. DAS em atraso e DASN pendente resolvidas com segurança.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -811,10 +811,64 @@
             font-weight: 300;
         }
 
-        @media(max-width: 500px) {
-            .plans-container {
-                grid-template-columns: 1fr;
-            }
+        /* ── MODAL ── */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 4px;
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            animation: modalPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalPop {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-box h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: var(--ink);
+        }
+
+        .modal-box p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--muted);
+            margin-bottom: 30px;
+        }
+
+        .btn-modal {
+            background: var(--gold);
+            color: #fff;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 2px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-modal:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(181, 153, 94, 0.4);
         }
     </style>
     <!-- Facebook Pixel Code -->
@@ -850,19 +904,22 @@
     <header>
         <div class="logo">
             <div class="logo-rule"></div>
-            SF Consultoria
-            <span class="logo-badge">Regularização Fiscal</span>
+            MEI em Dia
+            <span class="logo-badge">Automação Fiscal</span>
         </div>
-        <div class="header-seal">
-            <div class="seal-dot"></div>
-            Atendimento Seguro
+        <div class="header-seal" style="display: flex; gap: 15px; align-items: center;">
+            <button class="btn-ghost" onclick="show('step-tracking-login')" style="padding: 6px 14px; font-size: 11px; margin: 0; border-color: var(--gold); color: var(--gold);">Ver andamento do meu processo</button>
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <div class="seal-dot"></div>
+                Atendimento Seguro
+            </div>
         </div>
     </header>
 
     <!-- HERO -->
     <div class="hero">
         <div class="hero-eyebrow">Consultoria Tributária Digital</div>
-        <h1>Regularize seu CPF ou MEI<br><em>sem complicações</em></h1>
+        <h1>Regularize seu MEI<br><em>em poucos minutos</em></h1>
         <p class="hero-sub">Orientação especializada para resolver sua situação junto à Receita Federal. Processo claro,
             resultado em dias.</p>
         <div class="trust-row">
@@ -890,15 +947,8 @@
                 <h2>Como podemos ajudar?</h2>
                 <p class="desc">Escolha a opção que deseja regularizar para iniciarmos sua consulta nas bases oficiais.</p>
                 
-                <!-- Escolha Inicial -->
+                <!-- Escolha Inicial (Simplificada para apenas MEI) -->
                 <div class="choice-grid" id="home-choices" style="display: flex; flex-direction: column; gap: 12px;">
-                    <button class="choice-btn" onclick="selectType('cpf')">
-                        <div class="choice-icon">👤</div>
-                        <div class="choice-text">
-                            <strong>Regularizar meu CPF</strong>
-                            <span>Situação irregular, pendência ou CPF suspenso</span>
-                        </div>
-                    </button>
                     <button class="choice-btn" onclick="selectType('mei')">
                         <div class="choice-icon">🏢</div>
                         <div class="choice-text">
@@ -908,83 +958,68 @@
                     </button>
                 </div>
 
-                <!-- Container do Input (Invisível inicialmente) -->
+                <!-- Container do Input -->
                 <div id="doc-input-container" style="display:none; animation: fadeUp .3s ease both;">
-                    <div class="field" style="margin-bottom: 24px;">
-                        <label id="doc-label">Informe seu CPF</label>
-                        <input type="text" id="user-doc" placeholder="000.000.000-00" maxlength="18">
+                    <div class="field" style="margin-bottom: 20px;">
+                        <label id="doc-label">Informe seu CNPJ</label>
+                        <input type="text" id="user-doc" placeholder="00.000.000/0000-00" maxlength="18">
                     </div>
+                    
+                    <!-- LGPD Checkbox -->
+                    <div style="margin-bottom: 24px; display: flex; align-items: flex-start; gap: 10px; text-align: left;">
+                        <input type="checkbox" id="lgpd-consent" style="margin-top: 4px; cursor: pointer;">
+                        <label for="lgpd-consent" style="font-size: 13px; color: var(--muted); line-height: 1.4; cursor: pointer;">
+                            Autorizo o processamento automatizado dos meus dados fiscais exclusivamente para fins de regularização conforme a LGPD.
+                        </label>
+                    </div>
+
                     <button class="btn-cta" onclick="startConsultation()">Consultar Situação →</button>
+                    
+                    <div style="margin-top: 15px; text-align: center;">
+                        <a href="javascript:void(0)" onclick="show('step-find-cnpj')" style="font-size: 13px; color: var(--gold); text-decoration: none; font-weight: 500;">Não sabe seu CNPJ? Encontre aqui →</a>
+                    </div>
+
                     <button class="btn-ghost" onclick="resetTypeSelection()">Voltar</button>
                 </div>
 
                 <div id="consulting-loader" style="display:none; text-align:center; padding: 20px 0;">
                     <div class="loader-spinner"></div>
-                    <p style="font-size: 14px; color: var(--gold); margin-top: 15px; font-weight: 500;">Consultando bases oficiais...</p>
+                    <p id="loader-message" style="font-size: 14px; color: var(--gold); margin-top: 15px; font-weight: 500;">Consultando bases oficiais...</p>
                 </div>
             </section>
 
-            <!-- ── STEP 2A: FORMULÁRIO CPF ── -->
-            <section id="step-cpf-form">
-                <div class="step-label">Passo 2 de 3 — Diagnóstico CPF</div>
-                <div class="progress-bar">
-                    <div class="pb done"></div>
-                    <div class="pb done"></div>
-                    <div class="pb"></div>
-                </div>
-                <h2>Situação do seu CPF</h2>
-                <p class="desc">Informe os detalhes para identificarmos o caminho mais rápido para regularização.</p>
-                <div class="field">
-                    <label>Status atual do CPF</label>
-                    <select id="cpf-sit">
-                        <option value="irregular">Irregular</option>
-                        <option value="pendente">Pendente de regularização</option>
-                        <option value="suspento">Suspenso</option>
-                        <option value="nao-sei">Não sei ao certo</option>
-                    </select>
-                </div>
-                <div class="field">
-                    <label>Principal motivo identificado</label>
-                    <select id="cpf-prob">
-                        <option value="ir">Imposto de Renda não declarado</option>
-                        <option value="cad">Dados cadastrais desatualizados</option>
-                        <option value="divida">Dívida ativa na Receita Federal</option>
-                        <option value="outro">Outro / Não sei</option>
-                    </select>
-                </div>
-                <div class="alert-box">
-                    ⚠️ CPFs em situação irregular geram bloqueios em empréstimos, abertura de contas e licitações.
-                </div>
-                <button class="btn-cta" onclick="show('step-cpf-result')">Analisar minha situação →</button>
-                <button class="btn-ghost" onclick="show('step-home')">Voltar</button>
-            </section>
+            <!-- ── STEP FIND CNPJ ── -->
+            <section id="step-find-cnpj">
+                <div class="step-label">Localizador de CNPJ</div>
+                <h2>Encontre seu CNPJ MEI</h2>
+                <p class="desc">Ainda não sabe o número do seu CNPJ? Informe seu nome e CPF para buscarmos nos registros públicos.</p>
 
-            <!-- ── STEP 3A: RESULTADO CPF ── -->
-            <section id="step-cpf-result">
-                <div class="step-label">Passo 3 de 3 — Resultado</div>
-                <div class="progress-bar">
-                    <div class="pb done"></div>
-                    <div class="pb done"></div>
-                    <div class="pb done"></div>
+                <div class="field">
+                    <label>Nome Completo</label>
+                    <input type="text" id="find-name" placeholder="Digite seu nome completo">
                 </div>
-                <h2>Análise concluída</h2>
-                <p class="desc">Identificamos o perfil da sua situação e o procedimento indicado.</p>
-                <div class="result-box">
-                    <div class="ri">✔</div>
-                    <div>
-                        <strong>Regularização viável — prazo estimado: 5 a 15 dias úteis</strong>
-                        <p>Com base nas informações fornecidas, sua situação se enquadra no procedimento padrão de
-                            regularização junto à Receita Federal. O guia completo detalha cada etapa com prints e
-                            orientações práticas.</p>
+
+                <div class="field">
+                    <label>Seu CPF</label>
+                    <input type="text" id="find-cpf" placeholder="000.000.000-00">
+                </div>
+
+                <div id="find-results" style="display:none; margin-bottom: 24px;">
+                    <label style="font-size: 11px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; display: block;">CNPJs Encontrados:</label>
+                    <div id="cnpj-list-container" style="display: flex; flex-direction: column; gap: 10px;">
+                        <!-- CNPJs will be listed here -->
                     </div>
                 </div>
-                <div class="divider"></div>
-                <p class="desc" style="margin-bottom:0;font-size:13px;">O passo a passo completo inclui acesso ao e-CAC,
-                    geração de pendências, envio de declaração e protocolo de acompanhamento.</p>
-                <div style="height:20px;"></div>
-                <button class="btn-cta gold" onclick="show('step-paywall')">Acessar guia completo →</button>
-                <button class="btn-ghost" onclick="show('step-home')">Voltar ao início</button>
+
+                <button class="btn-cta" id="btn-search-cnpj" onclick="performCnpjSearch()">Buscar meu CNPJ →</button>
+                <button class="btn-status" id="searching-badge" style="display:none; width: 100%; padding: 16px; background: var(--paper); border: 1px solid var(--rule); border-radius: 3px; font-size: 13px; color: var(--muted); text-align: center;">
+                    <span class="loader-spinner" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle; margin-right: 10px;"></span>
+                    Buscando no Google e bases públicas...
+                </button>
+                
+                <button class="btn-ghost" onclick="show('step-home')" style="margin-top: 12px;">Voltar</button>
             </section>
+
 
             <!-- ── STEP 2B: FORMULÁRIO MEI ── -->
             <section id="step-mei-form">
@@ -996,27 +1031,49 @@
                 </div>
                 <h2>Situação do seu MEI</h2>
                 <p class="desc">Informe os dados abaixo para um diagnóstico preciso do seu CNPJ.</p>
-                <div class="field">
-                    <label>Situação dos pagamentos (DAS)</label>
-                    <select id="mei-pay">
-                        <option value="atrasado-muito">Mais de 12 meses em atraso</option>
-                        <option value="atrasado-pouco">Menos de 12 meses em atraso</option>
-                        <option value="em-dia">Em dia</option>
-                        <option value="nao-sei">Não tenho certeza</option>
-                    </select>
+                <div class="result-box" style="flex-direction: column; gap: 16px; background: #fff; border: 1px solid var(--rule); border-left: 4px solid var(--gold);">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; width: 100%;">
+                        <div class="ri" style="color: var(--gold); font-size: 22px;">🏢</div>
+                        <div style="flex: 1;">
+                            <strong id="res-razao" style="font-size: 16px; color: var(--ink);">-</strong>
+                            <p id="res-fantasia" style="font-size: 13px; color: var(--muted); margin-top: 2px;">Nome Fantasia: -</p>
+                        </div>
+                    </div>
+                    
+                    <div class="divider" style="margin: 0; opacity: 0.5;"></div>
+
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
+                        <div>
+                            <label style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); display: block; margin-bottom: 4px;">Titular / Sócios</label>
+                            <span id="res-socios" style="font-size: 14px; font-weight: 500; color: var(--ink);">-</span>
+                        </div>
+                        <div>
+                            <label style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); display: block; margin-bottom: 4px;">Atividade Principal</label>
+                            <span id="res-atividade" style="font-size: 13px; line-height: 1.4; color: var(--ink); display: block;">-</span>
+                        </div>
+                        <div>
+                            <label style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); display: block; margin-bottom: 4px;">Endereço Registrado</label>
+                            <span id="res-endereco" style="font-size: 13px; color: var(--muted);">-</span>
+                        </div>
+                    </div>
+
+                    <div class="divider" style="margin: 0; opacity: 0.5;"></div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <p id="res-cnpj" style="font-size: 12px; font-weight: 500;">CNPJ: -</p>
+                            <p id="res-data-abertura" style="font-size: 11px; color: var(--muted);">Aberto em: -</p>
+                        </div>
+                        <div id="res-situacao-badge" style="padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase;">-</div>
+                    </div>
                 </div>
-                <div class="field">
-                    <label>Declaração anual (DASN) enviada?</label>
-                    <select id="mei-dasn">
-                        <option value="nao">Não foi enviada</option>
-                        <option value="atrasada">Sim, mas com atraso</option>
-                        <option value="sim">Sim, em dia</option>
-                    </select>
+
+                <div class="alert-box" style="margin-top: 20px;">
+                    💡 <strong>Diagnóstico Completo Disponível:</strong><br>
+                    Para consultar pendências de DAS, enviar declarações em atraso ou realizar o parcelamento de débitos, o sistema precisa realizar o acesso automatizado via portal Gov.br.
                 </div>
-                <div class="alert-box">
-                    ⚠️ MEIs com mais de 12 meses sem pagamento correm risco de cancelamento automático do CNPJ.
-                </div>
-                <button class="btn-cta" onclick="show('step-mei-result')">Analisar minha situação →</button>
+                
+                <button class="btn-cta" onclick="show('step-mei-result')">Consultar Pendências Tributárias →</button>
                 <button class="btn-ghost" onclick="show('step-home')">Voltar</button>
             </section>
 
@@ -1055,55 +1112,263 @@
                     <p class="desc" style="margin-bottom:0;">Selecione a melhor forma de regularizar sua situação agora.</p>
                 </div>
 
-                <ul class="deliverables">
-                    <li><span class="del-check">✓</span> Guia Completo com Passo a Passo</li>
-                    <li><span class="del-check">✓</span> Modelos de documentos prontos</li>
-                    <li><span class="del-check">✓</span> Suporte especializado</li>
-                </ul>
-
-                <div class="comparison-block" style="margin-top: 32px;">
-                    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 16px; color: var(--ink);">Entenda qual opção é ideal para você</h3>
-                    
-                    <div style="margin-bottom: 18px;">
-                        <p class="desc" style="margin-bottom: 4px; font-weight: 600; font-size: 14px; color: var(--ink);">✔ Guia passo a passo — R$19,90</p>
-                        <p class="desc" style="font-size: 13px; line-height: 1.5; margin-bottom: 0;">Você recebe um guia completo com todas as instruções para regularizar sua situação por conta própria. Ideal para quem quer economizar e tem tempo para seguir o processo.</p>
-                    </div>
-
-                    <div style="margin-bottom: 24px;">
-                        <p class="desc" style="margin-bottom: 4px; font-weight: 600; font-size: 14px; color: var(--ink);">✔ Atendimento completo — R$59,90</p>
-                        <p class="desc" style="font-size: 13px; line-height: 1.5; margin-bottom: 0;">Nossa equipe analisa seu caso, tenta resolver para você e acompanha todo o processo. Se necessário, encaminhamos para um especialista parceiro sem custo adicional. Ideal para quem quer praticidade, segurança e evitar erros.</p>
-                    </div>
-
-                    <div class="alert-box" style="margin-bottom: 32px;">
-                        💡 <strong>Recomendação:</strong><br>
-                        Se você quer resolver mais rápido e com menos risco, o atendimento completo é a melhor escolha.
-                    </div>
-                </div>
-
                 <div class="plans-container">
                     <!-- PLANO 1 -->
-                    <div class="plan-card" onclick="comprarGuia()">
-                        <div class="plan-title">Autoatendimento</div>
-                        <div class="plan-price">
-                            <span class="plan-price-unit">R$&nbsp;</span><span class="val">19</span><span class="unit">,90</span>
-                        </div>
-                        <p class="plan-desc">Acesso ao guia completo com orientações enviadas pelo WhatsApp.</p>
-                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Solicitar Guia</button>
-                    </div>
-
-                    <!-- PLANO 2 -->
-                    <div class="plan-card premium" onclick="show('step-premium-form')">
-                        <div class="premium-badge">Mais Escolhido</div>
-                        <div class="plan-title">Nós resolvemos para você</div>
+                    <div class="plan-card" onclick="startCheckout('Relatório de Débitos', 59.90)">
+                        <div class="plan-title">Extrato de Débitos</div>
                         <div class="plan-price">
                             <span class="plan-price-unit">R$&nbsp;</span><span class="val">59</span><span class="unit">,90</span>
                         </div>
-                        <p class="plan-desc">Consultoria personalizada com análise e negociação total do seu caso.</p>
-                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Solicitar Consultoria</button>
+                        <p class="plan-desc">Identificação completa de todas as pendências e guias DAS em atraso.</p>
+                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Solicitar Extrato</button>
+                    </div>
+
+                    <!-- PLANO 2 -->
+                    <div class="plan-card premium" onclick="startCheckout('Regularização Total', 119.90)">
+                        <div class="premium-badge">Mais Escolhido</div>
+                        <div class="plan-title">Regularização Completa</div>
+                        <div class="plan-price">
+                            <span class="plan-price-unit">R$&nbsp;</span><span class="val">119</span><span class="unit">,90</span>
+                        </div>
+                        <p class="plan-desc">Consultoria, parcelamento de dívidas e emissão de todas as guias pendentes.</p>
+                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Solicitar Regularização</button>
                     </div>
                 </div>
 
+                <button class="btn-ghost" onclick="show('step-mei-form')">Voltar ao diagnóstico</button>
+            </section>
+
+            <!-- ── STEP PIX ── -->
+            <section id="step-pix">
+                <div class="step-label">Aguardando Pagamento</div>
+                <h2>Conclua seu pagamento</h2>
+                <p class="desc">Para liberar o acesso ao sistema de regularização, realize o pagamento via PIX abaixo.</p>
+                
+                <div class="pix-box">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-4266141740005204000053039865802BR5913MEI_EM_DIA_APP6009SAO_PAULO62070503***6304E2CA" alt="QR Code PIX" style="margin-bottom: 20px; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <div class="pix-label">Chave PIX (Copia e Cola)</div>
+                    <div class="pix-key" id="pix-key-val">Carregando chave...</div>
+                    <button class="copy-btn" onclick="copyPix()">Copiar Código PIX</button>
+                </div>
+
+                <div class="alert-box" style="text-align: left;">
+                    ⏱️ <strong>Confirmação Automática:</strong><br>
+                    O sistema identificará seu pagamento em até 60 segundos. Não feche esta tela.
+                </div>
+
+                <div id="payment-confirming" style="text-align:center; padding: 10px 0;">
+                    <div class="loader-spinner" style="width: 20px; height: 20px;"></div>
+                    <p style="font-size: 12px; color: var(--muted); margin-top: 10px;">Aguardando confirmação bancária...</p>
+                </div>
+
+                <!-- Botão de simulação para o usuário avançar manualmente no teste -->
+                <button class="btn-ghost" onclick="confirmPaymentSimulation()" style="border-style: dashed; margin-top: 20px;">[Simular Confirmação de Pagamento]</button>
+            </section>
+
+            <!-- ── STEP GOV CREDENTIALS ── -->
+            <section id="step-credentials">
+                <div class="step-label">Segurança & Automação</div>
+                <h2>Acesso ao Portal Gov.br</h2>
+                <p class="desc">Pagamento confirmado! Agora, informe sua senha do Gov.br para que nosso robô possa iniciar a regularização.</p>
+
+                <div class="field">
+                    <label>Seu CPF (atrelado ao Gov.br)</label>
+                    <input type="text" id="gov-cpf" placeholder="000.000.000-00" maxlength="14" oninput="this.value = this.value.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')" style="width: 100%; padding: 13px 16px; border: 1px solid var(--rule); border-radius: 3px; margin-bottom: 12px;">
+                </div>
+
+                <div class="field">
+                    <label>Senha do Portal Gov.br</label>
+                    <input type="password" id="gov-password" placeholder="Sua senha segura" style="width: 100%; padding: 13px 16px; border: 1px solid var(--rule); border-radius: 3px;">
+                </div>
+
+                <div class="alert-box">
+                    🔒 <strong>Segurança Máxima:</strong><br>
+                    Sua senha é utilizada apenas para o acesso único do robô e nunca será armazenada em nosso banco de dados.
+                </div>
+
+                <div style="margin-bottom: 24px; display: flex; align-items: flex-start; gap: 10px; text-align: left;">
+                    <input type="checkbox" id="robot-consent" style="margin-top: 4px; cursor: pointer;">
+                    <label for="robot-consent" style="font-size: 13px; color: var(--muted); line-height: 1.4; cursor: pointer;">
+                        Autorizo o robô do MEI em Dia a realizar os procedimentos de consulta e parcelamento em meu nome.
+                    </label>
+                </div>
+
+                <button class="btn-cta gold" onclick="startRegularization()">Iniciar Regularização Agora →</button>
+            </section>
+
+            <!-- ── STEP TRACKING LOGIN ── -->
+            <section id="step-tracking-login">
+                <div class="step-label">Consulta de Andamento</div>
+                <h2>Acompanhe seu processo</h2>
+                <p class="desc">Informe os dados abaixo para visualizar o status da sua regularização.</p>
+                
+                <div class="field">
+                    <label>Seu CNPJ</label>
+                    <input type="text" id="track-cnpj" placeholder="00.000.000/0000-00" maxlength="18" oninput="maskCNPJ(this)">
+                </div>
+                <div class="field">
+                    <label>Últimos 4 dígitos do WhatsApp</label>
+                    <input type="text" id="track-digits" placeholder="####" maxlength="4">
+                </div>
+
+                <div id="track-error" style="display:none; color:var(--red); font-size:12px; margin-bottom:20px; text-align:center;">
+                    Dados não encontrados ou pagamento ainda não aprovado.
+                </div>
+
+                <button class="btn-cta gold" onclick="loginTracking()">Consultar Agora →</button>
                 <button class="btn-ghost" onclick="show('step-home')">Voltar ao início</button>
+            </section>
+
+            <!-- ── STEP TRACKING DASHBOARD ── -->
+            <section id="step-tracking-dashboard">
+                <div class="step-label">Área do Cliente</div>
+                <div class="success-wrap">
+                    <div class="success-icon" style="border-color: var(--gold);">
+                        <span style="font-size: 32px;">📊</span>
+                    </div>
+                    <h2 id="track-res-razao">--</h2>
+                    <p class="desc" style="color:var(--gold); font-weight:700;" id="track-res-status">--</p>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="result-box" style="background: var(--paper); border-left-color: var(--gold); text-align:left;">
+                    <div class="ri" style="color: var(--gold);">🕒</div>
+                    <div>
+                        <strong>Última atualização:</strong>
+                        <p id="track-res-message" style="margin-top:4px;">Estamos no processo de análise de suas pendências.</p>
+                    </div>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <label style="font-size:10px; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:10px;">Progresso do Processo</label>
+                    <div class="progress-bar" style="height:10px;">
+                        <div id="track-res-progress" class="pb done" style="width: 10%; flex:none; transition: width 1s ease;"></div>
+                    </div>
+                </div>
+
+                <button class="btn-cta" onclick="window.open('https://wa.me/5511999999999', '_blank')">Dúvidas? Falar com Consultor</button>
+                <button class="btn-ghost" onclick="logoutTracking()">Sair</button>
+            </section>
+
+            <!-- Step: MEI Manual Info (59,90 Flow) -->
+            <section id="step-mei-manual-info">
+                <div class="step-label">Dados para Regularização</div>
+                <h2>Finalize seu Cadastro</h2>
+                <p class="desc">Preencha os dados abaixo para que nossa equipe possa iniciar sua análise personalizada.</p>
+                
+                <div class="field" style="margin-top: 10px;">
+                    <label>Seu Nome Completo</label>
+                    <input type="text" id="manual-name" placeholder="Ex: João Silva">
+                </div>
+                <div class="field" style="margin-top: 20px;">
+                    <label>CNPJ</label>
+                    <input type="text" id="manual-cnpj" disabled style="background: var(--paper); cursor: not-allowed;">
+                </div>
+                <div class="field" style="margin-top: 20px;">
+                    <label>WhatsApp (com DDD)</label>
+                    <input type="text" id="manual-phone" placeholder="(00) 00000-0000" oninput="maskPhone(this)">
+                </div>
+
+                <div style="margin-top: 32px;">
+                    <button class="btn-cta gold" onclick="submitManualMeiLead()" id="btn-manual-submit">Enviar Dados e Iniciar Análise →</button>
+                </div>
+            </section>
+
+            <!-- Step: MEI Queue Confirmation (59,90 Final Message) -->
+            <section id="step-mei-queue-success">
+                <div class="success-wrap">
+                    <div class="success-icon" style="border-color: var(--gold);">
+                        <span style="font-size: 32px;">🕒</span>
+                    </div>
+                    <h2>Análise Iniciada!</h2>
+                </div>
+                
+                <div class="result-box" style="background: var(--paper); border-left: 3px solid var(--gold); border-radius: 4px; padding: 24px; text-align:left; margin-top: 32px;">
+                    <p style="font-size: 14px; line-height: 1.6; color: var(--ink);">
+                        Vamos vasculhar a situação cadastral completa do seu CNPJ, isso pode levar de <strong>5 minutos a 24 horas</strong> dependendo da situação.
+                    </p>
+                    <p style="font-size: 14px; line-height: 1.6; color: var(--ink); margin-top: 15px;">
+                        Em breve entraremos em contato pelo <strong>WhatsApp</strong> lhe trazendo as informações precisas de débitos e pendências.
+                    </p>
+                    
+                    <div style="margin: 24px 0; padding: 20px; background: #fff; border: 1px dashed var(--rule); border-radius: 4px;">
+                        <p style="color: var(--ink); font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 8px;">
+                            <span style="color: var(--gold);">⚠️</span> Importante: Tenha sua senha do gov.br pronta. 
+                        </p>
+                        <p style="font-size: 13px; margin-top: 8px; color: var(--muted);">
+                            Caso não saiba, utilize <a href="https://sso.acesso.gov.br/password-recovery" target="_blank" style="color: var(--gold); font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--gold);">este link para recuperar</a>.
+                        </p>
+                    </div>
+                    
+                    <p style="font-size: 12px; color: var(--muted); font-style: italic; line-height: 1.5; opacity: 0.8;">
+                        Devido a nossa alta demanda, os servidores do GOV estão restringindo nosso acesso automatizado, e você terá o melhor do atendimento de nossa equipe de colaboradores.
+                    </p>
+                    <p style="margin-top: 24px; font-weight: 600; color: var(--gold); text-align: center; font-size: 14px; letter-spacing: 0.02em;">
+                        Ajudaremos você a regularizar suas pendências da forma mais profissional possível.
+                    </p>
+                </div>
+                
+                <button class="btn-ghost" onclick="window.location.reload()" style="margin-top: 32px;">Voltar ao Início</button>
+            </section>
+
+    <!-- ── STEP PREMIUM CONTACT (For R$ 119.90 Plan) ── -->
+    <section id="step-premium-contact">
+                <div class="step-label">Consultoria Especializada</div>
+                <div class="success-wrap">
+                    <div class="success-icon" style="border-color: var(--gold);">
+                        <span style="font-size: 32px;">📞</span>
+                    </div>
+                    <h2>Pagamento Confirmado!</h2>
+                    <p class="desc" style="color: var(--ink); font-weight: 500;">
+                        Em breve nosso escritório estará entrando em contato para a consulta profunda de débitos e irregularidades possíveis de seu CNPJ.
+                    </p>
+                    <p class="desc">
+                        Pode ficar tranquilo que daqui pra frente nós faremos todo o trabalho burocrático pra você, até logo.
+                    </p>
+                </div>
+
+                <div class="field" style="margin: 30px 0;">
+                    <label>WhatsApp para Contato</label>
+                    <input type="text" id="contact-phone" placeholder="(00) 00000-0000" oninput="maskPhone(this)" style="width: 100%; padding: 13px 16px; border: 1px solid var(--rule); border-radius: 3px;">
+                </div>
+
+                <button class="btn-cta gold" onclick="finishPremiumFlow()">Confirmar Dados e Finalizar</button>
+            </section>
+
+            <!-- ── CUSTOM MODAL ── -->
+            <div id="confirm-modal" class="modal-overlay">
+                <div class="modal-box">
+                    <h3>Confirmação de Contato</h3>
+                    <p id="modal-msg">Mensagem de confirmação...</p>
+                    <button class="btn-modal" onclick="closeAndFinalize()">OK, Entendido</button>
+                </div>
+            </div>
+
+            <!-- ── STEP STATUS ── -->
+            <section id="step-status">
+                <div class="step-label">Processamento em Andamento</div>
+                <h2 id="status-title">Iniciando automação...</h2>
+                <p id="status-desc" class="desc">Por favor, não feche esta página até que o robô conclua o serviço.</p>
+
+                <div style="margin: 40px 0;">
+                    <div class="progress-bar" style="height: 8px;">
+                        <div id="status-progress-bar" class="pb done" style="width: 0%; flex: none; transition: width 0.5s ease;"></div>
+                    </div>
+                </div>
+
+                <div class="result-box" style="background: var(--paper); border-left-color: var(--gold);">
+                    <div class="ri" style="color: var(--gold);">🤖</div>
+                    <div>
+                        <strong>Status do Robô:</strong>
+                        <p id="status-message">Conectando aos servidores da Receita Federal...</p>
+                    </div>
+                </div>
+
+                <div id="success-actions" style="display:none; margin-top: 32px;">
+                    <button class="btn-cta gold" onclick="comprarGuia()">Falar com Consultor no WhatsApp</button>
+                    <button class="btn-ghost" onclick="location.reload()" style="margin-top: 15px;">Finalizar e Voltar</button>
+                </div>
             </section>
 
             <!-- ── PREMIUM FORM ── -->
@@ -1199,6 +1464,19 @@
         });
 
         function show(id) {
+            if (id === 'step-mei-manual-info') {
+                document.getElementById('manual-cnpj').value = document.getElementById('user-doc')?.value || '';
+            }
+            // Re-exibir o hero apenas na home ou no login de rastreio
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                if (id === 'step-home' || id === 'step-tracking-login') {
+                    hero.style.display = 'block';
+                } else {
+                    hero.style.display = 'none';
+                }
+            }
+
             // Reset home choices if navigating back to home
             if (id === 'step-home') {
                 resetTypeSelection();
@@ -1252,18 +1530,8 @@
 
         function selectType(type) {
             selectedConsultationType = type;
-            const label = document.getElementById('doc-label');
-            const input = document.getElementById('user-doc');
             const choices = document.getElementById('home-choices');
             const container = document.getElementById('doc-input-container');
-
-            if (type === 'cpf') {
-                label.innerText = 'Informe seu CPF';
-                input.placeholder = '000.000.000-00';
-            } else {
-                label.innerText = 'Informe seu CNPJ';
-                input.placeholder = '00.000.000/0000-00';
-            }
 
             choices.style.display = 'none';
             container.style.display = 'block';
@@ -1289,15 +1557,17 @@
             if (input) input.value = '';
         }
 
-        function startConsultation() {
-            const nextStep = selectedConsultationType === 'cpf' ? 'step-cpf-form' : 'step-mei-form';
-            simulateConsultation(nextStep);
-        }
-
-        function simulateConsultation(nextStep) {
+        async function startConsultation() {
             const doc = document.getElementById('user-doc').value;
-            if (!doc || doc.trim().length < 11) {
-                alert('Para sua segurança, informe um documento válido para iniciarmos a consulta nas bases oficiais.');
+            const lgpd = document.getElementById('lgpd-consent').checked;
+
+            if (!doc || doc.trim().length < 14) {
+                alert('Por favor, informe um CNPJ válido.');
+                return;
+            }
+
+            if (!lgpd) {
+                alert('Você precisa autorizar o processamento dos dados para continuar.');
                 return;
             }
 
@@ -1305,51 +1575,446 @@
             document.getElementById('doc-input-container').style.display = 'none';
             document.getElementById('consulting-loader').style.display = 'block';
 
-            if (typeof gtag === 'function') {
-                gtag('event', 'search', { search_term: selectedConsultationType });
-            }
+            try {
+                const cnpj = doc.replace(/\D/g, '');
+                const response = await fetch(`/api/v1/consultar-cnpj/${cnpj}`);
+                
+                if (!response.ok) {
+                    throw new Error('Não conseguimos localizar este CNPJ. Verifique se os números estão corretos.');
+                }
 
-            // Realistic delay to build trust
-            setTimeout(() => {
-                show(nextStep);
-            }, 2200);
+                const data = await response.json();
+                currentRazaoSocial = data.razao_social; // Store for checkout
+                
+                // Update Detailed Data Card
+                document.getElementById('res-razao').innerText = data.razao_social;
+                document.getElementById('res-fantasia').innerText = data.nome_fantasia ? `Nome Fantasia: ${data.nome_fantasia}` : 'Sem nome fantasia registrado';
+                document.getElementById('res-cnpj').innerText = `CNPJ: ${data.cnpj}`;
+                document.getElementById('res-data-abertura').innerText = `Aberto em: ${new Date(data.data_inicio_atividade).toLocaleDateString('pt-BR')}`;
+                
+                // Get socio name from QSA if available
+                let socioNome = "Não informado";
+                if (data.qsa && data.qsa.length > 0) {
+                    socioNome = data.qsa.map(s => s.nome_socio || s.nome).join(', ');
+                } else if (data.razao_social.includes(data.cnpj.substring(0,8))) {
+                     // Attempt to clean MEI name if it follows standard pattern: NAME + CNPJ
+                     socioNome = data.razao_social.replace(/[0-9]/g, '').trim();
+                }
+                document.getElementById('res-socios').innerText = socioNome;
+                
+                document.getElementById('res-atividade').innerText = data.cnae_fiscal_descricao;
+                
+                const endereco = `${data.logradouro}, ${data.numero}${data.complemento ? ' ' + data.complemento : ''} - ${data.bairro}, ${data.municipio}/${data.uf}`;
+                document.getElementById('res-endereco').innerText = endereco;
+
+                const situacaoBadge = document.getElementById('res-situacao-badge');
+                situacaoBadge.innerText = data.descricao_situacao_cadastral;
+                if (data.descricao_situacao_cadastral === 'ATIVA') {
+                    situacaoBadge.style.background = 'var(--green-bg)';
+                    situacaoBadge.style.color = 'var(--green)';
+                } else {
+                    situacaoBadge.style.background = '#FEEBEB';
+                    situacaoBadge.style.color = 'var(--red)';
+                }
+
+                if (typeof gtag === 'function') {
+                    gtag('event', 'search', { search_term: 'mei_real' });
+                }
+
+                // Realistic delay to maintain the "consultancy" feel
+                setTimeout(() => {
+                    show('step-mei-form');
+                }, 1500);
+
+            } catch (error) {
+                alert(error.message);
+                resetTypeSelection();
+            }
         }
 
-        let lastGeneratedUrl = '';
+        let currentOrderId = null;
+        let selectedPrice = 0;
+        let currentRazaoSocial = "";
 
-        function reabrirWhats() {
-            if (lastGeneratedUrl) window.open(lastGeneratedUrl, '_blank');
+        async function startCheckout(planName, price) {
+            selectedPrice = price;
+            const doc = document.getElementById('user-doc').value;
+            const cnpj = doc.replace(/\D/g, '');
+
+            try {
+                show('step-pix');
+                const response = await fetch('/api/v1/checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        cnpj, 
+                        razao_social: currentRazaoSocial || "Não identificado",
+                        plan_name: planName, 
+                        price 
+                    })
+                });
+
+                if (!response.ok) throw new Error('Erro ao iniciar checkout.');
+
+                const data = await response.json();
+                currentOrderId = data.order_id;
+                document.getElementById('pix-key-val').innerText = data.pix_key;
+                
+                // Show real QR Code image if available
+                if (data.qr_code_base64) {
+                    const img = document.getElementById('pix-qr-img');
+                    img.src = `data:image/png;base64,${data.qr_code_base64}`;
+                    img.style.display = 'inline-block';
+                    document.getElementById('qr-placeholder').style.display = 'none';
+                }
+                
+                startPaymentPolling();
+
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        let paymentPollingInterval = null;
+        function startPaymentPolling() {
+            if (paymentPollingInterval) clearInterval(paymentPollingInterval);
+            
+            paymentPollingInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(`/api/v1/status-processo/${currentOrderId}`);
+                    if (!response.ok) return;
+
+                    const data = await response.json();
+                    if (data.status === 'paid') {
+                        clearInterval(paymentPollingInterval);
+                        if (selectedPrice === 119.9) {
+                            show('step-tracking-dashboard');
+                            trackProcess();
+                        } else {
+                            show('step-mei-manual-info');
+                        }
+                    }
+                } catch (e) { console.error("Payment polling error:", e); }
+            }, 3000);
+        }
+
+        function copyPix() {
+            const key = document.getElementById('pix-key-val').innerText;
+            navigator.clipboard.writeText(key).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.innerText = 'Copiado!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerText = 'Copiar Código PIX';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        async function confirmPaymentSimulation() {
+            if (!currentOrderId) return;
+            try {
+                await fetch(`/api/v1/simular-pagamento/${currentOrderId}`, { method: 'POST' });
+                // The polling will automatically detect this and move to the next step
+            } catch (e) {
+                console.error("Simulation error:", e);
+                show('step-credentials'); // Fallback direct show
+            }
+        }
+
+        // --- Premium Flow Controls ---
+        window.maskPhone = function(i) {
+            let v = i.value.replace(/\D/g, '');
+            if (v.length > 11) v = v.substring(0, 11);
+            if (v.length > 10) {
+                i.value = `(${v.substring(0, 2)}) ${v.substring(2, 7)}-${v.substring(7)}`;
+            } else if (v.length > 5) {
+                i.value = `(${v.substring(0, 2)}) ${v.substring(2, 6)}-${v.substring(6)}`;
+            } else if (v.length > 2) {
+                i.value = `(${v.substring(0, 2)}) ${v.substring(2)}`;
+            } else if (v.length > 0) {
+                i.value = `(${v}`;
+            }
+        };
+
+        window.maskCNPJ = function(i) {
+            let v = i.value.replace(/\D/g, '');
+            if (v.length > 14) v = v.substring(0, 14);
+            if (v.length > 12) {
+                i.value = v.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2}).*/, '$1.$2.$3/$4-$5');
+            } else if (v.length > 8) {
+                i.value = v.replace(/^(\d{2})(\d{3})(\d{3})(\d{0,4}).*/, '$1.$2.$3/$4');
+            } else if (v.length > 5) {
+                i.value = v.replace(/^(\d{2})(\d{3})(\d{0,3}).*/, '$1.$2.$3');
+            } else if (v.length > 2) {
+                i.value = v.replace(/^(\d{2})(\d{0,3}).*/, '$1.$2');
+            } else {
+                i.value = v;
+            }
+        };
+
+        window.finishPremiumFlow = async function() {
+            const phoneField = document.getElementById('contact-phone');
+            const phone = phoneField.value;
+            const cleanPhone = phone.replace(/\D/g, '');
+            
+            if (cleanPhone.length < 10) {
+                alert("Por favor, informe seu WhatsApp com DDD para que possamos entrar em contato.");
+                return;
+            }
+
+            if (window.confirm(`O número ${phone} está correto?\nNosso escritório entrará em contato por este WhatsApp em breve.`)) {
+                try {
+                    // Salvar no banco de dados
+                    await fetch('/api/v1/atualizar-contato', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ order_id: currentOrderId, phone: phone })
+                    });
+                    
+                    alert('Dados enviados com sucesso! Até logo.');
+                    window.location.reload();
+                } catch (e) {
+                    console.error("Error saving contact:", e);
+                    alert("Erro ao salvar contato. Por favor, tente novamente.");
+                }
+            }
+        };
+
+        window.closeAndFinalize = function() {
+            document.getElementById('confirm-modal').style.display = 'none';
+            alert('Dados enviados com sucesso! Nosso escritório entrará em contato em breve.');
+            window.location.reload();
+        };
+
+        async function loginTracking() {
+            const cnpj = document.getElementById('track-cnpj').value.replace(/\D/g, '');
+            const digits = document.getElementById('track-digits').value;
+            const error = document.getElementById('track-error');
+            
+            error.style.display = 'none';
+
+            try {
+                const res = await fetch('/api/v1/tracking/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ cnpj, phone_suffix: digits })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    localStorage.setItem('track_cnpj', cnpj);
+                    localStorage.setItem('track_digits', digits);
+                    renderTrackingDashboard(data);
+                    show('step-tracking-dashboard');
+                } else {
+                    error.style.display = 'block';
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        function renderTrackingDashboard(data) {
+            document.getElementById('track-res-razao').innerText = data.razao_social || "Empresa Identificada";
+            document.getElementById('track-res-status').innerText = data.status === 'completed' ? 'CONCLUÍDO' : 'EM ANDAMENTO';
+            
+            if (data.progress > 0) {
+                document.getElementById('track-res-message').innerText = data.message;
+                document.getElementById('track-res-progress').style.width = data.progress + '%';
+            } else {
+                document.getElementById('track-res-message').innerText = "Estamos no processo de análise de suas pendências.";
+                document.getElementById('track-res-progress').style.width = '10%';
+            }
+        }
+
+        async function submitManualMeiLead() {
+            const name = document.getElementById('manual-name').value;
+            const phone = document.getElementById('manual-phone').value;
+            if (!name || phone.length < 10) {
+                alert('Por favor, preencha seu nome e WhatsApp corretamente.');
+                return;
+            }
+            const btn = document.getElementById('btn-manual-submit');
+            btn.disabled = true;
+            btn.innerText = 'Enviando...';
+            try {
+                await fetch('/api/v1/atualizar-contato', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ order_id: currentOrderId, phone, name })
+                });
+                show('step-mei-queue-success');
+            } catch (e) {
+                console.error(e);
+                alert("Erro ao salvar dados. Tente novamente.");
+                btn.disabled = false;
+                btn.innerText = 'Enviar Dados e Iniciar Análise →';
+            }
+        }
+
+        function logoutTracking() {
+            localStorage.removeItem('track_cnpj');
+            localStorage.removeItem('track_digits');
+            show('step-home');
+        }
+
+        // Auto-login if session exists
+        window.addEventListener('load', async () => {
+            const cnpj = localStorage.getItem('track_cnpj');
+            const digits = localStorage.getItem('track_digits');
+            if (cnpj && digits) {
+                try {
+                    const res = await fetch('/api/v1/tracking/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ cnpj, phone_suffix: digits })
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        renderTrackingDashboard(data);
+                        show('step-tracking-dashboard');
+                    }
+                } catch (e) {}
+            }
+        });
+
+        async function startRegularization() {
+            const cpf = document.getElementById('gov-cpf').value.replace(/\D/g, '');
+            const password = document.getElementById('gov-password').value;
+            const consent = document.getElementById('robot-consent').checked;
+
+            if (!cpf || cpf.length < 11) {
+                alert("Por favor, informe seu CPF vinculado ao Gov.br.");
+                return;
+            }
+
+            if (!password) {
+                alert("Por favor, informe sua senha do Gov.br.");
+                return;
+            }
+
+            if (!consent) {
+                alert("Você precisa autorizar o robô para continuar.");
+                return;
+            }
+
+            try {
+                show('step-status');
+                const response = await fetch('/api/v1/regularizar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ order_id: currentOrderId, gov_password: password, cpf: cpf, consent: consent })
+                });
+
+                if (!response.ok) throw new Error('Erro ao iniciar processo.');
+
+                show('step-status');
+                startPolling();
+
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        function startPolling() {
+            if (statusPollingInterval) clearInterval(statusPollingInterval);
+            
+            statusPollingInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(`/api/v1/status-processo/${currentOrderId}`);
+                    if (!response.ok) return;
+
+                    const data = await response.json();
+                    
+                    document.getElementById('status-message').innerText = data.message;
+                    document.getElementById('status-progress-bar').style.width = `${data.progress}%`;
+
+                    if (data.status === 'completed') {
+                        clearInterval(statusPollingInterval);
+                        document.getElementById('status-title').innerText = 'Processo Finalizado!';
+                        document.getElementById('status-desc').innerText = 'Seus débitos foram processados com sucesso.';
+                        document.getElementById('success-actions').style.display = 'block';
+                    }
+
+                } catch (error) {
+                    console.error("Polling error:", error);
+                }
+            }, 3000);
         }
 
         function comprarGuia() {
             const telefone = "5551999906748";
-            const texto = `Olá! Gostaria de adquirir o *Guia de Autoatendimento* por R$19,90.`;
-            lastGeneratedUrl = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
-            
-            if (typeof fbq === 'function') fbq('track', 'Contact', { content_name: 'Guia Autoatendimento' });
-            if (typeof gtag === 'function') gtag('event', 'generate_lead', { content_name: 'Guia', method: 'whatsapp' });
-            window.open(lastGeneratedUrl, '_blank');
-            show('step-success');
+            const texto = `Olá! Acabei de realizar o procedimento de regularização no site para o CNPJ e gostaria de receber os documentos. (Pedido: ${currentOrderId})`;
+            const url = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
+            window.open(url, '_blank');
         }
 
-        function enviarLead() {
-            const nome = document.getElementById('nome').value;
-            const whats = document.getElementById('whats').value;
-            const problema = document.getElementById('problema').value;
+        async function performCnpjSearch() {
+            const nome = document.getElementById('find-name').value;
+            const cpf = document.getElementById('find-cpf').value;
 
-            if (!nome || !whats) {
-                alert("Por favor, preencha seu nome e WhatsApp para continuarmos.");
+            if (!nome || !cpf) {
+                alert("Por favor, preencha seu nome e CPF.");
                 return;
             }
 
-            const telefone = "5551999906748";
-            const texto = `Olá! Gostaria de contratar a *Consultoria Premium* (R$59,90).\n\n*Nome:* ${nome}\n*WhatsApp:* ${whats}\n*Caso:* ${problema}`;
-            lastGeneratedUrl = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
+            const btn = document.getElementById('btn-search-cnpj');
+            const badge = document.getElementById('searching-badge');
+            const resultsDiv = document.getElementById('find-results');
+            const listContainer = document.getElementById('cnpj-list-container');
 
-            if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'Consultoria Premium' });
-            if (typeof gtag === 'function') gtag('event', 'generate_lead', { content_name: 'Consultoria', method: 'whatsapp' });
-            window.open(lastGeneratedUrl, '_blank');
-            show('step-success');
+            btn.style.display = 'none';
+            badge.style.display = 'block';
+            resultsDiv.style.display = 'none';
+
+            try {
+                const response = await fetch('http://localhost:8000/api/v1/buscar-cnpj', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nome, cpf })
+                });
+
+                if (!response.ok) throw new Error('Não encontramos seu CNPJ automaticamente. Verifique se os dados estão corretos ou procure no Portal do Empreendedor.');
+
+                const data = await response.json();
+                
+                if (data.cnpjs.length === 0) {
+                    const confirmSearch = confirm('Não encontramos seu CNPJ automaticamente. Deseja abrir uma busca manual no Google para tentar localizar?');
+                    if (confirmSearch) {
+                        const query = encodeURIComponent(`${nome} ${cpf} CNPJ`);
+                        window.open(`https://www.google.com/search?q=${query}`, '_blank');
+                    }
+                    return;
+                }
+
+                listContainer.innerHTML = '';
+                data.cnpjs.forEach(cnpj => {
+                    const div = document.createElement('div');
+                    div.className = 'result-box';
+                    div.style.margin = '0';
+                    div.style.padding = '12px 16px';
+                    div.style.cursor = 'pointer';
+                    div.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                            <strong style="font-size: 15px;">${cnpj}</strong>
+                            <span style="font-size: 11px; color: var(--gold); font-weight: 600;">SELECIONAR</span>
+                        </div>
+                    `;
+                    div.onclick = () => {
+                        document.getElementById('user-doc').value = cnpj;
+                        show('step-home');
+                        selectType('mei');
+                    };
+                    listContainer.appendChild(div);
+                });
+
+                resultsDiv.style.display = 'block';
+
+            } catch (error) {
+                alert(error.message);
+            } finally {
+                btn.style.display = 'block';
+                badge.style.display = 'none';
+            }
         }
     </script>
 </body>
