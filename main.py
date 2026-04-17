@@ -2,13 +2,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 import os
-import sys
-import asyncio
-
-# Fix for Windows loop policy with psycopg
-if sys.platform == "win32":
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-
 from app.api.endpoints import router as api_router
 from app.services.db import init_db
 
