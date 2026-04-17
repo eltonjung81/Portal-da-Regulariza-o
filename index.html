@@ -1871,9 +1871,11 @@
                 startPaymentPolling();
 
             } catch (error) {
-                alert(error.message);
-                document.getElementById('mp-status-text').innerText = "Erro ao gerar pagamento. Tente novamente.";
+                console.error("Checkout error:", error);
+                document.getElementById('mp-status-text').innerText = "Erro ao gerar link de pagamento. Por favor, tente novamente.";
                 document.getElementById('btn-reopen-mp').style.display = 'block';
+                document.getElementById('mp-redirect-loader').style.display = 'none';
+                alert("Não foi possível conectar ao servidor de pagamento. Certifique-se de que o servidor está rodando e tente novamente.");
             }
         }
 
