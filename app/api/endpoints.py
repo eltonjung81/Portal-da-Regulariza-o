@@ -17,8 +17,8 @@ router = APIRouter()
 sdk = mercadopago.SDK(os.getenv("MERCADO_PAGO_ACCESS_TOKEN", "TEST-TOKEN-MISSING"))
 
 class CheckoutRequest(BaseModel):
-    cnpj: str
-    razao_social: str
+    cnpj: Optional[str] = None
+    razao_social: Optional[str] = None
     plan_name: str
     price: float
 
@@ -89,8 +89,8 @@ async def checkout(request: CheckoutRequest):
     order_data = {
         "id": order_id,
         "payment_id": payment_id,
-        "cnpj": request.cnpj,
-        "razao_social": request.razao_social,
+        "cnpj": request.cnpj if request.cnpj else "",
+        "razao_social": request.razao_social if request.razao_social else "",
         "plan": request.plan_name,
         "price": request.price,
         "status": "pending_payment",

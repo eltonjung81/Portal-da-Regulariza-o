@@ -870,6 +870,60 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(181, 153, 94, 0.4);
         }
+
+        /* ── WHATSAPP BUTTON ── */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: #128c7e;
+        }
+
+        .whatsapp-float span {
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .hero-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--muted);
+            margin-top: -10px;
+            margin-bottom: 30px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .home-plans-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        @media(max-width: 600px) {
+            .home-plans-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
     <!-- Facebook Pixel Code -->
     <script>
@@ -919,6 +973,7 @@
     <!-- HERO -->
     <div class="hero">
         <div class="hero-eyebrow">Consultoria Tributária Digital</div>
+        <div class="hero-name">Elton Jung (contabilista)</div>
         <h1>Regularize seu MEI<br><em>em poucos minutos</em></h1>
         <p class="hero-sub">Orientação especializada para resolver sua situação junto à Receita Federal. Processo claro,
             resultado em dias.</p>
@@ -944,19 +999,29 @@
                     <div class="pb"></div>
                     <div class="pb"></div>
                 </div>
-                <h2>Como podemos ajudar?</h2>
-                <p class="desc">Escolha a opção que deseja regularizar para iniciarmos sua consulta nas bases oficiais.</p>
-                
-                <!-- Escolha Inicial (Simplificada para apenas MEI) -->
-                <div class="choice-grid" id="home-choices" style="display: flex; flex-direction: column; gap: 12px;">
-                    <button class="choice-btn" onclick="selectType('mei')">
-                        <div class="choice-icon">🏢</div>
-                        <div class="choice-text">
-                            <strong>Regularizar meu MEI</strong>
-                            <span>DAS em atraso, DASN pendente ou CNPJ irregular</span>
+                <!-- Escolha Inicial com Ofertas -->
+                <div class="home-plans-grid">
+                    <div class="plan-card" onclick="selectInitialPlan('self', 39.90)">
+                        <div class="plan-title" style="margin-bottom: 5px;">Faça você mesmo</div>
+                        <div class="plan-price" style="margin-bottom: 10px;">
+                            <span class="plan-price-unit">R$ </span><span class="val">39</span><span class="unit">,90</span>
                         </div>
-                    </button>
+                        <p class="plan-desc" style="font-size: 11px;">Nos guiaremos passo a passo para que você não cometa erros que possam te comprometer.</p>
+                        <button class="btn-cta gold" style="padding: 10px; font-size: 10px; margin: 0;">Ver Detalhes</button>
+                    </div>
+                    
+                    <div class="plan-card premium" onclick="selectInitialPlan('full', 69.90)">
+                        <div class="premium-badge" style="font-size: 8px; padding: 2px 8px;">Recomendado</div>
+                        <div class="plan-title" style="margin-bottom: 5px;">Equipe Especializada</div>
+                        <div class="plan-price" style="margin-bottom: 10px;">
+                            <span class="plan-price-unit">R$ </span><span class="val">69</span><span class="unit">,90</span>
+                        </div>
+                        <p class="plan-desc" style="font-size: 11px;">Nossa equipe fará todo o processo: unificação de dívidas e entrega de declarações.</p>
+                        <button class="btn-cta gold" style="padding: 10px; font-size: 10px; margin: 0;">Contratar Equipe</button>
+                    </div>
                 </div>
+
+                <button class="btn-cta" onclick="selectType('mei')" style="background: var(--ink); margin-bottom: 20px;">Consulte seu MEI de forma rápida →</button>
 
                 <!-- Container do Input -->
                 <div id="doc-input-container" style="display:none; animation: fadeUp .3s ease both;">
@@ -1091,17 +1156,54 @@
                     <div class="ri">✔</div>
                     <div>
                         <strong>Regularização possível — guia disponível para o seu caso</strong>
-                        <p>MEIs com pagamentos em atraso e declarações pendentes podem ser regularizados via portal
-                            Gov.br, Simei e Receita Federal. O guia inclui cálculo de multas, parcelamento e
-                            procedimento completo.</p>
+                        <p>Escolha o melhor plano para você regularizar sua situação agora mesmo.</p>
                     </div>
                 </div>
-                <div class="divider"></div>
-                <p class="desc" style="margin-bottom:0;font-size:13px;">O passo a passo completo cobre: emissão de DAS
-                    retroativos, parcelamento de dívidas, envio da DASN e regularização cadastral no CNPJ.</p>
-                <div style="height:20px;"></div>
-                <button class="btn-cta gold" onclick="show('step-paywall')">Acessar guia completo →</button>
+                
+                <div class="home-plans-grid" style="margin-top: 20px;">
+                    <div class="plan-card" onclick="selectInitialPlan('self', 39.90)">
+                        <div class="plan-title" style="margin-bottom: 5px;">Faça você mesmo</div>
+                        <div class="plan-price" style="margin-bottom: 10px;">
+                            <span class="plan-price-unit">R$ </span><span class="val">39</span><span class="unit">,90</span>
+                        </div>
+                        <p class="plan-desc" style="font-size: 11px;">Guia passo a passo completo.</p>
+                        <button class="btn-cta gold" style="padding: 10px; font-size: 10px; margin: 0;">Selecionar</button>
+                    </div>
+                    
+                    <div class="plan-card premium" onclick="selectInitialPlan('full', 69.90)">
+                        <div class="premium-badge" style="font-size: 8px; padding: 2px 8px;">Recomendado</div>
+                        <div class="plan-title" style="margin-bottom: 5px;">Equipe Especializada</div>
+                        <div class="plan-price" style="margin-bottom: 10px;">
+                            <span class="plan-price-unit">R$ </span><span class="val">69</span><span class="unit">,90</span>
+                        </div>
+                        <p class="plan-desc" style="font-size: 11px;">Equipe faz todo o processo.</p>
+                        <button class="btn-cta gold" style="padding: 10px; font-size: 10px; margin: 0;">Selecionar</button>
+                    </div>
+                </div>
+
                 <button class="btn-ghost" onclick="show('step-home')">Voltar ao início</button>
+            </section>
+
+            <!-- ── STEP PLAN DETAILS ── -->
+            <section id="step-plan-details">
+                <div class="step-label">Detalhes do Plano</div>
+                <h2 id="plan-details-title">Título do Plano</h2>
+                <p class="desc" id="plan-details-desc">Descrição curta.</p>
+                
+                <div class="result-box" style="background: var(--paper); border-left-color: var(--gold); flex-direction: column;">
+                    <strong style="margin-bottom: 15px;">O que está incluso:</strong>
+                    <ul class="deliverables" id="plan-details-list" style="margin-bottom: 0;">
+                        <!-- List items will be injected here -->
+                    </ul>
+                </div>
+
+                <div class="alert-box" style="margin-top: 20px;">
+                    ✅ <strong>Garantia de Satisfação:</strong><br>
+                    Seu processo será tratado com prioridade e segurança total por Elton Jung e equipe.
+                </div>
+
+                <button class="btn-cta gold" id="btn-confirm-plan" onclick="confirmCurrentPlan()">Confirmar Plano e Ir para Pagamento →</button>
+                <button class="btn-ghost" onclick="show('step-home')">Voltar</button>
             </section>
 
             <!-- ── PAYWALL ── -->
@@ -1114,24 +1216,24 @@
 
                 <div class="plans-container">
                     <!-- PLANO 1 -->
-                    <div class="plan-card" onclick="startCheckout('Relatório de Débitos', 59.90)">
-                        <div class="plan-title">Extrato de Débitos</div>
+                    <div class="plan-card" onclick="selectInitialPlan('self', 39.90)">
+                        <div class="plan-title">Plano Passo a Passo</div>
                         <div class="plan-price">
-                            <span class="plan-price-unit">R$&nbsp;</span><span class="val">59</span><span class="unit">,90</span>
+                            <span class="plan-price-unit">R$&nbsp;</span><span class="val">39</span><span class="unit">,90</span>
                         </div>
-                        <p class="plan-desc">Identificação completa de todas as pendências e guias DAS em atraso.</p>
-                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Solicitar Extrato</button>
+                        <p class="plan-desc">Identificação completa e guia para regularização manual.</p>
+                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Selecionar Plano</button>
                     </div>
 
                     <!-- PLANO 2 -->
-                    <div class="plan-card premium" onclick="startCheckout('Regularização Total', 119.90)">
+                    <div class="plan-card premium" onclick="selectInitialPlan('full', 69.90)">
                         <div class="premium-badge">Mais Escolhido</div>
-                        <div class="plan-title">Regularização Completa</div>
+                        <div class="plan-title">Equipe Especializada</div>
                         <div class="plan-price">
-                            <span class="plan-price-unit">R$&nbsp;</span><span class="val">119</span><span class="unit">,90</span>
+                            <span class="plan-price-unit">R$&nbsp;</span><span class="val">69</span><span class="unit">,90</span>
                         </div>
-                        <p class="plan-desc">Consultoria, parcelamento de dívidas e emissão de todas as guias pendentes.</p>
-                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Solicitar Regularização</button>
+                        <p class="plan-desc">Nossa equipe faz todo o trabalho burocrático para você.</p>
+                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Selecionar Plano</button>
                     </div>
                 </div>
 
@@ -1164,6 +1266,25 @@
                     <div class="loader-spinner" style="width: 20px; height: 20px;"></div>
                     <p style="font-size: 12px; color: var(--muted); margin-top: 10px;">Aguardando confirmação bancária...</p>
                 </div>
+            </section>
+
+            <!-- ── STEP COLLECT DOC (PÓS-PAGAMENTO) ── -->
+            <section id="step-collect-doc">
+                <div class="step-label">Pagamento Aprovado!</div>
+                <h2>Quase lá...</h2>
+                <p class="desc">Agora que seu pagamento foi confirmado, informe o CNPJ que deseja regularizar.</p>
+                
+                <div class="field">
+                    <label>Informe seu CNPJ</label>
+                    <input type="text" id="post-pay-doc" placeholder="00.000.000/0000-00" maxlength="18" oninput="maskCNPJ(this)">
+                </div>
+
+                <div class="alert-box">
+                    📝 <strong>Importante:</strong><br>
+                    Nossa equipe usará este CNPJ para realizar a consulta oficial e iniciar o processo que você contratou.
+                </div>
+
+                <button class="btn-cta gold" onclick="submitPostPayDoc()">Continuar para Próximo Passo →</button>
             </section>
 
             <!-- ── STEP GOV CREDENTIALS ── -->
@@ -1464,6 +1585,79 @@
             }
         });
 
+        let selectedPlanName = '';
+        let currentPlanPrice = 0;
+
+        function selectInitialPlan(type, price) {
+            selectedPlanName = type === 'self' ? 'Plano Passo a Passo' : 'Consultoria Completa';
+            currentPlanPrice = price;
+            
+            const title = document.getElementById('plan-details-title');
+            const desc = document.getElementById('plan-details-desc');
+            const list = document.getElementById('plan-details-list');
+            
+            if (type === 'self') {
+                title.innerText = 'Plano Passo a Passo';
+                desc.innerText = 'Ideal para quem quer economia e autonomia.';
+                list.innerHTML = `
+                    <li><span class="del-check">✔</span> Guia completo de regularização</li>
+                    <li><span class="del-check">✔</span> Emissão de guias DAS em atraso</li>
+                    <li><span class="del-check">✔</span> Envio da declaração manual (DASN)</li>
+                    <li><span class="del-check">✔</span> Suporte contra erros fiscais</li>
+                `;
+            } else {
+                title.innerText = 'Equipe Especializada';
+                desc.innerText = 'Deixe que nossos profissionais resolvam tudo por você.';
+                list.innerHTML = `
+                    <li><span class="del-check">✔</span> Regularização total feita por nossa equipe</li>
+                    <li><span class="del-check">✔</span> Unificação e parcelamento de dívidas</li>
+                    <li><span class="del-check">✔</span> Entrega de todas as declarações pendentes</li>
+                    <li><span class="del-check">✔</span> Relatório final de conformidade</li>
+                `;
+            }
+            
+            show('step-plan-details');
+        }
+
+        async function confirmCurrentPlan() {
+            // Se já tivermos CNPJ (veio da consulta), usamos. Se não, vai vázio e pedimos depois.
+            const doc = document.getElementById('user-doc').value;
+            startCheckout(selectedPlanName, currentPlanPrice);
+        }
+
+        async function submitPostPayDoc() {
+            const doc = document.getElementById('post-pay-doc').value;
+            if (doc.replace(/\D/g, '').length < 14) {
+                alert('Por favor, informe um CNPJ válido.');
+                return;
+            }
+            
+            // Vincular o CNPJ ao pedido no banco
+            try {
+                await fetch('/api/v1/atualizar-contato', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        order_id: currentOrderId, 
+                        name: "CNPJ Vinculado Pós-Pagamento", 
+                        phone: "0000000000" // Placeholder phone
+                    })
+                });
+                
+                // Atualizar o campo global para o robô usar
+                document.getElementById('user-doc').value = doc;
+                
+                // Seguir o fluxo dependendo do plano
+                if (currentPlanPrice === 69.90) {
+                    show('step-credentials');
+                } else {
+                    show('step-mei-manual-info');
+                }
+            } catch (e) {
+                alert("Erro ao salvar dados. Tente novamente.");
+            }
+        }
+
         function show(id) {
             if (id === 'step-mei-manual-info') {
                 document.getElementById('manual-cnpj').value = document.getElementById('user-doc')?.value || '';
@@ -1693,11 +1887,17 @@
                     const data = await response.json();
                     if (data.status === 'paid') {
                         clearInterval(paymentPollingInterval);
-                        if (selectedPrice === 119.9) {
-                            show('step-tracking-dashboard');
-                            trackProcess();
+                        
+                        // Verificar se temos CNPJ
+                        const cnpj = document.getElementById('user-doc').value;
+                        if (!cnpj || cnpj.length < 14) {
+                            show('step-collect-doc');
                         } else {
-                            show('step-mei-manual-info');
+                            if (selectedPrice === 69.90) {
+                                show('step-credentials');
+                            } else {
+                                show('step-mei-manual-info');
+                            }
                         }
                     }
                 } catch (e) { console.error("Payment polling error:", e); }
@@ -2026,6 +2226,11 @@
             }
         }
     </script>
+    <!-- WHATSAPP FLOAT -->
+    <a href="https://wa.me/5551999906748?text=Olá! Gostaria de tirar dúvidas sobre a regularização do meu MEI." class="whatsapp-float" target="_blank">
+        <span style="font-size: 20px;">💬</span>
+        <span>Tirar dúvidas pelo WhatsApp</span>
+    </a>
 </body>
 
 </html>
