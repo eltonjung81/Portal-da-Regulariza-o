@@ -1240,31 +1240,22 @@
                 <button class="btn-ghost" onclick="show('step-mei-form')">Voltar ao diagnóstico</button>
             </section>
 
-            <!-- ── STEP PIX ── -->
+            <!-- ── STEP PIX (REDIRECIONAMENTO MP) ── -->
             <section id="step-pix">
-                <div class="step-label">Aguardando Pagamento</div>
-                <h2>Conclua seu pagamento</h2>
-                <p class="desc">Para liberar o acesso ao sistema de regularização, realize o pagamento via PIX abaixo.</p>
+                <div class="step-label">Pagamento Seguro</div>
+                <h2>Conclua no Mercado Pago</h2>
+                <p class="desc">Para sua segurança, você será redirecionado para o ambiente oficial do Mercado Pago para efetuar o pagamento via Pix ou Cartão.</p>
                 
-                <div class="pix-box">
-                    <img id="pix-qr-img" src="" alt="QR Code PIX" style="display: none; margin: 0 auto 20px; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 220px; width: 100%; height: auto;">
-                    <div id="qr-placeholder" style="padding: 40px 0;">
-                        <div class="loader-spinner"></div>
-                        <p style="font-size: 11px; color: var(--gold); margin-top: 10px;">Gerando QR Code Seguro...</p>
-                    </div>
-                    <div class="pix-label">Chave PIX (Copia e Cola)</div>
-                    <div class="pix-key" id="pix-key-val">Processando...</div>
-                    <button class="copy-btn" onclick="copyPix()">Copiar Código PIX</button>
+                <div class="pix-box" style="padding: 40px 20px;">
+                    <div class="loader-spinner" id="mp-redirect-loader"></div>
+                    <p style="font-size: 14px; color: var(--gold); margin-top: 20px; font-weight: 500;" id="mp-status-text">Redirecionando você...</p>
+                    
+                    <button class="btn-cta gold" id="btn-reopen-mp" style="display:none; margin-top: 20px;" onclick="reopenMP()">Abrir Mercado Pago Novamente</button>
                 </div>
 
                 <div class="alert-box" style="text-align: left;">
                     ⏱️ <strong>Confirmação Automática:</strong><br>
-                    O sistema identificará seu pagamento em até 60 segundos. Não feche esta tela.
-                </div>
-
-                <div id="payment-confirming" style="text-align:center; padding: 10px 0;">
-                    <div class="loader-spinner" style="width: 20px; height: 20px;"></div>
-                    <p style="font-size: 12px; color: var(--muted); margin-top: 10px;">Aguardando confirmação bancária...</p>
+                    Assim que o pagamento for aprovado no Mercado Pago, esta página será atualizada automaticamente para o próximo passo. Não feche esta janela.
                 </div>
             </section>
 
@@ -1562,6 +1553,17 @@
         let trackedPremiumStart = false;
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Verificar se há um order_id na URL (retorno do Mercado Pago)
+            const urlParams = new URLSearchParams(window.location.search);
+            const savedOrderId = urlParams.get('order_id');
+            const paymentStatus = urlParams.get('status');
+
+            if (savedOrderId) {
+                currentOrderId = savedOrderId;
+                show('step-pix'); // Mostrar progresso
+                startPaymentPolling(); // Voltar a monitorar
+            }
+
             // Monitora início do preenchimento de CPF/CNPJ
             const inputDoc = document.getElementById('user-doc');
             if (inputDoc) {
@@ -1830,6 +1832,7 @@
         let currentOrderId = null;
         let selectedPrice = 0;
         let currentRazaoSocial = "";
+        let currentMPUrl = "";
 
         async function startCheckout(planName, price) {
             selectedPrice = price;
@@ -1838,6 +1841,9 @@
 
             try {
                 show('step-pix');
+                document.getElementById('mp-status-text').innerText = "Gerando link de pagamento individual...";
+                document.getElementById('btn-reopen-mp').style.display = 'none';
+
                 const response = await fetch('/api/v1/checkout', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1853,26 +1859,26 @@
 
                 const data = await response.json();
                 currentOrderId = data.order_id;
-                document.getElementById('pix-key-val').innerText = data.pix_key;
+                currentMPUrl = data.init_point;
                 
-                // Show real QR Code image if available
-                if (data.qr_code_base64) {
-                    const img = document.getElementById('pix-qr-img');
-                    // Check if it's already a full data URI or URL
-                    if (data.qr_code_base64.startsWith('http') || data.qr_code_base64.startsWith('data:')) {
-                        img.src = data.qr_code_base64;
-                    } else {
-                        img.src = `data:image/png;base64,${data.qr_code_base64}`;
-                    }
-                    img.style.display = 'inline-block';
-                    document.getElementById('qr-placeholder').style.display = 'none';
-                }
+                document.getElementById('mp-status-text').innerText = "Pagamento pronto! Redirecionando para o Mercado Pago...";
                 
+                // Abrir Mercado Pago
+                setTimeout(() => {
+                    window.location.href = currentMPUrl;
+                }, 1500);
+
                 startPaymentPolling();
 
             } catch (error) {
                 alert(error.message);
+                document.getElementById('mp-status-text').innerText = "Erro ao gerar pagamento. Tente novamente.";
+                document.getElementById('btn-reopen-mp').style.display = 'block';
             }
+        }
+
+        function reopenMP() {
+            if (currentMPUrl) window.location.href = currentMPUrl;
         }
 
         let paymentPollingInterval = null;

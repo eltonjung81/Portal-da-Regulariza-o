@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, BackgroundTasks
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Request
 from typing import Optional
 import uuid
 import httpx
@@ -50,60 +50,71 @@ async def buscar_cnpj(request: SearchCNPJRequest):
     return {"cnpjs": cnpjs}
 
 @router.post("/checkout")
-async def checkout(request: CheckoutRequest):
+async def checkout(request_data: CheckoutRequest, request: Request):
     order_id = str(uuid.uuid4())
     
-    # Create Mercado Pago Payment
-    payment_data = {
-        "transaction_amount": float(request.price),
-        "description": f"MEI em Dia - {request.plan_name}",
-        "payment_method_id": "pix",
-        "payer": {
-            "email": "cliente@mei-em-dia.com", # Placeholder or collect from user
-            "first_name": "Cliente",
-            "last_name": "MEI"
-        }
+    # Obter a URL base dinamicamente (host atual)
+    base_url = f"{request.url.scheme}://{request.url.netloc}"
+    
+    # Configuração da Preferência (Checkout Pro)
+    preference_data = {
+        "items": [
+            {
+                "title": f"MEI em Dia - {request_data.plan_name}",
+                "description": f"Plano de regularização MEI: {request_data.plan_name}",
+                "quantity": 1,
+                "unit_price": float(request_data.price),
+                "currency_id": "BRL"
+            }
+        ],
+        "payment_methods": {
+            "excluded_payment_types": [
+                {"id": "ticket"}, # Boleto
+                {"id": "debit_card"},
+                {"id": "atm"}
+            ],
+            "installments": 12 # Permitir parcelamento no cartão
+        },
+        "back_urls": {
+            "success": f"{base_url}/?order_id={order_id}&status=success",
+            "failure": f"{base_url}/?order_id={order_id}&status=failure",
+            "pending": f"{base_url}/?order_id={order_id}&status=pending"
+        },
+        "auto_return": "approved",
+        "external_reference": order_id
     }
     
-    # Idempotency key
-    request_options = mercadopago.config.RequestOptions()
-    request_options.custom_headers = {"X-Idempotency-Key": order_id}
-
-    result = sdk.payment().create(payment_data, request_options)
+    result = sdk.preference().create(preference_data)
     
     if result["status"] >= 400:
-        # Fallback to simulation if token is missing or invalid for testing
-        print(f"MP Error: {result['response']}")
-        qr_code = "00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-4266141740005204000053039865802BR5913MEI_EM_DIA_APP6009SAO_PAULO62070503***6304E2CA"
-        # Generate a real QR code image using a public API for the fallback key
-        qr_code_base64 = f"https://api.qrserver.com/v1/create-qr-code/?size=250x250&data={qr_code}"
-        payment_id = "SIMULATED_" + order_id
+        print(f"MP Preference Error: {result['response']}")
+        # Fallback simulation
+        init_point = f"{base_url}/?order_id={order_id}&simulated=true"
     else:
-        payment = result["response"]
-        qr_code = payment["point_of_interaction"]["transaction_data"]["qr_code"]
-        # Convert base64 from MP to a proper data URI if it's not already
-        raw_base64 = payment["point_of_interaction"]["transaction_data"]["qr_code_base64"]
-        qr_code_base64 = f"data:image/png;base64,{raw_base64}"
-        payment_id = str(payment["id"])
+        # Usar init_point (Produção) ou sandbox_init_point (Teste)
+        # Se o token começar com TEST-, usamos sandbox
+        if os.getenv("MERCADO_PAGO_ACCESS_TOKEN", "").startswith("TEST-"):
+            init_point = result["response"]["sandbox_init_point"]
+        else:
+            init_point = result["response"]["init_point"]
 
     order_data = {
         "id": order_id,
-        "payment_id": payment_id,
-        "cnpj": request.cnpj if request.cnpj else "",
-        "razao_social": request.razao_social if request.razao_social else "",
-        "plan": request.plan_name,
-        "price": request.price,
+        "payment_id": f"PREF_{order_id}", # Placeholder até o pagamento real
+        "cnpj": request_data.cnpj if request_data.cnpj else "",
+        "razao_social": request_data.razao_social if request_data.razao_social else "",
+        "plan": request_data.plan_name,
+        "price": request_data.price,
         "status": "pending_payment",
         "progress": 0,
-        "message": "Aguardando pagamento via PIX"
+        "message": "Aguardando pagamento no Mercado Pago"
     }
     
     await save_order(order_data)
     
     return {
         "order_id": order_id, 
-        "pix_key": qr_code,
-        "qr_code_base64": qr_code_base64
+        "init_point": init_point
     }
 
 # Helper functions are imported from app.services.db
@@ -139,15 +150,20 @@ async def get_status(order_id: str):
     if not order:
         raise HTTPException(status_code=404, detail="Processo não encontrado.")
     
-    # If still waiting for payment, check real status in MP
-    if order["status"] == "pending_payment" and not order["payment_id"].startswith("SIMULATED_"):
+    # If still waiting for payment, check real status in MP using external_reference
+    if order["status"] == "pending_payment":
         try:
-            payment_info = sdk.payment().get(order["payment_id"])
-            mp_status = payment_info["response"].get("status")
-            if mp_status == "approved":
-                await update_payment_paid(order_id)
-                order = await get_order(order_id) # Refresh
-        except:
+            # Buscar pagamentos associados a esta external_reference (order_id)
+            search_results = sdk.payment().search({'external_reference': order_id})
+            if search_results["status"] == 200:
+                payments = search_results["response"].get("results", [])
+                for p in payments:
+                    if p["status"] == "approved":
+                        await update_payment_paid(order_id)
+                        order = await get_order(order_id) # Refresh
+                        break
+        except Exception as e:
+            print(f"Status check error: {e}")
             pass
 
     return order
