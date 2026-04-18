@@ -14,15 +14,16 @@
         rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
 
-    <!-- Global site tag (gtag.js) - Google Ads -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-CONVERSION_ID"></script>
+    <!-- Google Tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18101510498"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      // SUBSTITUIR 'AW-CONVERSION_ID' PELO SEU ID REAL (Ex: AW-123456789)
-      gtag('config', 'AW-CONVERSION_ID');
+      // Configuração para Google Ads e Google Analytics
+      gtag('config', 'AW-18101510498');
+      gtag('config', 'G-JWTFYFMPB5');
     </script>
     <style>
         :root {
@@ -1017,14 +1018,7 @@
     src="https://www.facebook.com/tr?id=3216062288689893&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JWTFYFMPB5"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-JWTFYFMPB5');
-    </script>
+    <!-- Google tags consolidated at the top of <head> -->
 </head>
 
 <body>
@@ -1934,8 +1928,7 @@
                         // Google Ads Conversion tracking
                         if (typeof gtag === 'function') {
                             gtag('event', 'conversion', {
-                                // SUBSTITUIR 'AW-CONVERSION_ID/AW-CONVERSION_LABEL' PELOS SEUS DADOS REAIS
-                                'send_to': 'AW-CONVERSION_ID/AW-CONVERSION_LABEL',
+                                'send_to': 'AW-18101510498',
                                 'value': 99.90,
                                 'currency': 'BRL'
                             });
