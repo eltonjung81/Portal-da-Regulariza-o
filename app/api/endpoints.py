@@ -53,13 +53,17 @@ async def buscar_cnpj(request: SearchCNPJRequest):
 async def checkout(request: CheckoutRequest):
     order_id = str(uuid.uuid4())
     
+    # Force Price and Plan Name (Security and Consistency)
+    request.price = 99.90
+    request.plan_name = "Regularização Completa MEI"
+    
     # Create Mercado Pago Payment
     payment_data = {
         "transaction_amount": float(request.price),
         "description": f"MEI em Dia - {request.plan_name}",
         "payment_method_id": "pix",
         "payer": {
-            "email": "cliente@mei-em-dia.com", # Placeholder or collect from user
+            "email": "cliente@portal-regulariza.com", 
             "first_name": "Cliente",
             "last_name": "MEI"
         }

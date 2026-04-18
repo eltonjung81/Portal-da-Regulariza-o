@@ -13,6 +13,17 @@
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap"
         rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Global site tag (gtag.js) - Google Ads -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-CONVERSION_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      // SUBSTITUIR 'AW-CONVERSION_ID' PELO SEU ID REAL (Ex: AW-123456789)
+      gtag('config', 'AW-CONVERSION_ID');
+    </script>
     <style>
         :root {
             --ink: #0D0D0D;
@@ -719,10 +730,43 @@
 
         /* ── NEW PLAN STYLES ── */
         .plans-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 16px;
-            margin: 24px 0;
+            margin: 24px auto;
+            max-width: 420px;
+        }
+
+        .home-plans-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin: 24px auto 0;
+            max-width: 420px;
+            width: 100%;
+        }
+
+        .price-anchor {
+            font-size: 14px;
+            color: var(--muted);
+            text-decoration: line-through;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .guarantee-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--green);
+            margin: 15px 0;
+            font-weight: 500;
+        }
+
+        .guarantee-badge i {
+            font-size: 18px;
         }
 
         .plan-card {
@@ -1036,23 +1080,17 @@
                     <span>Atenção: promoção válida para hoje e amanhã somente</span>
                 </div>
                 <div class="home-plans-grid">
-                    <div class="plan-card" onclick="selectInitialPlan('self', 39.90)">
-                        <div class="plan-title" style="margin-bottom: 5px;">Faça você mesmo</div>
-                        <div class="plan-price" style="margin-bottom: 10px;">
-                            <span class="plan-price-unit">R$ </span><span class="val">39</span><span class="unit">,90</span>
+                    <div class="plan-card premium" onclick="selectInitialPlan('full', 99.90)">
+                        <div class="premium-badge">Oportunidade Única</div>
+                        <div class="plan-title" style="margin-bottom: 5px;">Regularização Completa MEI</div>
+                        <div class="plan-price" style="margin-bottom: 10px; flex-direction: column; align-items: center;">
+                            <span class="price-anchor">R$ 189,90</span>
+                            <div>
+                                <span class="plan-price-unit">R$ </span><span class="val">99</span><span class="unit">,90</span>
+                            </div>
                         </div>
-                        <p class="plan-desc" style="font-size: 11px;">Nos guiaremos passo a passo para que você não cometa erros que possam te comprometer.</p>
-                        <button class="btn-cta gold" style="padding: 10px; font-size: 10px; margin: 0;">Ver Detalhes</button>
-                    </div>
-                    
-                    <div class="plan-card premium" onclick="selectInitialPlan('full', 69.90)">
-                        <div class="premium-badge" style="font-size: 8px; padding: 2px 8px;">Recomendado</div>
-                        <div class="plan-title" style="margin-bottom: 5px;">Equipe Especializada</div>
-                        <div class="plan-price" style="margin-bottom: 10px;">
-                            <span class="plan-price-unit">R$ </span><span class="val">69</span><span class="unit">,90</span>
-                        </div>
-                        <p class="plan-desc" style="font-size: 11px;">Nossa equipe fará todo o processo: unificação de dívidas e entrega de declarações.</p>
-                        <button class="btn-cta gold" style="padding: 10px; font-size: 10px; margin: 0;">Contratar Equipe</button>
+                        <p class="plan-desc" style="font-size: 11px;">Diagnóstico + Parcelamento de Dívidas + Entrega de Declarações Atrasadas.</p>
+                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: 10px;">Contratar Regularização Completa</button>
                     </div>
                 </div>
 
@@ -1168,6 +1206,11 @@
                     </div>
                 </div>
 
+                <div class="alert-box" style="margin-top: 20px; border-left-color: var(--red); background: #FFF5F5;">
+                    ⚠️ <strong>Atenção: Risco Imediato</strong><br>
+                    Detectamos pendências que podem levar ao bloqueio do seu CPF e perda de benefícios do INSS.
+                </div>
+
                 <div class="alert-box" style="margin-top: 20px;">
                     💡 <strong>Diagnóstico Completo Disponível:</strong><br>
                     Para consultar pendências de DAS, enviar declarações em atraso ou realizar o parcelamento de débitos, o sistema precisa realizar o acesso automatizado via portal Gov.br.
@@ -1199,23 +1242,17 @@
                     <span>Promoção válida para hoje e amanhã somente</span>
                 </div>
                 <div class="home-plans-grid" style="margin-top: 10px;">
-                    <div class="plan-card" onclick="selectInitialPlan('self', 39.90)">
-                        <div class="plan-title" style="margin-bottom: 5px;">Faça você mesmo</div>
-                        <div class="plan-price" style="margin-bottom: 10px;">
-                            <span class="plan-price-unit">R$ </span><span class="val">39</span><span class="unit">,90</span>
+                    <div class="plan-card premium" onclick="selectInitialPlan('full', 99.90)">
+                        <div class="premium-badge">Recomendado</div>
+                        <div class="plan-title" style="margin-bottom: 5px;">Regularização Completa MEI</div>
+                        <div class="plan-price" style="margin-bottom: 10px; flex-direction: column; align-items: center;">
+                            <span class="price-anchor">R$ 189,90</span>
+                            <div>
+                                <span class="plan-price-unit">R$ </span><span class="val">99</span><span class="unit">,90</span>
+                            </div>
                         </div>
-                        <p class="plan-desc" style="font-size: 11px;">Guia passo a passo completo.</p>
-                        <button class="btn-cta gold" style="padding: 10px; font-size: 10px; margin: 0;">Selecionar</button>
-                    </div>
-                    
-                    <div class="plan-card premium" onclick="selectInitialPlan('full', 69.90)">
-                        <div class="premium-badge" style="font-size: 8px; padding: 2px 8px;">Recomendado</div>
-                        <div class="plan-title" style="margin-bottom: 5px;">Equipe Especializada</div>
-                        <div class="plan-price" style="margin-bottom: 10px;">
-                            <span class="plan-price-unit">R$ </span><span class="val">69</span><span class="unit">,90</span>
-                        </div>
-                        <p class="plan-desc" style="font-size: 11px;">Equipe faz todo o processo.</p>
-                        <button class="btn-cta gold" style="padding: 10px; font-size: 10px; margin: 0;">Selecionar</button>
+                        <p class="plan-desc" style="font-size: 11px;">Tudo incluso: Diagnóstico, Dívidas e Declarações.</p>
+                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: 10px;">Selecionar e Regularizar</button>
                     </div>
                 </div>
 
@@ -1235,9 +1272,13 @@
                     </ul>
                 </div>
 
+                <div class="guarantee-badge">
+                    <span>🛡️ Satisfação garantida ou seu dinheiro de volta</span>
+                </div>
+
                 <div class="alert-box" style="margin-top: 20px;">
-                    ✅ <strong>Garantia de Satisfação:</strong><br>
-                    Seu processo será tratado com prioridade e segurança total por Elton Jung e equipe.
+                    ✅ <strong>Segurança Total:</strong><br>
+                    Seu processo será tratado com prioridade e acompanhamento profissional por nossa equipe especializada.
                 </div>
 
                 <button class="btn-cta gold" id="btn-confirm-plan" onclick="confirmCurrentPlan()">Confirmar Plano e Ir para Pagamento →</button>
@@ -1257,24 +1298,19 @@
                     <span>Promoção válida para hoje e amanhã somente</span>
                 </div>
                 <div class="plans-container">
-                    <!-- PLANO 1 -->
-                    <div class="plan-card" onclick="selectInitialPlan('self', 39.90)">
-                        <div class="plan-title">Plano Passo a Passo</div>
-                        <div class="plan-price">
-                            <span class="plan-price-unit">R$&nbsp;</span><span class="val">39</span><span class="unit">,90</span>
-                        </div>
-                        <p class="plan-desc">Identificação completa e guia para regularização manual.</p>
-                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Selecionar Plano</button>
-                    </div>
-
-                    <!-- PLANO 2 -->
-                    <div class="plan-card premium" onclick="selectInitialPlan('full', 69.90)">
+                    <div class="plan-card premium" onclick="selectInitialPlan('full', 99.90)">
                         <div class="premium-badge">Mais Escolhido</div>
-                        <div class="plan-title">Equipe Especializada</div>
-                        <div class="plan-price">
-                            <span class="plan-price-unit">R$&nbsp;</span><span class="val">69</span><span class="unit">,90</span>
+                        <div class="plan-title">Regularização Completa MEI</div>
+                        <div class="plan-price" style="flex-direction: column; align-items: center;">
+                            <span class="price-anchor">R$ 189,90</span>
+                            <div>
+                                <span class="plan-price-unit">R$&nbsp;</span><span class="val">99</span><span class="unit">,90</span>
+                            </div>
                         </div>
-                        <p class="plan-desc">Nossa equipe faz todo o trabalho burocrático para você.</p>
+                        <p class="plan-desc">Nossa equipe faz todo o trabalho burocrático para você: Diagnóstico + Parcelamento + Declarações.</p>
+                        <div class="guarantee-badge">
+                            <span>🛡️ Satisfação garantida ou seu dinheiro de volta</span>
+                        </div>
                         <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Selecionar Plano</button>
                     </div>
                 </div>
@@ -1588,9 +1624,9 @@
     <!-- FOOTER -->
     <footer>
         <div class="footer-left">
+            Este site presta serviços de consultoria técnica privada e não é o portal oficial do governo. Atuamos como facilitadores na regularização de CNPJ. <br><br>
             Este serviço oferece orientações baseadas em informações públicas disponibilizadas pela Receita Federal do
-            Brasil. Não substitui assessoria jurídica ou contábil formal. Os resultados podem variar conforme a situação
-            individual de cada contribuinte.
+            Brasil. Não substitui assessoria jurídica ou contábil formal.
         </div>
         <div class="footer-right">
             <span class="footer-lock">🔒</span>
@@ -1631,32 +1667,22 @@
         let currentPlanPrice = 0;
 
         function selectInitialPlan(type, price) {
-            selectedPlanName = type === 'self' ? 'Plano Passo a Passo' : 'Consultoria Completa';
+            selectedPlanName = 'Regularização Completa MEI';
             currentPlanPrice = price;
             
             const title = document.getElementById('plan-details-title');
             const desc = document.getElementById('plan-details-desc');
             const list = document.getElementById('plan-details-list');
             
-            if (type === 'self') {
-                title.innerText = 'Plano Passo a Passo';
-                desc.innerText = 'Ideal para quem quer economia e autonomia.';
-                list.innerHTML = `
-                    <li><span class="del-check">✔</span> Guia completo de regularização</li>
-                    <li><span class="del-check">✔</span> Emissão de guias DAS em atraso</li>
-                    <li><span class="del-check">✔</span> Envio da declaração manual (DASN)</li>
-                    <li><span class="del-check">✔</span> Suporte contra erros fiscais</li>
-                `;
-            } else {
-                title.innerText = 'Equipe Especializada';
-                desc.innerText = 'Deixe que nossos profissionais resolvam tudo por você.';
-                list.innerHTML = `
-                    <li><span class="del-check">✔</span> Regularização total feita por nossa equipe</li>
-                    <li><span class="del-check">✔</span> Unificação e parcelamento de dívidas</li>
-                    <li><span class="del-check">✔</span> Entrega de todas as declarações pendentes</li>
-                    <li><span class="del-check">✔</span> Relatório final de conformidade</li>
-                `;
-            }
+            title.innerText = 'Regularização Completa MEI';
+            desc.innerText = 'A solução mais rápida e segura para o seu negócio.';
+            list.innerHTML = `
+                <li><span class="del-check">✔</span> Diagnóstico Fiscal Completo (DAS e DASN)</li>
+                <li><span class="del-check">✔</span> Cálculo e Parcelamento de Dívidas em até 60x</li>
+                <li><span class="del-check">✔</span> Entrega de todas as declarações em atraso</li>
+                <li><span class="del-check">✔</span> Baixa de bloqueios administrativos</li>
+                <li><span class="del-check">✔</span> Suporte via WhatsApp após regularização</li>
+            `;
             
             show('step-plan-details');
         }
@@ -1689,8 +1715,8 @@
                 // Atualizar o campo global para o robô usar
                 document.getElementById('user-doc').value = doc;
                 
-                // Seguir o fluxo dependendo do plano
-                if (currentPlanPrice === 69.90) {
+                // Seguir o fluxo dependendo do plano (único agora)
+                if (currentPlanPrice === 99.90) {
                     show('step-credentials');
                 } else {
                     show('step-mei-manual-info');
@@ -1930,12 +1956,22 @@
                     if (data.status === 'paid') {
                         clearInterval(paymentPollingInterval);
                         
+                        // Google Ads Conversion tracking
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'conversion', {
+                                // SUBSTITUIR 'AW-CONVERSION_ID/AW-CONVERSION_LABEL' PELOS SEUS DADOS REAIS
+                                'send_to': 'AW-CONVERSION_ID/AW-CONVERSION_LABEL',
+                                'value': 99.90,
+                                'currency': 'BRL'
+                            });
+                        }
+                        
                         // Verificar se temos CNPJ
                         const cnpj = document.getElementById('user-doc').value;
                         if (!cnpj || cnpj.length < 14) {
                             show('step-collect-doc');
                         } else {
-                            if (selectedPrice === 69.90) {
+                            if (selectedPrice === 99.90) {
                                 show('step-credentials');
                             } else {
                                 show('step-mei-manual-info');
