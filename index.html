@@ -1079,22 +1079,24 @@
                     <span class="icon">🔥</span>
                     <span>Atenção: promoção válida para hoje e amanhã somente</span>
                 </div>
-                <div class="home-plans-grid">
-                    <div class="plan-card premium" onclick="selectInitialPlan('full', 99.90)">
-                        <div class="premium-badge">Oportunidade Única</div>
-                        <div class="plan-title" style="margin-bottom: 5px;">Regularização Completa MEI</div>
-                        <div class="plan-price" style="margin-bottom: 10px; flex-direction: column; align-items: center;">
-                            <span class="price-anchor">R$ 189,90</span>
-                            <div>
-                                <span class="plan-price-unit">R$ </span><span class="val">99</span><span class="unit">,90</span>
+                <div id="home-choices">
+                    <div class="home-plans-grid">
+                        <div class="plan-card premium" onclick="selectInitialPlan('full', 99.90)">
+                            <div class="premium-badge">Oportunidade Única</div>
+                            <div class="plan-title" style="margin-bottom: 5px;">Regularização Completa MEI</div>
+                            <div class="plan-price" style="margin-bottom: 10px; flex-direction: column; align-items: center;">
+                                <span class="price-anchor">R$ 189,90</span>
+                                <div>
+                                    <span class="plan-price-unit">R$ </span><span class="val">99</span><span class="unit">,90</span>
+                                </div>
                             </div>
+                            <p class="plan-desc" style="font-size: 11px;">Diagnóstico + Parcelamento de Dívidas + Entrega de Declarações Atrasadas.</p>
+                            <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: 10px;">Contratar Regularização Completa</button>
                         </div>
-                        <p class="plan-desc" style="font-size: 11px;">Diagnóstico + Parcelamento de Dívidas + Entrega de Declarações Atrasadas.</p>
-                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: 10px;">Contratar Regularização Completa</button>
                     </div>
-                </div>
 
-                <button class="btn-cta" onclick="selectType('mei')" style="background: var(--ink); margin-bottom: 20px;">Consulte seu MEI de forma rápida →</button>
+                    <button class="btn-cta" onclick="selectType('mei')" style="background: var(--ink); margin-bottom: 20px; margin-top: 20px;">Consulte seu MEI de forma rápida →</button>
+                </div>
 
                 <!-- Container do Input -->
                 <div id="doc-input-container" style="display:none; animation: fadeUp .3s ease both;">
