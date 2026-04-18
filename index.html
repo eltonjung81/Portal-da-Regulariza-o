@@ -1000,6 +1000,36 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ── PEACE BANNER ── */
+        .peace-banner {
+            background: var(--green-bg);
+            border: 1px solid #c3e6cb;
+            border-radius: 6px;
+            padding: 16px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: left;
+            box-shadow: 0 4px 12px rgba(26, 107, 60, 0.05);
+        }
+        .peace-banner .icon {
+            font-size: 24px;
+            color: var(--green);
+            flex-shrink: 0;
+        }
+        .peace-banner .text {
+            font-size: 13px;
+            line-height: 1.4;
+            color: #155724;
+        }
+        .peace-banner .text strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: var(--green);
+        }
     </style>
     <!-- Facebook Pixel Code -->
     <script>
@@ -1085,7 +1115,22 @@
                                 </div>
                             </div>
                             <p class="plan-desc" style="font-size: 11px;">Diagnóstico + Parcelamento de Dívidas + Entrega de Declarações Atrasadas.</p>
+                            
+                            <div style="background: rgba(26, 107, 60, 0.05); padding: 8px; border-radius: 4px; margin-bottom: 10px; border: 1px dashed var(--green);">
+                                <p style="font-size: 10px; color: var(--green); font-weight: 700; text-transform: uppercase; margin: 0; display: flex; align-items: center; gap: 4px; justify-content: center;">
+                                    🛡️ Burocracia Zero por nossa conta
+                                </p>
+                            </div>
+
                             <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: 10px;">Contratar Regularização Completa</button>
+                        </div>
+                    </div>
+
+                    <div class="peace-banner">
+                        <div class="icon">🛡️</div>
+                        <div class="text">
+                            <strong>Fique tranquilo.</strong>
+                            Toda a burocracia será feita por nós. Você foca no seu negócio, nós resolvemos o resto com rapidez e segurança.
                         </div>
                     </div>
 
@@ -1276,7 +1321,10 @@
                                 <span class="plan-price-unit">R$&nbsp;</span><span class="val">99</span><span class="unit">,90</span>
                             </div>
                         </div>
-                        <p class="plan-desc">Nossa equipe faz todo o trabalho burocrático para você: Diagnóstico + Parcelamento + Declarações.</p>
+                        <p class="plan-desc">Fique tranquilo: nossa equipe faz todo o trabalho burocrático para você. Resolva DAS, parcelamento e declarações sem dor de cabeça.</p>
+                        <div class="guarantee-badge" style="margin-top: 5px;">
+                            <span>🛡️ Zero Burocracia: Nós fazemos tudo</span>
+                        </div>
                         <div class="guarantee-badge">
                             <span>🛡️ Satisfação garantida ou seu dinheiro de volta</span>
                         </div>
