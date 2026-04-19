@@ -44,10 +44,38 @@ class SearchCNPJRequest(BaseModel):
     nome: str
     cpf: str
 
+class DiagnosticoLeadRequest(BaseModel):
+    cnpj: str
+    nome: str
+    atividade: Optional[str] = ""
+    tempo_mei: Optional[str] = ""
+    situacao_das: Optional[str] = ""
+    preocupacoes: Optional[str] = ""
+    phone: str
+    email: Optional[str] = ""
+
 @router.post("/buscar-cnpj")
 async def buscar_cnpj(request: SearchCNPJRequest):
     cnpjs = await search_cnpj_on_google(request.nome, request.cpf)
     return {"cnpjs": cnpjs}
+
+@router.post("/diagnostico-lead")
+async def receive_diagnostico_lead(request: DiagnosticoLeadRequest):
+    from app.services.db import save_diagnostico_lead
+    lead_id = str(uuid.uuid4())
+    lead_data = {
+        "id": lead_id,
+        "cnpj": request.cnpj,
+        "nome": request.nome,
+        "atividade": request.atividade,
+        "tempo_mei": request.tempo_mei,
+        "situacao_das": request.situacao_das,
+        "preocupacoes": request.preocupacoes,
+        "phone": request.phone,
+        "email": request.email
+    }
+    await save_diagnostico_lead(lead_data)
+    return {"status": "ok", "id": lead_id}
 
 @router.post("/checkout")
 async def checkout(request: CheckoutRequest):

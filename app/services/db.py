@@ -58,6 +58,24 @@ async def save_order(order_data: dict):
             ))
             await conn.commit()
 
+async def save_diagnostico_lead(lead_data: dict):
+    async with await get_db_connection() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute("""
+                INSERT INTO leads (id, cnpj, razao_social, plan, price, status, phone, message)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, (
+                lead_data["id"],
+                lead_data["cnpj"],
+                lead_data.get("nome", ""),
+                "Diagnóstico Gratuito",
+                0.0,
+                "lead_diagnostico",
+                lead_data.get("phone", ""),
+                f"Atividade: {lead_data.get('atividade')} | Tempo: {lead_data.get('tempo_mei')} | Situação: {lead_data.get('situacao_das')} | Preocupações: {lead_data.get('preocupacoes')} | Email: {lead_data.get('email')}"
+            ))
+            await conn.commit()
+
 async def get_order(order_id: str):
     async with await get_db_connection() as conn:
         async with conn.cursor() as cur:
