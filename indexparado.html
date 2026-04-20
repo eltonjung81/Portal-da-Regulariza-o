@@ -1271,24 +1271,35 @@
                     <div class="pb"></div>
                 </div>
                 <!-- Escolha Inicial com Ofertas -->
-                <div class="promo-banner">
-                    <span class="icon">🔥</span>
-                    <span>Atenção: promoção válida para hoje e amanhã somente</span>
-                </div>
+                <!-- Escolha Inicial -->
                 <div id="home-choices">
                     <div class="home-plans-grid">
                         <div class="plan-card premium" onclick="selectType('mei')">
                             <div class="premium-badge">Consulta Gratuita</div>
-                            <div class="plan-title" style="margin-bottom: 5px;">Regularização Completa MEI</div>
-                            <p class="plan-desc" style="font-size: 12px; margin-top: 10px;">Diagnóstico + Parcelamento de Dívidas + Entrega de Declarações Atrasadas. Nossa equipe resolve tudo por você.</p>
+                            <div class="plan-title" style="margin-bottom: 5px;">Tenho meu CNPJ</div>
+                            <p class="plan-desc" style="font-size: 12px; margin-top: 10px;">Diagnóstico rápido das suas dívidas e declarações pendentes. Descubra sua situação na hora.</p>
                             
                             <div style="background: rgba(26, 107, 60, 0.05); padding: 8px; border-radius: 4px; margin-bottom: 10px; border: 1px dashed var(--green);">
                                 <p style="font-size: 10px; color: var(--green); font-weight: 700; text-transform: uppercase; margin: 0; display: flex; align-items: center; gap: 4px; justify-content: center;">
-                                    🛡️ Burocracia Zero por nossa conta
+                                    🚀 Resultado Imediato
                                 </p>
                             </div>
 
-                            <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: 10px;">Regularizar Meu MEI Agora →</button>
+                            <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: 10px;">Consultar Meu CNPJ →</button>
+                        </div>
+
+                        <div class="plan-card" onclick="showDirectLead()" style="border-color: var(--rule); background: #fff;">
+                            <div class="premium-badge" style="background: var(--ink); color: #fff;">Falar com Especialista</div>
+                            <div class="plan-title" style="margin-bottom: 5px;">Não sei meu CNPJ</div>
+                            <p class="plan-desc" style="font-size: 12px; margin-top: 10px;">Não lembra do CNPJ ou prefere atendimento direto? Deixe seu contato e nós te ajudamos.</p>
+                            
+                            <div style="background: #f8f9fa; padding: 8px; border-radius: 4px; margin-bottom: 10px; border: 1px dashed #ccc;">
+                                <p style="font-size: 10px; color: var(--ink); font-weight: 700; text-transform: uppercase; margin: 0; display: flex; align-items: center; gap: 4px; justify-content: center;">
+                                    📞 Atendimento Humano
+                                </p>
+                            </div>
+
+                            <button class="btn-cta" style="background: var(--ink); padding: 12px; font-size: 11px; margin-top: 10px;">Solicitar Contato →</button>
                         </div>
                     </div>
 
@@ -1299,8 +1310,6 @@
                             Toda a burocracia será feita por nós. Você foca no seu negócio, nós resolvemos o resto com rapidez e segurança.
                         </div>
                     </div>
-
-                    <button class="btn-cta" onclick="selectType('mei')" style="background: var(--ink); margin-bottom: 20px; margin-top: 20px;">Regularizar meu MEI agora →</button>
                 </div>
 
                 <!-- Container do Input -->
@@ -1325,6 +1334,29 @@
                     </div>
 
                     <button class="btn-ghost" onclick="resetTypeSelection()">Voltar</button>
+                </div>
+
+                <!-- Container do Contato Direto -->
+                <div id="direct-lead-container" style="display:none; animation: fadeUp .3s ease both;">
+                    <div class="step-label" style="margin-bottom: 12px;">Atendimento Personalizado</div>
+                    <h2 style="font-size: 20px; margin-bottom: 8px;">Como podemos chamar você?</h2>
+                    <p class="desc" style="margin-bottom: 20px;">Deixe seu nome e WhatsApp. Nossa equipe entrará em contato rapidinho para consultar seu CNPJ e resolver suas pendências.</p>
+
+                    <div class="field">
+                        <label>Seu Nome Completo</label>
+                        <input type="text" id="direct-name" placeholder="Ex: João da Silva">
+                    </div>
+
+                    <div class="field">
+                        <label>WhatsApp (com DDD)</label>
+                        <input type="text" id="direct-phone" placeholder="(00) 00000-0000" oninput="maskPhone(this)">
+                    </div>
+
+                    <button class="btn-cta" onclick="submitDirectLead()" id="btn-direct-whatsapp" style="background: #25D366; font-size: 15px; padding: 18px 24px; letter-spacing: 0.03em; margin-top: 10px;">
+                        💬 Enviar e Falar no WhatsApp
+                    </button>
+                    
+                    <button class="btn-ghost" onclick="resetTypeSelection()" style="margin-top: 15px;">Voltar</button>
                 </div>
 
                 <div id="consulting-loader" style="display:none; text-align:center; padding: 20px 0;">
