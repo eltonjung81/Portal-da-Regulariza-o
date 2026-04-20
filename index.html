@@ -1921,9 +1921,11 @@
     <!-- FOOTER -->
     <footer>
         <div class="footer-left">
-            Este site presta serviços de consultoria técnica privada e não é o portal oficial do governo. Atuamos como facilitadores na regularização de CNPJ. <br><br>
-            Este serviço oferece orientações baseadas em informações públicas disponibilizadas pela Receita Federal do
-            Brasil. Não substitui assessoria jurídica ou contábil formal.
+            <strong>Razão Social:</strong> Elton Jung<br>
+            <strong>CNPJ:</strong> 28.600.483/0001-84<br>
+            <strong>Endereço:</strong> Gal Flores, 691, Centro, Agudo - RS, CEP 96540-000.<br><br>
+            <strong>Aviso Legal:</strong> A Elton Jung é uma empresa privada de consultoria administrativa. Não somos o Portal do Empreendedor, o SEBRAE ou qualquer órgão do Governo Federal. Atuamos de forma independente para facilitar processos de regularização.<br><br>
+            <a href="javascript:void(0)" onclick="openPrivacyModal()" style="color: var(--gold); text-decoration: underline;">Política de Privacidade</a>
         </div>
         <div class="footer-right">
             <span class="footer-lock">🔒</span>
@@ -1931,7 +1933,23 @@
         </div>
     </footer>
 
+    <!-- POLICY MODAL -->
+    <div id="privacy-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 24px;">Política de Privacidade</h3>
+            <p style="text-align: left; font-size: 14px;">Os dados coletados (CNPJ e WhatsApp) são utilizados exclusivamente para o contato de consultoria solicitado pelo usuário. Não compartilhamos informações com terceiros e respeitamos a LGPD.</p>
+            <button class="btn-cta gold" onclick="closePrivacyModal()">Entendi</button>
+        </div>
+    </div>
+
     <script>
+        function openPrivacyModal() {
+            document.getElementById('privacy-modal').style.display = 'flex';
+        }
+        function closePrivacyModal() {
+            document.getElementById('privacy-modal').style.display = 'none';
+        }
+
         // Flags para garantir disparo único por formulário
         let trackedDocStart = false;
         let trackedPremiumStart = false;
@@ -1966,6 +1984,68 @@
         // Redireciona para o input de CNPJ em vez de checkout
         function selectInitialPlan(type, price) {
             selectType('mei');
+        }
+
+        function showDirectLead() {
+            const choices = document.getElementById('home-choices');
+            const container = document.getElementById('direct-lead-container');
+
+            if (choices) choices.style.display = 'none';
+            if (container) container.style.display = 'block';
+
+            if (typeof gtag === 'function') {
+                gtag('event', 'select_content', {
+                    content_type: 'consultation_type',
+                    item_id: 'direct_lead'
+                });
+            }
+        }
+
+        async function submitDirectLead() {
+            const name = document.getElementById('direct-name').value.trim();
+            const phone = document.getElementById('direct-phone').value;
+            const cleanPhone = phone.replace(/\D/g, '');
+
+            if (!name) {
+                alert('Por favor, informe seu nome completo.');
+                return;
+            }
+            if (cleanPhone.length < 10) {
+                alert('Por favor, informe um WhatsApp válido com DDD.');
+                return;
+            }
+
+            const btn = document.getElementById('btn-direct-whatsapp');
+            btn.disabled = true;
+            btn.innerText = 'Abrindo WhatsApp...';
+
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', { method: 'whatsapp', value: 1 });
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-18101510498/p5_SCPfin54cEOLCvLdD',
+                    'value': 1,
+                    'currency': 'BRL'
+                });
+            }
+            if (typeof fbq === 'function') {
+                fbq('track', 'Lead');
+            }
+
+            try {
+                await fetch('/api/v1/capturar-lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, phone, cnpj: "NÃO INFORMADO", razao_social: "Não Sei o CNPJ" })
+                });
+            } catch (e) {
+            }
+
+            const msg = `Olá, Elton! Solicitei a regularização pelo site e gostaria de prosseguir com o atendimento. Meu nome é ${name}.`;
+            // Using the same WhatsApp number as the other lead flow
+            const url = `https://wa.me/5551999906748?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+
+            show('step-success');
         }
 
         // Captura lead e abre WhatsApp com mensagem personalizada
@@ -2013,7 +2093,7 @@
             }
 
             // Abre WhatsApp com mensagem personalizada
-            const msg = `Olá! Acabei de consultar meu CNPJ ${cnpj} no site e quero ajuda profissional para regularizar minhas pendências.`;
+            const msg = `Olá, Elton! Solicitei a regularização do CNPJ ${cnpj} pelo site e gostaria de prosseguir com o atendimento.`;
             const url = `https://wa.me/5551999906748?text=${encodeURIComponent(msg)}`;
             window.open(url, '_blank');
 
@@ -2142,14 +2222,22 @@
         function resetTypeSelection() {
             const choices = document.getElementById('home-choices');
             const container = document.getElementById('doc-input-container');
+            const directContainer = document.getElementById('direct-lead-container');
             const loader = document.getElementById('consulting-loader');
             
             if (choices) choices.style.display = 'flex';
             if (container) container.style.display = 'none';
+            if (directContainer) directContainer.style.display = 'none';
             if (loader) loader.style.display = 'none';
             
             const input = document.getElementById('user-doc');
             if (input) input.value = '';
+            
+            const btnDirect = document.getElementById('btn-direct-whatsapp');
+            if (btnDirect) {
+                btnDirect.disabled = false;
+                btnDirect.innerText = '💬 Enviar e Falar no WhatsApp';
+            }
         }
 
         async function startConsultation() {
