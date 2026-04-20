@@ -1277,16 +1277,10 @@
                 </div>
                 <div id="home-choices">
                     <div class="home-plans-grid">
-                        <div class="plan-card premium" onclick="selectInitialPlan('full', 99.90)">
-                            <div class="premium-badge">Oportunidade Única</div>
+                        <div class="plan-card premium" onclick="selectType('mei')">
+                            <div class="premium-badge">Consulta Gratuita</div>
                             <div class="plan-title" style="margin-bottom: 5px;">Regularização Completa MEI</div>
-                            <div class="plan-price" style="margin-bottom: 10px; flex-direction: column; align-items: center;">
-                                <span class="price-anchor">R$ 189,90</span>
-                                <div>
-                                    <span class="plan-price-unit">R$ </span><span class="val">99</span><span class="unit">,90</span>
-                                </div>
-                            </div>
-                            <p class="plan-desc" style="font-size: 11px;">Diagnóstico + Parcelamento de Dívidas + Entrega de Declarações Atrasadas.</p>
+                            <p class="plan-desc" style="font-size: 12px; margin-top: 10px;">Diagnóstico + Parcelamento de Dívidas + Entrega de Declarações Atrasadas. Nossa equipe resolve tudo por você.</p>
                             
                             <div style="background: rgba(26, 107, 60, 0.05); padding: 8px; border-radius: 4px; margin-bottom: 10px; border: 1px dashed var(--green);">
                                 <p style="font-size: 10px; color: var(--green); font-weight: 700; text-transform: uppercase; margin: 0; display: flex; align-items: center; gap: 4px; justify-content: center;">
@@ -1294,7 +1288,7 @@
                                 </p>
                             </div>
 
-                            <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: 10px;">Contratar Regularização Completa</button>
+                            <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: 10px;">Regularizar Meu MEI Agora →</button>
                         </div>
                     </div>
 
@@ -1426,22 +1420,40 @@
 
                 <div class="divider"></div>
 
-                <div class="home-plans-grid" style="margin-top: 10px;">
-                    <div class="plan-card premium" onclick="selectInitialPlan('full', 99.90)">
-                        <div class="premium-badge">Oportunidade Única</div>
-                        <div class="plan-title" style="margin-bottom: 5px;">Regularização Completa MEI</div>
-                        <div class="plan-price" style="margin-bottom: 10px; flex-direction: column; align-items: center;">
-                            <span class="price-anchor">R$ 189,90</span>
-                            <div>
-                                <span class="plan-price-unit">R$ </span><span class="val">99</span><span class="unit">,90</span>
-                            </div>
-                        </div>
-                        <p class="plan-desc" style="font-size: 11px;">Diagnóstico Completo + Parcelamento de Dívidas + Entrega de Declarações Atrasadas.</p>
-                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: 10px;">Contratar Regularização Agora</button>
+                <!-- LEAD CAPTURE FORM -->
+                <div style="margin-top: 4px;">
+                    <div class="step-label" style="margin-bottom: 12px;">Último passo — Atendimento Especializado</div>
+                    <h2 style="font-size: 20px; margin-bottom: 8px;">Informe seus dados para o contato</h2>
+                    <p class="desc" style="margin-bottom: 20px;">Nossa equipe especializada entrará em contato pelo WhatsApp para resolver todas as suas pendências sem burocracia.</p>
+
+                    <div class="field">
+                        <label>Seu Nome Completo</label>
+                        <input type="text" id="lead-name" placeholder="Ex: João da Silva">
                     </div>
+
+                    <div class="field">
+                        <label>WhatsApp (com DDD)</label>
+                        <input type="text" id="lead-phone" placeholder="(00) 00000-0000" oninput="maskPhone(this)">
+                    </div>
+
+                    <div class="peace-banner" style="margin-bottom: 20px;">
+                        <div class="icon">🛡️</div>
+                        <div class="text">
+                            <strong>Fique tranquilo.</strong>
+                            Toda a burocracia será feita por nós. Você só precisa autorizar.
+                        </div>
+                    </div>
+
+                    <button class="btn-cta" onclick="submitLeadWhatsApp()" id="btn-lead-whatsapp" style="background: #25D366; font-size: 15px; padding: 18px 24px; letter-spacing: 0.03em;">
+                        💬 Finalizar Regularização pelo WhatsApp
+                    </button>
+
+                    <p style="font-size: 11px; color: var(--muted); text-align: center; margin-top: 12px;">
+                        🔒 Seus dados são usados exclusivamente para o seu atendimento
+                    </p>
                 </div>
-                
-                <button class="btn-ghost" onclick="show('step-home')" style="margin-top: 20px;">Voltar</button>
+
+                <button class="btn-ghost" onclick="show('step-home')" style="margin-top: 16px;">Voltar</button>
             </section>
 
 
@@ -1909,31 +1921,66 @@
         let selectedPlanName = '';
         let currentPlanPrice = 0;
 
+        // Redireciona para o input de CNPJ em vez de checkout
         function selectInitialPlan(type, price) {
-            selectedPlanName = 'Regularização Completa MEI';
-            currentPlanPrice = price;
-            
-            const title = document.getElementById('plan-details-title');
-            const desc = document.getElementById('plan-details-desc');
-            const list = document.getElementById('plan-details-list');
-            
-            title.innerText = 'Regularização Completa MEI';
-            desc.innerText = 'A solução mais rápida e segura para o seu negócio.';
-            list.innerHTML = `
-                <li><span class="del-check">✔</span> Diagnóstico Fiscal Completo (DAS e DASN)</li>
-                <li><span class="del-check">✔</span> Cálculo e Parcelamento de Dívidas em até 60x</li>
-                <li><span class="del-check">✔</span> Entrega de todas as declarações em atraso</li>
-                <li><span class="del-check">✔</span> Baixa de bloqueios administrativos</li>
-                <li><span class="del-check">✔</span> Suporte via WhatsApp após regularização</li>
-            `;
-            
-            show('step-plan-details');
+            selectType('mei');
+        }
+
+        // Captura lead e abre WhatsApp com mensagem personalizada
+        async function submitLeadWhatsApp() {
+            const name = document.getElementById('lead-name').value.trim();
+            const phone = document.getElementById('lead-phone').value;
+            const cnpj = document.getElementById('user-doc').value || '';
+            const cleanPhone = phone.replace(/\D/g, '');
+
+            if (!name) {
+                alert('Por favor, informe seu nome completo.');
+                return;
+            }
+            if (cleanPhone.length < 10) {
+                alert('Por favor, informe um WhatsApp válido com DDD.');
+                return;
+            }
+
+            const btn = document.getElementById('btn-lead-whatsapp');
+            btn.disabled = true;
+            btn.innerText = 'Abrindo WhatsApp...';
+
+            // Disparo de eventos de conversão
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', { method: 'whatsapp', value: 1 });
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-18101510498/p5_SCPfin54cEOLCvLdD',
+                    'value': 1,
+                    'currency': 'BRL'
+                });
+            }
+            if (typeof fbq === 'function') {
+                fbq('track', 'Lead');
+            }
+
+            // Salva lead no backend (não bloqueia o fluxo)
+            try {
+                await fetch('/api/v1/capturar-lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, phone, cnpj, razao_social: currentRazaoSocial })
+                });
+            } catch (e) {
+                // Silent fail — o WhatsApp sempre abre
+            }
+
+            // Abre WhatsApp com mensagem personalizada
+            const msg = `Olá! Acabei de consultar meu CNPJ ${cnpj} no site e quero ajuda profissional para regularizar minhas pendências.`;
+            const url = `https://wa.me/5551999906748?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+
+            // Mostra tela de sucesso
+            show('step-success');
         }
 
         async function confirmCurrentPlan() {
-            // Se já tivermos CNPJ (veio da consulta), usamos. Se não, vai vázio e pedimos depois.
-            const doc = document.getElementById('user-doc').value;
-            startCheckout(selectedPlanName, currentPlanPrice);
+            submitLeadWhatsApp();
         }
 
         async function submitPostPayDoc() {

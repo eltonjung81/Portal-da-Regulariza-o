@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEI em Dia | Regularização de Débitos MEI</title>
+    <title>Regularização de MEI e Parcelamento de Dívidas em Atraso | MEI em Dia</title>
     <meta name="description"
-        content="Regularize sua situação fiscal MEI com automação inteligente. DAS em atraso e DASN pendente resolvidas com segurança.">
+        content="Evite o cancelamento do seu CNPJ e a cobrança na Dívida Ativa. Regularizamos seu MEI com parcelamento de DAS, entrega de DASN e negociação de débitos na PGFN. Processo rápido e 100% seguro.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -967,6 +967,179 @@
             box-shadow: 0 4px 12px rgba(181, 153, 94, 0.1);
         }
 
+        /* ── URGENCY SERVICES SECTION ── */
+        .urgency-section {
+            width: 100%;
+            max-width: 780px;
+            padding: 0 32px 56px;
+        }
+
+        .urgency-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(22px, 3.5vw, 30px);
+            font-weight: 700;
+            text-align: center;
+            color: var(--ink);
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .urgency-subtitle {
+            font-size: 14px;
+            color: var(--muted);
+            text-align: center;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .urgency-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .urgency-card {
+            background: var(--surface);
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            padding: 24px 20px;
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+
+        .urgency-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 4px 20px rgba(184, 146, 74, 0.1);
+        }
+
+        .urgency-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+        }
+
+        .urgency-card-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .urgency-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .urgency-card-desc {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.55;
+            font-weight: 300;
+        }
+
+        .urgency-tag {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--red);
+            background: #FFF0EE;
+            border: 1px solid #FECECA;
+            border-radius: 20px;
+            padding: 3px 10px;
+        }
+
+        /* ── SOCIAL PROOF SECTION ── */
+        .social-proof-section {
+            width: 100%;
+            max-width: 780px;
+            padding: 0 32px 56px;
+        }
+
+        .proof-grid {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            overflow: hidden;
+            background: var(--surface);
+        }
+
+        .proof-item {
+            flex: 1;
+            text-align: center;
+            padding: 24px 16px;
+            border-right: 1px solid var(--rule);
+        }
+
+        .proof-item:last-child {
+            border-right: none;
+        }
+
+        .proof-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .proof-label {
+            font-size: 11px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        @media(max-width: 600px) {
+            .urgency-grid {
+                grid-template-columns: 1fr;
+            }
+            .urgency-section {
+                padding: 0 24px 40px;
+            }
+            .social-proof-section {
+                padding: 0 24px 40px;
+            }
+            .proof-grid {
+                flex-wrap: wrap;
+            }
+            .proof-item {
+                flex: 1 1 50%;
+                border-bottom: 1px solid var(--rule);
+            }
+            .proof-item:nth-child(2) {
+                border-right: none;
+            }
+        }
+
+        /* ── MOBILE: WhatsApp button - prevent covering form elements ── */
+        @media(max-width: 600px) {
+            .whatsapp-float {
+                bottom: 16px;
+                right: 16px;
+                padding: 10px 14px;
+                font-size: 22px;
+            }
+            .whatsapp-float span.wa-text {
+                display: none;
+            }
+            .card-wrap {
+                padding-bottom: 100px;
+            }
+        }
+
         .promo-banner .icon {
             font-size: 16px;
             animation: pulse 1.5s infinite;
@@ -1071,17 +1244,16 @@
 
     <!-- HERO -->
     <div class="hero">
-        <div class="hero-eyebrow">Consultoria Tributária Digital</div>
+        <div class="hero-eyebrow">Especialistas em Regularização de MEI</div>
         <div class="hero-name">Elton Jung (Especialista Técnico)</div>
-        <h1>Regularize seu MEI<br><em>em poucos minutos</em></h1>
-        <p class="hero-sub">Orientação especializada para resolver sua situação junto à Receita Federal. Processo claro,
-            resultado em dias.</p>
+        <h1>Regularização de MEI e<br><em>Parcelamento de Dívidas em Atraso</em></h1>
+        <p class="hero-sub">Evite o cancelamento do seu CNPJ e a cobrança na Dívida Ativa. Resolvemos suas pendências de forma rápida e profissional.</p>
         <div class="trust-row">
-            <span>Informações oficiais</span>
+            <span>Consultoria Especializada</span>
             <div class="trust-sep"></div>
-            <span>Atendimento humanizado</span>
+            <span>Processo 100% Seguro</span>
             <div class="trust-sep"></div>
-            <span>Resultado garantido</span>
+            <span>+500 MEIs Regularizados</span>
         </div>
     </div>
 
@@ -1105,16 +1277,10 @@
                 </div>
                 <div id="home-choices">
                     <div class="home-plans-grid">
-                        <div class="plan-card premium" onclick="selectInitialPlan('full', 99.90)">
-                            <div class="premium-badge">Oportunidade Única</div>
+                        <div class="plan-card premium" onclick="selectType('mei')">
+                            <div class="premium-badge">Consulta Gratuita</div>
                             <div class="plan-title" style="margin-bottom: 5px;">Regularização Completa MEI</div>
-                            <div class="plan-price" style="margin-bottom: 10px; flex-direction: column; align-items: center;">
-                                <span class="price-anchor">R$ 189,90</span>
-                                <div>
-                                    <span class="plan-price-unit">R$ </span><span class="val">99</span><span class="unit">,90</span>
-                                </div>
-                            </div>
-                            <p class="plan-desc" style="font-size: 11px;">Diagnóstico + Parcelamento de Dívidas + Entrega de Declarações Atrasadas.</p>
+                            <p class="plan-desc" style="font-size: 12px; margin-top: 10px;">Diagnóstico + Parcelamento de Dívidas + Entrega de Declarações Atrasadas. Nossa equipe resolve tudo por você.</p>
                             
                             <div style="background: rgba(26, 107, 60, 0.05); padding: 8px; border-radius: 4px; margin-bottom: 10px; border: 1px dashed var(--green);">
                                 <p style="font-size: 10px; color: var(--green); font-weight: 700; text-transform: uppercase; margin: 0; display: flex; align-items: center; gap: 4px; justify-content: center;">
@@ -1122,7 +1288,7 @@
                                 </p>
                             </div>
 
-                            <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: 10px;">Contratar Regularização Completa</button>
+                            <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: 10px;">Regularizar Meu MEI Agora →</button>
                         </div>
                     </div>
 
@@ -1134,7 +1300,7 @@
                         </div>
                     </div>
 
-                    <button class="btn-cta" onclick="selectType('mei')" style="background: var(--ink); margin-bottom: 20px; margin-top: 20px;">Consulte seu MEI de forma rápida →</button>
+                    <button class="btn-cta" onclick="selectType('mei')" style="background: var(--ink); margin-bottom: 20px; margin-top: 20px;">Regularizar meu MEI agora →</button>
                 </div>
 
                 <!-- Container do Input -->
@@ -1152,7 +1318,7 @@
                         </label>
                     </div>
 
-                    <button class="btn-cta" onclick="startConsultation()">Consultar Situação →</button>
+                    <button class="btn-cta" onclick="startConsultation()">Regularizar meu MEI agora →</button>
                     
                     <div style="margin-top: 15px; text-align: center;">
                         <a href="javascript:void(0)" onclick="show('step-find-cnpj')" style="font-size: 13px; color: var(--gold); text-decoration: none; font-weight: 500;">Não sabe seu CNPJ? Encontre aqui →</a>
@@ -1254,22 +1420,40 @@
 
                 <div class="divider"></div>
 
-                <div class="home-plans-grid" style="margin-top: 10px;">
-                    <div class="plan-card premium" onclick="selectInitialPlan('full', 99.90)">
-                        <div class="premium-badge">Oportunidade Única</div>
-                        <div class="plan-title" style="margin-bottom: 5px;">Regularização Completa MEI</div>
-                        <div class="plan-price" style="margin-bottom: 10px; flex-direction: column; align-items: center;">
-                            <span class="price-anchor">R$ 189,90</span>
-                            <div>
-                                <span class="plan-price-unit">R$ </span><span class="val">99</span><span class="unit">,90</span>
-                            </div>
-                        </div>
-                        <p class="plan-desc" style="font-size: 11px;">Diagnóstico Completo + Parcelamento de Dívidas + Entrega de Declarações Atrasadas.</p>
-                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: 10px;">Contratar Regularização Agora</button>
+                <!-- LEAD CAPTURE FORM -->
+                <div style="margin-top: 4px;">
+                    <div class="step-label" style="margin-bottom: 12px;">Último passo — Atendimento Especializado</div>
+                    <h2 style="font-size: 20px; margin-bottom: 8px;">Informe seus dados para o contato</h2>
+                    <p class="desc" style="margin-bottom: 20px;">Nossa equipe especializada entrará em contato pelo WhatsApp para resolver todas as suas pendências sem burocracia.</p>
+
+                    <div class="field">
+                        <label>Seu Nome Completo</label>
+                        <input type="text" id="lead-name" placeholder="Ex: João da Silva">
                     </div>
+
+                    <div class="field">
+                        <label>WhatsApp (com DDD)</label>
+                        <input type="text" id="lead-phone" placeholder="(00) 00000-0000" oninput="maskPhone(this)">
+                    </div>
+
+                    <div class="peace-banner" style="margin-bottom: 20px;">
+                        <div class="icon">🛡️</div>
+                        <div class="text">
+                            <strong>Fique tranquilo.</strong>
+                            Toda a burocracia será feita por nós. Você só precisa autorizar.
+                        </div>
+                    </div>
+
+                    <button class="btn-cta" onclick="submitLeadWhatsApp()" id="btn-lead-whatsapp" style="background: #25D366; font-size: 15px; padding: 18px 24px; letter-spacing: 0.03em;">
+                        💬 Finalizar Regularização pelo WhatsApp
+                    </button>
+
+                    <p style="font-size: 11px; color: var(--muted); text-align: center; margin-top: 12px;">
+                        🔒 Seus dados são usados exclusivamente para o seu atendimento
+                    </p>
                 </div>
-                
-                <button class="btn-ghost" onclick="show('step-home')" style="margin-top: 20px;">Voltar</button>
+
+                <button class="btn-ghost" onclick="show('step-home')" style="margin-top: 16px;">Voltar</button>
             </section>
 
 
@@ -1638,6 +1822,60 @@
         </div><!-- .card -->
     </div><!-- .card-wrap -->
 
+    <!-- ── SOCIAL PROOF SECTION ── -->
+    <div class="social-proof-section">
+        <div class="proof-grid">
+            <div class="proof-item">
+                <span class="proof-number">+500</span>
+                <span class="proof-label">MEIs<br>Regularizados</span>
+            </div>
+            <div class="proof-item">
+                <span class="proof-number">100%</span>
+                <span class="proof-label">Processo<br>Seguro</span>
+            </div>
+            <div class="proof-item">
+                <span class="proof-number">60x</span>
+                <span class="proof-label">Parcelamento<br>de DAS</span>
+            </div>
+            <div class="proof-item">
+                <span class="proof-number">24h</span>
+                <span class="proof-label">Atendimento<br>Prioritário</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── URGENCY SERVICES SECTION ── -->
+    <div class="urgency-section">
+        <h2 class="urgency-title">Serviços de Urgência para MEI</h2>
+        <p class="urgency-subtitle">Identifique sua situação e resolva agora — antes que piore.</p>
+        <div class="urgency-grid">
+            <div class="urgency-card">
+                <span class="urgency-card-icon">🚫</span>
+                <div class="urgency-card-title">CNPJ Bloqueado ou Suspenso</div>
+                <p class="urgency-card-desc">Seu CNPJ pode ser cancelado a qualquer momento. Realizamos a reativação rápida junto à Receita Federal.</p>
+                <span class="urgency-tag">⚡ Reativação Urgente</span>
+            </div>
+            <div class="urgency-card">
+                <span class="urgency-card-icon">💰</span>
+                <div class="urgency-card-title">Parcelamento de DAS em Atraso</div>
+                <p class="urgency-card-desc">Parcelamos suas dívidas de DAS antigas em até <strong>60 vezes</strong>, com as melhores condições disponíveis.</p>
+                <span class="urgency-tag">⚡ Dívidas em até 60x</span>
+            </div>
+            <div class="urgency-card">
+                <span class="urgency-card-icon">⚖️</span>
+                <div class="urgency-card-title">Dívida Ativa (PGFN)</div>
+                <p class="urgency-card-desc">Débitos protestados na PGFN? Realizamos negociação especializada e apresentamos a solução com menor impacto possível.</p>
+                <span class="urgency-tag">⚡ Negociação Especializada</span>
+            </div>
+            <div class="urgency-card">
+                <span class="urgency-card-icon">📄</span>
+                <div class="urgency-card-title">Declaração Anual (DASN) Pendente</div>
+                <p class="urgency-card-desc">Declarações em atraso geram multas crescentes. Entregamos todas as suas DASNs pendentes para evitar penalidades.</p>
+                <span class="urgency-tag">⚡ Evite Multas Agora</span>
+            </div>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer>
         <div class="footer-left">
@@ -1683,31 +1921,66 @@
         let selectedPlanName = '';
         let currentPlanPrice = 0;
 
+        // Redireciona para o input de CNPJ em vez de checkout
         function selectInitialPlan(type, price) {
-            selectedPlanName = 'Regularização Completa MEI';
-            currentPlanPrice = price;
-            
-            const title = document.getElementById('plan-details-title');
-            const desc = document.getElementById('plan-details-desc');
-            const list = document.getElementById('plan-details-list');
-            
-            title.innerText = 'Regularização Completa MEI';
-            desc.innerText = 'A solução mais rápida e segura para o seu negócio.';
-            list.innerHTML = `
-                <li><span class="del-check">✔</span> Diagnóstico Fiscal Completo (DAS e DASN)</li>
-                <li><span class="del-check">✔</span> Cálculo e Parcelamento de Dívidas em até 60x</li>
-                <li><span class="del-check">✔</span> Entrega de todas as declarações em atraso</li>
-                <li><span class="del-check">✔</span> Baixa de bloqueios administrativos</li>
-                <li><span class="del-check">✔</span> Suporte via WhatsApp após regularização</li>
-            `;
-            
-            show('step-plan-details');
+            selectType('mei');
+        }
+
+        // Captura lead e abre WhatsApp com mensagem personalizada
+        async function submitLeadWhatsApp() {
+            const name = document.getElementById('lead-name').value.trim();
+            const phone = document.getElementById('lead-phone').value;
+            const cnpj = document.getElementById('user-doc').value || '';
+            const cleanPhone = phone.replace(/\D/g, '');
+
+            if (!name) {
+                alert('Por favor, informe seu nome completo.');
+                return;
+            }
+            if (cleanPhone.length < 10) {
+                alert('Por favor, informe um WhatsApp válido com DDD.');
+                return;
+            }
+
+            const btn = document.getElementById('btn-lead-whatsapp');
+            btn.disabled = true;
+            btn.innerText = 'Abrindo WhatsApp...';
+
+            // Disparo de eventos de conversão
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', { method: 'whatsapp', value: 1 });
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-18101510498/p5_SCPfin54cEOLCvLdD',
+                    'value': 1,
+                    'currency': 'BRL'
+                });
+            }
+            if (typeof fbq === 'function') {
+                fbq('track', 'Lead');
+            }
+
+            // Salva lead no backend (não bloqueia o fluxo)
+            try {
+                await fetch('/api/v1/capturar-lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, phone, cnpj, razao_social: currentRazaoSocial })
+                });
+            } catch (e) {
+                // Silent fail — o WhatsApp sempre abre
+            }
+
+            // Abre WhatsApp com mensagem personalizada
+            const msg = `Olá! Acabei de consultar meu CNPJ ${cnpj} no site e quero ajuda profissional para regularizar minhas pendências.`;
+            const url = `https://wa.me/5551999906748?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+
+            // Mostra tela de sucesso
+            show('step-success');
         }
 
         async function confirmCurrentPlan() {
-            // Se já tivermos CNPJ (veio da consulta), usamos. Se não, vai vázio e pedimos depois.
-            const doc = document.getElementById('user-doc').value;
-            startCheckout(selectedPlanName, currentPlanPrice);
+            submitLeadWhatsApp();
         }
 
         async function submitPostPayDoc() {
@@ -2321,9 +2594,9 @@
         }
     </script>
     <!-- WHATSAPP FLOAT -->
-    <a href="https://wa.me/5551999906748?text=Olá! Gostaria de tirar dúvidas sobre a regularização do meu MEI." class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/5551999906748?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20profissional%20para%20regularizar%20as%20d%C3%ADvidas%20do%20meu%20MEI%20hoje." class="whatsapp-float" target="_blank" id="whatsapp-float-btn" aria-label="Falar pelo WhatsApp">
         <span style="font-size: 20px;">💬</span>
-        <span>Tirar dúvidas pelo WhatsApp</span>
+        <span class="wa-text">Falar com especialista agora</span>
     </a>
 </body>
 
