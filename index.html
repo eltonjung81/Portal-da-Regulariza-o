@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regularização de MEI e Parcelamento de Dívidas em Atraso | MEI em Dia</title>
+    <title>Assessoria Particular para Regularização de MEI e Parcelamento</title>
     <meta name="description"
-        content="Evite o cancelamento do seu CNPJ e a cobrança na Dívida Ativa. Regularizamos seu MEI com parcelamento de DAS, entrega de DASN e negociação de débitos na PGFN. Processo rápido e 100% seguro.">
+        content="Evite o cancelamento do seu CNPJ e a cobrança na Dívida Ativa. Assessoramos seu MEI com parcelamento de DAS, organização de DASN e negociação de débitos na PGFN. Processo particular rápido e seguro.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -35,8 +35,8 @@
             --rule: #DDD8CF;
             --surface: #FFFFFF;
             --red: #C0392B;
-            --green: #1A6B3C;
-            --green-bg: #F0F7F3;
+            --accent: #D35400; /* Laranja/Grafite substitution for green */
+            --accent-bg: #FDF2E9;
         }
 
         * {
@@ -117,7 +117,7 @@
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: var(--green);
+            background: var(--accent);
             flex-shrink: 0;
         }
 
@@ -370,15 +370,15 @@
             border-radius: 3px;
             padding: 20px 20px;
             margin-bottom: 24px;
-            background: var(--green-bg);
-            border-left: 3px solid var(--green);
+            background: var(--accent-bg);
+            border-left: 3px solid var(--accent);
             display: flex;
             align-items: flex-start;
             gap: 12px;
         }
 
         .result-box .ri {
-            color: var(--green);
+            color: var(--accent);
             font-size: 18px;
             margin-top: 1px;
             flex-shrink: 0;
@@ -535,7 +535,7 @@
         }
 
         .del-check {
-            color: var(--green);
+            color: var(--accent);
             font-size: 14px;
             flex-shrink: 0;
             margin-top: 1px;
@@ -592,8 +592,8 @@
         }
 
         .copy-btn.copied {
-            border-color: var(--green);
-            color: var(--green);
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         /* ── SUCCESS ── */
@@ -606,13 +606,13 @@
             height: 72px;
             margin: 0 auto 24px;
             border-radius: 50%;
-            border: 2px solid var(--green);
+            border: 2px solid var(--accent);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
-            color: var(--green);
-            background: var(--green-bg);
+            color: var(--accent);
+            background: var(--accent-bg);
         }
 
         .success-wrap h2 {
@@ -761,7 +761,7 @@
             justify-content: center;
             gap: 8px;
             font-size: 13px;
-            color: var(--green);
+            color: var(--accent);
             margin: 15px 0;
             font-weight: 500;
         }
@@ -1176,8 +1176,8 @@
 
         /* ── PEACE BANNER ── */
         .peace-banner {
-            background: var(--green-bg);
-            border: 1px solid #c3e6cb;
+            background: var(--accent-bg);
+            border: 1px solid #FAD7A1;
             border-radius: 6px;
             padding: 16px;
             margin: 20px 0;
@@ -1185,23 +1185,23 @@
             align-items: center;
             gap: 12px;
             text-align: left;
-            box-shadow: 0 4px 12px rgba(26, 107, 60, 0.05);
+            box-shadow: 0 4px 12px rgba(184, 146, 74, 0.05);
         }
         .peace-banner .icon {
             font-size: 24px;
-            color: var(--green);
+            color: var(--ink);
             flex-shrink: 0;
         }
         .peace-banner .text {
             font-size: 13px;
             line-height: 1.4;
-            color: #155724;
+            color: var(--ink);
         }
         .peace-banner .text strong {
             display: block;
             font-size: 14px;
             margin-bottom: 4px;
-            color: var(--green);
+            color: var(--ink);
         }
     </style>
     <!-- Facebook Pixel Code -->
@@ -1226,6 +1226,11 @@
 
 <body>
 
+    <!-- DISCLAIMER TOPO -->
+    <div style="background: var(--ink); color: var(--gold); text-align: center; padding: 10px 16px; font-size: 12px; letter-spacing: 0.04em; font-weight: 500; font-family: 'DM Sans', sans-serif;">
+        Consultoria Administrativa Particular | Elton Jung Assessoria
+    </div>
+
     <!-- HEADER -->
     <header>
         <div class="logo">
@@ -1247,13 +1252,13 @@
         <div class="hero-eyebrow">Especialistas em Regularização de MEI</div>
         <div class="hero-name">Elton Jung (Especialista Técnico)</div>
         <h1>Regularização de MEI e<br><em>Parcelamento de Dívidas em Atraso</em></h1>
-        <p class="hero-sub">Evite o cancelamento do seu CNPJ e a cobrança na Dívida Ativa. Resolvemos suas pendências de forma rápida e profissional.</p>
+        <p class="hero-sub">Evite o cancelamento do seu CNPJ e a cobrança na Dívida Ativa. Assessoramos suas pendências de forma rápida e profissional.</p>
         <div class="trust-row">
-            <span>Consultoria Especializada</span>
+            <span>Consultoria Privada</span>
             <div class="trust-sep"></div>
-            <span>Processo 100% Seguro</span>
+            <span>Atendimento Particular</span>
             <div class="trust-sep"></div>
-            <span>+500 MEIs Regularizados</span>
+            <span>+500 MEIs Atendidos</span>
         </div>
     </div>
 
@@ -1279,9 +1284,9 @@
                             <div class="plan-title" style="margin-bottom: 5px;">Tenho meu CNPJ</div>
                             <p class="plan-desc" style="font-size: 12px; margin-top: 10px;">Diagnóstico rápido das suas dívidas e declarações pendentes. Descubra sua situação na hora.</p>
                             
-                            <div style="background: rgba(26, 107, 60, 0.05); padding: 8px; border-radius: 4px; margin-bottom: 10px; border: 1px dashed var(--green);">
-                                <p style="font-size: 10px; color: var(--green); font-weight: 700; text-transform: uppercase; margin: 0; display: flex; align-items: center; gap: 4px; justify-content: center;">
-                                    🚀 Resultado Imediato
+                            <div style="background: rgba(211, 84, 0, 0.05); padding: 8px; border-radius: 4px; margin-bottom: 10px; border: 1px dashed var(--accent);">
+                                <p style="font-size: 10px; color: var(--accent); font-weight: 700; text-transform: uppercase; margin: 0; display: flex; align-items: center; gap: 4px; justify-content: center;">
+                                    📊 Início Imediato da Análise
                                 </p>
                             </div>
 
@@ -1327,7 +1332,7 @@
                         </label>
                     </div>
 
-                    <button class="btn-cta" onclick="startConsultation()">Regularizar meu MEI agora →</button>
+                    <button class="btn-cta" onclick="startConsultation()">Solicitar análise do meu MEI →</button>
                     
                     <div style="margin-top: 15px; text-align: center;">
                         <a href="javascript:void(0)" onclick="show('step-find-cnpj')" style="font-size: 13px; color: var(--gold); text-decoration: none; font-weight: 500;">Não sabe seu CNPJ? Encontre aqui →</a>
@@ -1361,7 +1366,7 @@
 
                 <div id="consulting-loader" style="display:none; text-align:center; padding: 20px 0;">
                     <div class="loader-spinner"></div>
-                    <p id="loader-message" style="font-size: 14px; color: var(--gold); margin-top: 15px; font-weight: 500;">Consultando bases oficiais...</p>
+                    <p id="loader-message" style="font-size: 14px; color: var(--gold); margin-top: 15px; font-weight: 500;">Consultando bases públicas...</p>
                 </div>
             </section>
 
@@ -1477,7 +1482,7 @@
                     </div>
 
                     <button class="btn-cta" onclick="submitLeadWhatsApp()" id="btn-lead-whatsapp" style="background: #25D366; font-size: 15px; padding: 18px 24px; letter-spacing: 0.03em;">
-                        💬 Finalizar Regularização pelo WhatsApp
+                        💬 Solicitar Assistência via WhatsApp
                     </button>
 
                     <p style="font-size: 11px; color: var(--muted); text-align: center; margin-top: 12px;">
@@ -1511,7 +1516,7 @@
                     Seu processo será tratado com prioridade e acompanhamento profissional por nossa equipe especializada.
                 </div>
 
-                <button class="btn-cta gold" id="btn-confirm-plan" onclick="confirmCurrentPlan()">Confirmar Plano e Ir para Pagamento →</button>
+                <button class="btn-cta gold" id="btn-confirm-plan" onclick="confirmCurrentPlan()">Confirmar e Ir para Pagamento →</button>
                 <button class="btn-ghost" onclick="show('step-home')">Voltar</button>
             </section>
 
@@ -1537,14 +1542,14 @@
                                 <span class="plan-price-unit">R$&nbsp;</span><span class="val">99</span><span class="unit">,90</span>
                             </div>
                         </div>
-                        <p class="plan-desc">Fique tranquilo: nossa equipe faz todo o trabalho burocrático para você. Resolva DAS, parcelamento e declarações sem dor de cabeça.</p>
+                        <p class="plan-desc">Fique tranquilo: nossa construtoria avalia e orienta todo o trabalho burocrático para você em relação a DAS, parcelamento e declarações.</p>
                         <div class="guarantee-badge" style="margin-top: 5px;">
-                            <span>🛡️ Zero Burocracia: Nós fazemos tudo</span>
+                            <span>🤝 Assessoria Especializada Cuidando de Tudo</span>
                         </div>
                         <div class="guarantee-badge">
-                            <span>🛡️ Satisfação garantida ou seu dinheiro de volta</span>
+                            <span>🤝 Serviço de apoio ao microempreendedor</span>
                         </div>
-                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Selecionar Plano</button>
+                        <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: auto;">Selecionar Pacote</button>
                     </div>
                 </div>
 
@@ -1592,7 +1597,7 @@
 
                 <div class="alert-box">
                     📝 <strong>Importante:</strong><br>
-                    Nossa equipe usará este CNPJ para realizar a consulta oficial e iniciar o processo que você contratou.
+                    Nossa equipe usará este CNPJ para realizar a consulta em bases de dados e iniciar a assessoria contratada.
                 </div>
 
                 <button class="btn-cta gold" onclick="submitPostPayDoc()">Continuar para Próximo Passo →</button>
@@ -1626,7 +1631,7 @@
                     </label>
                 </div>
 
-                <button class="btn-cta gold" onclick="startRegularization()">Iniciar Regularização Agora →</button>
+                <button class="btn-cta gold" onclick="startRegularization()">Solicitar Processamento Automático →</button>
             </section>
 
             <!-- ── STEP TRACKING LOGIN ── -->
@@ -1869,19 +1874,19 @@
         <div class="proof-grid">
             <div class="proof-item">
                 <span class="proof-number">+500</span>
-                <span class="proof-label">MEIs<br>Regularizados</span>
+                <span class="proof-label">MEIs<br>Atendidos</span>
             </div>
             <div class="proof-item">
-                <span class="proof-number">100%</span>
-                <span class="proof-label">Processo<br>Seguro</span>
+                <span class="proof-number">Privado</span>
+                <span class="proof-label">Atendimento<br>Particular</span>
             </div>
             <div class="proof-item">
                 <span class="proof-number">60x</span>
-                <span class="proof-label">Parcelamento<br>de DAS</span>
+                <span class="proof-label">Possíveis<br>Parcelamentos</span>
             </div>
             <div class="proof-item">
-                <span class="proof-number">24h</span>
-                <span class="proof-label">Atendimento<br>Prioritário</span>
+                <span class="proof-number">Ágil</span>
+                <span class="proof-label">Consultoria<br>Prioritária</span>
             </div>
         </div>
     </div>
@@ -1912,8 +1917,8 @@
             <div class="urgency-card">
                 <span class="urgency-card-icon">📄</span>
                 <div class="urgency-card-title">Declaração Anual (DASN) Pendente</div>
-                <p class="urgency-card-desc">Declarações em atraso geram multas crescentes. Entregamos todas as suas DASNs pendentes para evitar penalidades.</p>
-                <span class="urgency-tag">⚡ Evite Multas Agora</span>
+                <p class="urgency-card-desc">Declarações em atraso geram multas crescentes. Organizamos e entregamos todas as suas DASNs pendentes para evitar penalidades.</p>
+                <span class="urgency-tag">⚡ Evite Acúmulo de Multas</span>
             </div>
         </div>
     </div>
@@ -2293,8 +2298,8 @@
                 const situacaoBadge = document.getElementById('res-situacao-badge');
                 situacaoBadge.innerText = data.descricao_situacao_cadastral;
                 if (data.descricao_situacao_cadastral === 'ATIVA') {
-                    situacaoBadge.style.background = 'var(--green-bg)';
-                    situacaoBadge.style.color = 'var(--green)';
+                    situacaoBadge.style.background = 'var(--accent-bg)';
+                    situacaoBadge.style.color = 'var(--accent)';
                 } else {
                     situacaoBadge.style.background = '#FEEBEB';
                     situacaoBadge.style.color = 'var(--red)';
@@ -2737,10 +2742,9 @@
             }
         }
     </script>
-    <!-- WHATSAPP FLOAT -->
-    <a href="https://wa.me/5551999906748?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20profissional%20para%20regularizar%20as%20d%C3%ADvidas%20do%20meu%20MEI%20hoje." class="whatsapp-float" target="_blank" id="whatsapp-float-btn" aria-label="Falar pelo WhatsApp">
+    <a href="https://wa.me/5551999906748?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20profissional%20para%20regularizar%20as%20d%C3%ADvidas%20do%20meu%20MEI." class="whatsapp-float" target="_blank" id="whatsapp-float-btn" aria-label="Falar pelo WhatsApp">
         <span style="font-size: 20px;">💬</span>
-        <span class="wa-text">Falar com especialista agora</span>
+        <span class="wa-text">Solicitar assistência cadastral</span>
     </a>
 </body>
 
