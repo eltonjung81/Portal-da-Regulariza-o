@@ -1307,7 +1307,7 @@
                 <div id="doc-input-container" style="display:none; animation: fadeUp .3s ease both;">
                     <div class="field" style="margin-bottom: 20px;">
                         <label id="doc-label">Informe seu CNPJ</label>
-                        <input type="text" id="user-doc" placeholder="00.000.000/0000-00" maxlength="18">
+                        <input type="text" id="user-doc" placeholder="00.000.000/0000-00" maxlength="18" oninput="maskCNPJ(this)" inputmode="numeric">
                     </div>
                     
                     <!-- LGPD Checkbox -->
@@ -1804,17 +1804,27 @@
             <!-- ── SUCESSO ── -->
             <section id="step-success">
                 <div class="success-wrap">
-                    <div class="success-icon">✓</div>
-                    <div class="step-label" style="text-align:center;">Solicitação Enviada</div>
-                    <h2>Tudo pronto! Seu atendimento começou.</h2>
-                    <p class="desc">Já enviamos seus dados para o nosso consultor. Se o WhatsApp não abriu automaticamente, você pode clicar no botão abaixo para iniciar a conversa agora mesmo.</p>
-                    
-                    <div class="alert-box" style="text-align:left;">
-                        💬 <strong>O que acontece agora?</strong><br>
-                        Nossa equipe analisará seu caso e enviará as orientações de pagamento e o acesso ao serviço diretamente no seu WhatsApp.
+                    <div class="success-icon" style="border-color: #25D366; color: #25D366; background: #f0fff4;">&#10003;</div>
+                    <div class="step-label" style="text-align:center;">Atendimento Iniciado</div>
+                    <h2>Perfeito! Já enviamos sua solicitação.</h2>
+                    <p class="desc">Nosso consultor especializado recebeu seus dados e entrará em contato pelo WhatsApp em breve para resolver todas as suas pendências.</p>
+
+                    <div class="peace-banner" style="margin: 20px 0;">
+                        <div class="icon">🛡️</div>
+                        <div class="text">
+                            <strong>Fique tranquilo.</strong>
+                            Toda a burocracia será feita por nós. Você só precisa aguardar nosso contato.
+                        </div>
                     </div>
-                    
-                    <button class="btn-cta gold" onclick="reabrirWhats()">Abrir WhatsApp Novamente</button>
+
+                    <div class="alert-box" style="text-align:left; margin-bottom: 20px;">
+                        💬 <strong>O que acontece agora?</strong><br>
+                        Nossa equipe analisará a situação do seu CNPJ e enviará um plano de regularização com preços e condições diretamente no seu WhatsApp.
+                    </div>
+
+                    <button class="btn-cta" onclick="reabrirWhats()" style="background: #25D366; font-size: 15px; padding: 18px 24px;">
+                        💬 WhatsApp não abriu? Clique aqui
+                    </button>
                     <button class="btn-ghost" onclick="location.reload()" style="margin-top: 15px;">Voltar ao início</button>
                 </div>
             </section>
@@ -2519,7 +2529,21 @@
 
         function comprarGuia() {
             const telefone = "5551999906748";
-            const texto = `Olá! Acabei de realizar o procedimento de regularização no site para o CNPJ e gostaria de receber os documentos. (Pedido: ${currentOrderId})`;
+            const cnpj = document.getElementById('user-doc')?.value || '';
+            const texto = cnpj
+                ? `Olá! Acabei de consultar meu CNPJ ${cnpj} no site e quero ajuda profissional para regularizar minhas pendências.`
+                : `Olá! Acabei de realizar o procedimento de regularização no site e gostaria de mais informações. (Pedido: ${currentOrderId})`;
+            const url = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
+            window.open(url, '_blank');
+        }
+
+        // Reabre o WhatsApp com a mensagem personalizada (botão na tela de sucesso)
+        function reabrirWhats() {
+            const telefone = "5551999906748";
+            const cnpj = document.getElementById('user-doc')?.value || '';
+            const texto = cnpj
+                ? `Olá! Acabei de consultar meu CNPJ ${cnpj} no site e quero ajuda profissional para regularizar minhas pendências.`
+                : `Olá, preciso de ajuda profissional para regularizar as dívidas do meu MEI hoje.`;
             const url = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
             window.open(url, '_blank');
         }

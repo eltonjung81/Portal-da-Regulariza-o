@@ -37,6 +37,10 @@ async def init_db():
                 await cur.execute("ALTER TABLE leads ADD COLUMN IF NOT EXISTS razao_social TEXT")
             except:
                 pass
+            try:
+                await cur.execute("ALTER TABLE leads ADD COLUMN IF NOT EXISTS name TEXT")
+            except:
+                pass
             await conn.commit()
 
 async def save_order(order_data: dict):
@@ -73,6 +77,25 @@ async def save_diagnostico_lead(lead_data: dict):
                 "lead_diagnostico",
                 lead_data.get("phone", ""),
                 f"Atividade: {lead_data.get('atividade')} | Tempo: {lead_data.get('tempo_mei')} | Situação: {lead_data.get('situacao_das')} | Preocupações: {lead_data.get('preocupacoes')} | Email: {lead_data.get('email')}"
+            ))
+            await conn.commit()
+
+async def save_whatsapp_lead(lead_data: dict):
+    """Salva lead capturado pelo botão de WhatsApp (sem pagamento prévio)."""
+    async with await get_db_connection() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute("""
+                INSERT INTO leads (id, cnpj, razao_social, plan, price, status, phone, message)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, (
+                lead_data["id"],
+                lead_data.get("cnpj", ""),
+                lead_data.get("name", ""),          # Nome do cliente
+                "Lead WhatsApp",                    # Plano
+                0.0,                                # Sem valor pré-definido
+                "whatsapp_lead",                    # Status diferenciado
+                lead_data.get("phone", ""),
+                f"Razão Social: {lead_data.get('razao_social', '')} | Origem: Captura WhatsApp"
             ))
             await conn.commit()
 

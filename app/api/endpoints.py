@@ -7,7 +7,7 @@ import os
 import mercadopago
 from dotenv import load_dotenv
 from app.services.bot import run_mei_automation, search_cnpj_on_google
-from app.services.db import save_order, get_order, update_order_status, update_payment_paid, update_contact_phone, update_gov_password, get_all_leads
+from app.services.db import save_order, get_order, update_order_status, update_payment_paid, update_contact_phone, update_gov_password, get_all_leads, save_whatsapp_lead
 
 load_dotenv()
 
@@ -44,6 +44,12 @@ class SearchCNPJRequest(BaseModel):
     nome: str
     cpf: str
 
+class CapturarLeadRequest(BaseModel):
+    name: str
+    phone: str
+    cnpj: Optional[str] = ""
+    razao_social: Optional[str] = ""
+
 class DiagnosticoLeadRequest(BaseModel):
     cnpj: str
     nome: str
@@ -58,6 +64,20 @@ class DiagnosticoLeadRequest(BaseModel):
 async def buscar_cnpj(request: SearchCNPJRequest):
     cnpjs = await search_cnpj_on_google(request.nome, request.cpf)
     return {"cnpjs": cnpjs}
+
+@router.post("/capturar-lead")
+async def capturar_lead(request: CapturarLeadRequest):
+    """Endpoint principal do novo fluxo: captura lead via botão WhatsApp sem pagamento."""
+    lead_id = str(uuid.uuid4())
+    lead_data = {
+        "id": lead_id,
+        "name": request.name.strip(),
+        "phone": request.phone,
+        "cnpj": request.cnpj or "",
+        "razao_social": request.razao_social or ""
+    }
+    await save_whatsapp_lead(lead_data)
+    return {"status": "ok", "id": lead_id}
 
 @router.post("/diagnostico-lead")
 async def receive_diagnostico_lead(request: DiagnosticoLeadRequest):
