@@ -7,7 +7,7 @@ import os
 import mercadopago
 from dotenv import load_dotenv
 from app.services.bot import run_mei_automation, search_cnpj_on_google
-from app.services.db import save_order, get_order, update_order_status, update_payment_paid, update_contact_phone, update_gov_password, get_all_leads, save_whatsapp_lead
+from app.services.db import save_order, get_order, update_order_status, update_payment_paid, update_contact_phone, update_gov_password, get_all_leads, save_whatsapp_lead, save_lead_regularizacao
 
 load_dotenv()
 
@@ -50,6 +50,12 @@ class CapturarLeadRequest(BaseModel):
     cnpj: Optional[str] = ""
     razao_social: Optional[str] = ""
 
+class LeadContingenciaRequest(BaseModel):
+    nome: str
+    whatsapp: str
+    como_ajudar: Optional[str] = ""
+    cnpj_rastreado: Optional[str] = ""
+
 class DiagnosticoLeadRequest(BaseModel):
     cnpj: str
     nome: str
@@ -77,6 +83,20 @@ async def capturar_lead(request: CapturarLeadRequest):
         "razao_social": request.razao_social or ""
     }
     await save_whatsapp_lead(lead_data)
+    return {"status": "ok", "id": lead_id}
+
+@router.post("/lead-contingencia")
+async def lead_contingencia(request: LeadContingenciaRequest):
+    """Captura lead de contingência (filtro anti-fuga)."""
+    lead_id = str(uuid.uuid4())
+    lead_data = {
+        "id": lead_id,
+        "nome": request.nome,
+        "whatsapp": request.whatsapp,
+        "como_ajudar": request.como_ajudar,
+        "cnpj_rastreado": request.cnpj_rastreado
+    }
+    await save_lead_regularizacao(lead_data)
     return {"status": "ok", "id": lead_id}
 
 @router.post("/diagnostico-lead")

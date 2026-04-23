@@ -41,6 +41,19 @@ async def init_db():
                 await cur.execute("ALTER TABLE leads ADD COLUMN IF NOT EXISTS name TEXT")
             except:
                 pass
+            
+            # New table for contingency leads
+            await cur.execute("""
+                CREATE TABLE IF NOT EXISTS leads_regularizacao (
+                    id TEXT PRIMARY KEY,
+                    nome TEXT,
+                    whatsapp TEXT,
+                    cnpj_rastreado TEXT,
+                    como_ajudar TEXT,
+                    status_conversao TEXT DEFAULT 'novo',
+                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
             await conn.commit()
 
 async def save_order(order_data: dict):
@@ -96,6 +109,22 @@ async def save_whatsapp_lead(lead_data: dict):
                 "whatsapp_lead",                    # Status diferenciado
                 lead_data.get("phone", ""),
                 f"Razão Social: {lead_data.get('razao_social', '')} | Origem: Captura WhatsApp"
+            ))
+            await conn.commit()
+
+async def save_lead_regularizacao(data: dict):
+    """Salva lead de contingência (usuário que não sabe o CNPJ ou precisa de ajuda direta)."""
+    async with await get_db_connection() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute("""
+                INSERT INTO leads_regularizacao (id, nome, whatsapp, cnpj_rastreado, como_ajudar)
+                VALUES (%s, %s, %s, %s, %s)
+            """, (
+                data["id"],
+                data["nome"],
+                data["whatsapp"],
+                data.get("cnpj_rastreado", ""),
+                data.get("como_ajudar", "")
             ))
             await conn.commit()
 

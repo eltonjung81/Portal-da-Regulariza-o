@@ -1203,6 +1203,91 @@
             margin-bottom: 4px;
             color: var(--ink);
         }
+
+        /* ── QUICK HERO INPUT ── */
+        .quick-input-wrap {
+            max-width: 500px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+
+        .quick-input-box {
+            display: flex;
+            background: var(--surface);
+            border: 2px solid var(--gold);
+            border-radius: 50px;
+            padding: 6px;
+            box-shadow: 0 10px 30px rgba(184, 146, 74, 0.15);
+            margin-bottom: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .quick-input-box:focus-within {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(184, 146, 74, 0.25);
+        }
+
+        .quick-input-box input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 0 24px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--ink);
+            outline: none;
+            width: 100%;
+        }
+
+        .quick-input-box button {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+
+        .quick-input-box button:hover {
+            background: var(--gold-lt);
+        }
+
+        .find-cnpj-link {
+            font-size: 13px;
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .find-cnpj-link:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        @media(max-width: 600px) {
+            .quick-input-box {
+                flex-direction: column;
+                border-radius: 12px;
+                padding: 12px;
+            }
+            .quick-input-box input {
+                padding: 12px;
+                text-align: center;
+                font-size: 18px;
+                margin-bottom: 8px;
+            }
+            .quick-input-box button {
+                width: 100%;
+                padding: 16px;
+            }
+        }
     </style>
     <!-- Facebook Pixel Code -->
     <script>
@@ -1251,8 +1336,18 @@
     <div class="hero">
         <div class="hero-eyebrow">Consultoria Particular Especializada em MEI</div>
         <div class="hero-name">Elton Jung (Especialista Técnico)</div>
-        <h1>Regularização de MEI e<br><em>Parcelamento de Dívidas em Atraso</em></h1>
+        <h1>Regularização de MEI e<br><em>Parcelamento de Dívidas</em></h1>
         <p class="hero-sub">Evite o cancelamento do seu CNPJ e a cobrança na Dívida Ativa. Assessoramos suas pendências de forma rápida e profissional.</p>
+        
+        <!-- QUICK CNPJ INPUT -->
+        <div class="quick-input-wrap">
+            <div class="quick-input-box">
+                <input type="text" id="hero-cnpj" placeholder="00.000.000/0000-00" maxlength="18" oninput="maskCNPJ(this)" inputmode="numeric">
+                <button onclick="startHeroConsultation()">Analisar Agora — R$ 99</button>
+            </div>
+            <a href="javascript:void(0)" onclick="openContingencyModal()" class="find-cnpj-link">Não lembra o CNPJ? Nós te ajudamos →</a>
+        </div>
+
         <div class="trust-row">
             <span>Consultoria Privada</span>
             <div class="trust-sep"></div>
@@ -1262,11 +1357,46 @@
         </div>
     </div>
 
+    <!-- CONTINGENCY MODAL -->
+    <div id="contingency-modal" class="modal-overlay">
+        <div class="modal-box" style="text-align: left; max-width: 500px;">
+            <div class="step-label" style="margin-bottom: 12px;">Localizador de MEI</div>
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; margin-bottom: 10px;">Não lembra o seu CNPJ?</h3>
+            <p style="font-size: 14px; color: var(--muted); margin-bottom: 24px;">Deixe seus dados e nossa equipe técnica fará uma busca nos registros nacionais para localizar sua empresa e diagnosticar sua situação.</p>
+            
+            <div class="field">
+                <label>Seu Nome Completo</label>
+                <input type="text" id="cont-name" placeholder="Ex: João da Silva">
+            </div>
+
+            <div class="field">
+                <label>WhatsApp (com DDD)</label>
+                <input type="text" id="cont-phone" placeholder="(00) 00000-0000" oninput="maskPhone(this)">
+            </div>
+
+            <div class="field">
+                <label>Como podemos te ajudar?</label>
+                <select id="cont-help">
+                    <option value="nao_lembro_cnpj">Não lembro meu CNPJ</option>
+                    <option value="regularizar_dividas">Quero regularizar dívidas</option>
+                    <option value="cancelar_mei">Quero cancelar meu MEI</option>
+                    <option value="outro">Outro assunto</option>
+                </select>
+            </div>
+
+            <button class="btn-cta" onclick="submitContingencyLead()" id="btn-submit-cont" style="background: #25D366; font-size: 15px; padding: 18px 24px; width: 100%;">
+                💬 Localizar MEI via WhatsApp
+            </button>
+            
+            <button class="btn-ghost" onclick="closeContingencyModal()" style="width: 100%; border: none; margin-top: 5px;">Fechar</button>
+        </div>
+    </div>
+
     <!-- CARD -->
     <div class="card-wrap">
         <div class="card">
 
-            <!-- ── STEP 1: ESCOLHA ── -->
+            <!-- ── STEP 1: IDENTIFICAÇÃO (FALLBACK/CARD) ── -->
             <section id="step-home" class="active">
                 <div class="step-label">Passo 1 de 4 — Identificação</div>
                 <div class="progress-bar">
@@ -1275,50 +1405,11 @@
                     <div class="pb"></div>
                     <div class="pb"></div>
                 </div>
-                <!-- Escolha Inicial com Ofertas -->
-                <!-- Escolha Inicial -->
-                <div id="home-choices">
-                    <div class="home-plans-grid">
-                        <div class="plan-card premium" onclick="selectType('mei')">
-                            <div class="premium-badge">Consulta Gratuita</div>
-                            <div class="plan-title" style="margin-bottom: 5px;">Tenho meu CNPJ</div>
-                            <p class="plan-desc" style="font-size: 12px; margin-top: 10px;">Diagnóstico rápido das suas dívidas e declarações pendentes. Descubra sua situação na hora.</p>
-                            
-                            <div style="background: rgba(211, 84, 0, 0.05); padding: 8px; border-radius: 4px; margin-bottom: 10px; border: 1px dashed var(--accent);">
-                                <p style="font-size: 10px; color: var(--accent); font-weight: 700; text-transform: uppercase; margin: 0; display: flex; align-items: center; gap: 4px; justify-content: center;">
-                                    📊 Início Imediato da Análise
-                                </p>
-                            </div>
+                
+                <div id="doc-input-container">
+                    <h2 style="font-size: 22px; margin-bottom: 10px;">Inicie seu diagnóstico</h2>
+                    <p class="desc" style="margin-bottom: 24px;">Informe seu CNPJ para que possamos analisar suas pendências fiscais e gerar seu relatório.</p>
 
-                            <button class="btn-cta gold" style="padding: 12px; font-size: 11px; margin-top: 10px;">Consultar Meu CNPJ →</button>
-                        </div>
-
-                        <div class="plan-card" onclick="showDirectLead()" style="border-color: var(--rule); background: #fff;">
-                            <div class="premium-badge" style="background: var(--ink); color: #fff;">Falar com Especialista</div>
-                            <div class="plan-title" style="margin-bottom: 5px;">Não sei meu CNPJ</div>
-                            <p class="plan-desc" style="font-size: 12px; margin-top: 10px;">Não lembra do CNPJ ou prefere atendimento direto? Deixe seu contato e nós te ajudamos.</p>
-                            
-                            <div style="background: #f8f9fa; padding: 8px; border-radius: 4px; margin-bottom: 10px; border: 1px dashed #ccc;">
-                                <p style="font-size: 10px; color: var(--ink); font-weight: 700; text-transform: uppercase; margin: 0; display: flex; align-items: center; gap: 4px; justify-content: center;">
-                                    📞 Atendimento Humano
-                                </p>
-                            </div>
-
-                            <button class="btn-cta" style="background: var(--ink); padding: 12px; font-size: 11px; margin-top: 10px;">Solicitar Contato →</button>
-                        </div>
-                    </div>
-
-                    <div class="peace-banner">
-                        <div class="icon">🛡️</div>
-                        <div class="text">
-                            <strong>Fique tranquilo.</strong>
-                            Toda a burocracia será feita por nós. Você foca no seu negócio, nós resolvemos o resto com rapidez e segurança.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Container do Input -->
-                <div id="doc-input-container" style="display:none; animation: fadeUp .3s ease both;">
                     <div class="field" style="margin-bottom: 20px;">
                         <label id="doc-label">Informe seu CNPJ</label>
                         <input type="text" id="user-doc" placeholder="00.000.000/0000-00" maxlength="18" oninput="maskCNPJ(this)" inputmode="numeric">
@@ -1332,14 +1423,26 @@
                         </label>
                     </div>
 
-                    <button class="btn-cta" onclick="startConsultation()">Solicitar análise do meu MEI →</button>
+                    <button class="btn-cta gold" onclick="startConsultation()" style="font-size: 15px; padding: 18px;">Analisar Meu MEI Agora →</button>
                     
                     <div style="margin-top: 15px; text-align: center;">
-                        <a href="javascript:void(0)" onclick="show('step-find-cnpj')" style="font-size: 13px; color: var(--gold); text-decoration: none; font-weight: 500;">Não sabe seu CNPJ? Encontre aqui →</a>
+                        <a href="javascript:void(0)" onclick="openContingencyModal()" style="font-size: 13px; color: var(--gold); text-decoration: none; font-weight: 500;">Não sabe seu CNPJ? Clique aqui →</a>
                     </div>
-
-                    <button class="btn-ghost" onclick="resetTypeSelection()">Voltar</button>
                 </div>
+
+                <div class="peace-banner" style="margin-top: 30px;">
+                    <div class="icon">🛡️</div>
+                    <div class="text">
+                        <strong>Fique tranquilo.</strong>
+                        Toda a burocracia será feita por nós. Você foca no seu negócio, nós resolvemos o resto com rapidez e segurança.
+                    </div>
+                </div>
+
+                <div id="consulting-loader" style="display:none; text-align:center; padding: 20px 0;">
+                    <div class="loader-spinner"></div>
+                    <p id="loader-message" style="font-size: 14px; color: var(--gold); margin-top: 15px; font-weight: 500;">Consultando bases públicas...</p>
+                </div>
+            </section>
 
                 <!-- Container do Contato Direto -->
                 <div id="direct-lead-container" style="display:none; animation: fadeUp .3s ease both;">
@@ -2739,6 +2842,76 @@
                 btn.style.display = 'block';
                 badge.style.display = 'none';
             }
+        }
+
+        // ── NEW FUNCTIONS ──
+        function startHeroConsultation() {
+            const doc = document.getElementById('hero-cnpj').value;
+            if (!doc || doc.trim().length < 14) {
+                alert('Por favor, informe um CNPJ válido para análise.');
+                return;
+            }
+            // Populate the main input and trigger consultation
+            document.getElementById('user-doc').value = doc;
+            document.getElementById('lgpd-consent').checked = true; // Auto-check for quick start if coming from hero
+            startConsultation();
+        }
+
+        function openContingencyModal() {
+            document.getElementById('contingency-modal').style.display = 'flex';
+            if (typeof gtag === 'function') {
+                gtag('event', 'contingency_modal_open');
+            }
+        }
+
+        function closeContingencyModal() {
+            document.getElementById('contingency-modal').style.display = 'none';
+        }
+
+        async function submitContingencyLead() {
+            const nome = document.getElementById('cont-name').value.trim();
+            const whatsapp = document.getElementById('cont-phone').value;
+            const como_ajudar = document.getElementById('cont-help').value;
+            const cleanPhone = whatsapp.replace(/\D/g, '');
+
+            if (!nome || cleanPhone.length < 10) {
+                alert('Por favor, informe seu nome e um WhatsApp válido.');
+                return;
+            }
+
+            const btn = document.getElementById('btn-submit-cont');
+            btn.disabled = true;
+            btn.innerText = 'Enviando...';
+
+            // Tracking
+            if (typeof gtag === 'function') {
+                gtag('event', 'Lead', { category: 'contingency', label: como_ajudar });
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-18101510498/p5_SCPfin54cEOLCvLdD',
+                    'value': 1,
+                    'currency': 'BRL'
+                });
+            }
+            if (typeof fbq === 'function') {
+                fbq('track', 'Lead');
+            }
+
+            try {
+                await fetch('/api/v1/lead-contingencia', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nome, whatsapp, como_ajudar })
+                });
+            } catch (e) {
+                console.error("Lead save error:", e);
+            }
+
+            const msg = `Olá, Elton! Preciso de ajuda com meu MEI. Nome: ${nome}. Motivo: ${como_ajudar}.`;
+            const url = `https://wa.me/5551999906748?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+
+            closeContingencyModal();
+            show('step-success');
         }
     </script>
     <a href="https://wa.me/5551999906748?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20profissional%20para%20regularizar%20as%20d%C3%ADvidas%20do%20meu%20MEI." class="whatsapp-float" target="_blank" id="whatsapp-float-btn" aria-label="Falar pelo WhatsApp">
