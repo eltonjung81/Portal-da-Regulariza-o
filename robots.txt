@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mei.eltonjung.com.br/sitemap.xml
